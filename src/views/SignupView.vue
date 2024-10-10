@@ -11,7 +11,6 @@
       id="passwordconfirm"
       type="text"
       placeholder="Confirmation du Mot de passe"
-      s
     />
     <input
       id="adress"
@@ -23,7 +22,7 @@
     <input id="phone" type="text" placeholder="Numéro de téléphone" />
 
     <br />
-    <button class="connect">S'inscrire</button>
+    <button class="connect" @click="checkConfirmPassword">S'inscrire</button>
     <br />
 
     <span>
@@ -33,6 +32,54 @@
     </span>
   </div>
 </template>
+
+<script>
+export default {
+  methods: {
+    checkSiret() {
+      const siret = document.getElementById("siret").value;
+      const siretRegex = /^[0-9]{9}$/;
+      if (!siretRegex.test(siret)) {
+        console.log("Numéro de SIRET invalide");
+        return false;
+      }
+      console.log("Numéro de SIRET valide");
+    },
+    checkPhone() {
+      const phone = document.getElementById("phone").value;
+      const phoneRegex =
+        /^(0[1-9]([-. ]?[0-9]{2}){4}|(\+33|0033)[1-9]([-. ]?[0-9]{2}){4})$/;
+      if (!phoneRegex.test(phone)) {
+        console.log("Numéro de téléphone invalide");
+        return false;
+      }
+      console.log("Numéro de téléphone valide");
+    },
+    checkPassword() {
+      const password = document.getElementById("password").value;
+      const passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d).{8,}$/;
+
+      if (!passwordRegex.test(password)) {
+        console.log(
+          "Mot de passe invalide : il doit contenir au moins 8 caractères et au moins 1 chiffre & 1 lettre."
+        );
+        return false;
+      }
+      console.log("Mot de passe valide");
+    },
+    checkConfirmPassword() {
+      const password = document.getElementById("password").value;
+      const passwordconfirm = document.getElementById("passwordconfirm").value;
+
+      if (password != passwordconfirm) {
+        console.log("Les mots de passe ne sont pas identique.");
+        return false;
+      }
+      console.log("Les deux mots de passes sont identique.");
+    },
+  },
+};
+</script>
 
 <style scoped>
 div.signup {
