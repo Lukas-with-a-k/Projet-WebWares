@@ -10,13 +10,19 @@ const routes = [
     
   },
   {
-   
-  }
-]
-
+    path: "/ProductDetails",
+    name: "ProductDetails",
+    component: () => import("../views/ProductDetails.vue"),
+  },
+  {
+    path: "/ProductList",
+    name: "ProductList",
+    component: () => import("../views/ProductList.vue"),
+  },
+];
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
-  routes,
-});
+  routes
+})
 
-export default router;
+export default router

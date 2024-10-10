@@ -3,20 +3,26 @@
       <nav class="navbar">
         <div class="logo">
           
-          <router-link to="/">MonLogo</router-link>
+          <router-link to="/">WebWares</router-link>
         </div>
         <ul class="nav-links">
           <li>
             <router-link to="/">Accueil</router-link>
           </li>
           <li>
-            <router-link to="/about">À propos</router-link>
+            <router-link to="/deco">Déco</router-link>
           </li>
           <li>
-            <router-link to="/services">Services</router-link>
+            <router-link to="/luminaires">Luminaires</router-link>
           </li>
           <li>
-            <router-link to="/contact">Contact</router-link>
+            <router-link to="/mobilier">Mobilier</router-link>
+          </li>
+          <li>
+            <router-link to="/tapis">Tapis</router-link>
+          </li>
+          <li>
+            <router-link to="/ProductList">Liste des produits</router-link>
           </li>
         </ul>
         <div class="auth-buttons">
@@ -30,7 +36,7 @@
   
   <script>
   export default {
-    name: "Header",
+    name: "HeaderComponent",
   };
   </script>
   
