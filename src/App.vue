@@ -6,8 +6,8 @@
       v-if="showLogin"
       @toggleSignup="toggleSignup"
       @closeForms="closeForms"
+       @loginSuccess="loginSuccess"
     />
-   
     <SignupComp
       v-if="showSignup"
       @toggleLogin="toggleLogin"
@@ -40,9 +40,11 @@ export default {
   },
   data() {
     return {
+      userType: null,
       showLogin: false,
       showSignup: false,
       accounts: [],
+      isLoggedIn: false,
     };
   },
   methods: {
@@ -78,6 +80,22 @@ export default {
         },
       ];
     },
+    loginSuccess(user) {
+      this.isLoggedIn = true;
+      this.userType = user.type;  
+      localStorage.setItem('userType', user.type);
+      this.closeForms();
+    },
+    checkIfLoggedIn() {
+      const userType = localStorage.getItem("userType");
+      if (userType) {
+        this.isLoggedIn = true;
+        this.userType = userType;
+      } else {
+        this.isLoggedIn = false;
+        this.userType = null;
+      }
+    },
     saveAccountsToLocalStorage(accounts) {
       localStorage.setItem("accounts", JSON.stringify(accounts));
     },
@@ -97,6 +115,11 @@ export default {
       this.accounts.push(newAccount);
       this.saveAccountsToLocalStorage(this.accounts);
     },
+    logout() {
+      this.isLoggedIn = false;
+      this.userType = null;
+      localStorage.removeItem("userType");
+    },
   },
   mounted() {
     const storedAccounts = this.getAccountsFromLocalStorage();
@@ -107,6 +130,7 @@ export default {
       this.saveAccountsToLocalStorage(defaultAccounts);
       this.accounts = defaultAccounts;
     }
+    this.checkIfLoggedIn();
   },
 };
 </script>
