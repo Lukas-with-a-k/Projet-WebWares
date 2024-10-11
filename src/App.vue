@@ -6,12 +6,14 @@
 <script>
 import HeaderComponent from './components/HeaderComponent.vue';
 import FooterComponent from './components/FooterComponent.vue';
+import Buttons from './components/Buttons.vue';
 
 export default {
   name: 'App',
   components: {
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    Buttons
   }
 };
 </script>
