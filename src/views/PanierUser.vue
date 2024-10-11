@@ -12,7 +12,7 @@
                 <span> {{ produit.qte }} </span>
                 <button @click="decrease(produit)"> + </button>
             </span>
-            <Buttons label="Supprimer du panier" @click="removeProduct(produit)" color="red"/>
+            <ButtonComponent label="Supprimer du panier" @click="removeProduct(produit)" color="red"/>
             <span>Total Ligne {{ subTotal(produit.id) }}</span>
         </div>
         <div>
@@ -22,11 +22,11 @@
 </template>
 
 <script>
-import Buttons from '@/components/Buttons.vue';
+import ButtonComponent from '@/components/ButtonComponent.vue';
 
     export default {
         components:{
-            Buttons
+            ButtonComponent
         },
         data(){
 return {
