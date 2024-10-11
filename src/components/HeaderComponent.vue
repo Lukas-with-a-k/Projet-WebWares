@@ -28,7 +28,6 @@
       <div class="auth-buttons">
         <!-- Bouton Connexion qui ouvre le formulaire -->
           <button v-if="!isLoggedIn" @click="$emit('toggleLogin')">Connexion</button>
-          <button v-if="isLoggedIn" @click="logout">Déconnexion</button>
           <button @click="$emit('toggleSignup')" v-if="!isLoggedIn">S'inscrire</button>        
 
         <!-- Menu déroulant qui s'affiche quand l'utilisateur est connecté -->
@@ -52,24 +51,25 @@
 
 <script>
 
-
 export default {
   name: "HeaderComponent",
+  props: {
+    isLoggedIn: {
+      type: Boolean,
+      userType: String,
+    },
+
+  },
   data() {
     return {
       isOpen: false,
     };
   },
-  props: {
-    isLoggedIn: {
-      type: Boolean,
-      default: false,
-    },
-  },
+  
   methods: {
-    
+   
     logout() {
-      this.$emit('logout');
+      this.$emit("logout");
     },
     
     // fonction qui permet d'afficher le menu déroulant
@@ -113,7 +113,7 @@ export default {
   text-decoration: none;
 }
 
-.auth-buttons a,
+.auth-buttons a ,
 .auth-buttons button {
   margin-left: 15px;
   padding: 10px 20px;

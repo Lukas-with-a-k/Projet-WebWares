@@ -52,6 +52,7 @@ export default {
           console.log("Connexion réussie !");
           localStorage.setItem("userType", account.type);
           localStorage.setItem("userId", usernameValue);
+          this.$emit("loginSuccess", account); 
           this.$emit("closeForms");
         } else {
           console.log("Mot de passe incorrect");
