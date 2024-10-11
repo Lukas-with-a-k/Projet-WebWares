@@ -1,13 +1,17 @@
 <template>
     <div>
-
+        <ButtonComponent/>
     </div>
 </template>
 
 <script>
-    export default {
-        
-    }
+
+import ButtonComponent from '@/components/ButtonComponent.vue';
+export default {
+    components: {
+        ButtonComponent
+    },
+}
 </script>
 
 <style scoped>

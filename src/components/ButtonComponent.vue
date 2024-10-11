@@ -8,10 +8,9 @@
     export default {
         props:{
             label: String,
-            color: String
-
-        }
-    }
+            color: String,
+        },
+    };
 </script>
 
 <style scoped>
@@ -19,3 +18,4 @@
         background-color: v-bind(color);
         padding: 7px 20px;
 }
+</style>
