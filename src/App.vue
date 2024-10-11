@@ -1,16 +1,13 @@
 <template>
-  <HeaderComponent />
+  <HeaderComponent :isLoggedIn="isLoggedIn" @toggleLogin="toggleLogin" @toggleSignup="toggleSignup" @logout="logout" />
   <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link> |
-    <a @click="toggleLogin">Login</a> |
     <LoginComp
       :accounts="accounts"
       v-if="showLogin"
       @toggleSignup="toggleSignup"
       @closeForms="closeForms"
     />
-    <a @click="toggleSignup">Signup</a> |
+   
     <SignupComp
       v-if="showSignup"
       @toggleLogin="toggleLogin"
@@ -31,6 +28,7 @@ import FooterComponent from './components/FooterComponent.vue';
 import LoginComp from "./components/LoginComp.vue";
 import SignupComp from "./components/SignupComp.vue";
 
+
 export default {
   name: 'App',
   components: { 
@@ -38,6 +36,7 @@ export default {
     FooterComponent,
     LoginComp,
     SignupComp,
+   
   },
   data() {
     return {
