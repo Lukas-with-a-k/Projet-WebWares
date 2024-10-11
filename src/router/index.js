@@ -10,14 +10,14 @@ const routes = [
     
   },
   {
-    path: "/ProductDetails",
-    name: "ProductDetails",
-    component: () => import("../views/ProductDetails.vue"),
-  },
-  {
     path: "/ProductList",
     name: "ProductList",
     component: () => import("../views/ProductList.vue"),
+  },
+  {
+    path: "/ProductList/ProductDetails",
+    name: "ProductDetails",
+    component: () => import("../views/ProductDetails.vue"),
   },
 ];
 const router = createRouter({

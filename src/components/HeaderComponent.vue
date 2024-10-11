@@ -42,7 +42,7 @@
   
   <style scoped>
   .header {
-    background-color: #3F4666;
+    background-color: #748284;
     padding: 20px;
   }
   
@@ -53,7 +53,7 @@
   }
   
   .logo a {
-    color: white;
+    color: #e6edeb;
     font-size: 24px;
     text-decoration: none;
   }
@@ -68,21 +68,21 @@
   }
   
   .nav-links a {
-    color: white;
+    color: #e6edeb;
     text-decoration: none;
   }
   
   .auth-buttons a {
     margin-left: 15px;
     padding: 10px 20px;
-    background-color: #f9f9f9;
-    color: #333;
+    background-color: #3f4666;
+    color: #e6edeb;
     text-decoration: none;
     border-radius: 5px;
   }
   
   .auth-buttons a:hover {
-    background-color: #ccc;
+    background-color: #4280b8;
   }
   </style>
   

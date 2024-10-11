@@ -19,8 +19,8 @@
   
   <style scoped>
   .footer {
-    background-color: #3F4666;
-    color: white;
+    background-color: #748284;
+    color: #e6edeb;
     padding: 20px 0;
     text-align: center;
     position: fixed;
@@ -33,7 +33,7 @@
   }
   
   .footer a {
-    color: white;
+    color: #3f4666;
     text-decoration: none;
   }
   
