@@ -42,7 +42,7 @@
   
   <style scoped>
   .header {
-    background-color: #333;
+    background-color: #3F4666;
     padding: 20px;
   }
   
