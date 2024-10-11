@@ -1,9 +1,24 @@
 <template>
   <div class="signup">
     <h3>Inscription</h3>
-    <input id="name" type="text" placeholder="Nom" />
-    <input id="name2" type="text" placeholder="Prénom" />
-    <input id="username" type="text" placeholder="Nom d'utilisateur" />
+    <input
+      id="name"
+      type="text"
+      placeholder="Nom"
+      :class="{ 'input-error': invalidFields.name }"
+    />
+    <input
+      id="name2"
+      type="text"
+      placeholder="Prénom"
+      :class="{ 'input-error': invalidFields.name2 }"
+    />
+    <input
+      id="username"
+      type="text"
+      placeholder="Nom d'utilisateur"
+      :class="{ 'input-error': invalidFields.username }"
+    />
     <input
       id="siret"
       type="text"
@@ -31,9 +46,20 @@
       id="adress"
       type="text"
       placeholder="Adresse (ex : 17 rue Fernand)"
+      :class="{ 'input-error': invalidFields.adress }"
     />
-    <input id="postal" type="text" placeholder="Code Postal" />
-    <input id="city" type="text" placeholder="Ville" />
+    <input
+      id="postal"
+      type="text"
+      placeholder="Code Postal"
+      :class="{ 'input-error': invalidFields.postal }"
+    />
+    <input
+      id="city"
+      type="text"
+      placeholder="Ville"
+      :class="{ 'input-error': invalidFields.city }"
+    />
     <input
       id="phone"
       type="text"
@@ -51,7 +77,8 @@
 
     <span>
       <p class="signup">
-        Deja membre ? <router-link to="/login">Connexion</router-link>
+        Deja membre ?
+        <a href="#" class="login" @click.prevent="toggleLogin">Se connecter</a>
       </p>
     </span>
   </div>
@@ -71,20 +98,97 @@ export default {
     };
   },
   methods: {
+    toggleLogin() {
+      console.log("test");
+      this.$emit("toggleLogin");
+    },
     checkSignUp() {
-      this.checkSiret();
-      this.checkPhone();
-      this.checkPassword();
-      this.checkConfirmPassword();
+      this.errorMessage = "";
+      this.invalidFields = {
+        siret: false,
+        phone: false,
+        password: false,
+        passwordConfirm: false,
+      };
+
+      const siretValid = this.checkSiret();
+      const phoneValid = this.checkPhone();
+      const passwordValid = this.checkPassword();
+      const passwordConfirmValid = this.checkConfirmPassword();
+      const usernameValid = this.checkUsername();
+
+      const requiredFields = [
+        "name",
+        "name2",
+        "username",
+        "siret",
+        "password",
+        "passwordconfirm",
+        "adress",
+        "postal",
+        "city",
+        "phone",
+      ];
+
+      let allFieldsFilled = true;
+
+      for (const field of requiredFields) {
+        const value = document.getElementById(field).value;
+        if (!value) {
+          this.invalidFields[field] = true;
+          allFieldsFilled = false;
+        } else {
+          this.invalidFields[field] = false;
+        }
+      }
+
       if (
-        this.checkSiret() != false &&
-        this.checkPhone() != false &&
-        this.checkPassword() != false &&
-        this.checkConfirmPassword() != false
+        allFieldsFilled &&
+        siretValid !== false &&
+        phoneValid !== false &&
+        passwordValid !== false &&
+        passwordConfirmValid !== false &&
+        usernameValid !== false
       ) {
         this.errorMessage = "";
+        const newUser = {
+          username: document.getElementById("username").value,
+          password: document.getElementById("password").value,
+          type: "member",
+          name: document.getElementById("name").value,
+          lastname: document.getElementById("name2").value,
+          siret: document.getElementById("siret").value,
+          adress: document.getElementById("adress").value,
+          postal: document.getElementById("postal").value,
+          city: document.getElementById("city").value,
+          phone: document.getElementById("phone").value,
+        };
+
+        const accounts = JSON.parse(localStorage.getItem("accounts")) || [];
+        accounts.push(newUser);
+        localStorage.setItem("accounts", JSON.stringify(accounts));
+        console.log(
+          "Compte crée avec succès, utilisateur : " + newUser.username
+        );
       }
     },
+
+    checkUsername() {
+      const username = document.getElementById("username").value;
+      const accounts = JSON.parse(localStorage.getItem("accounts")) || [];
+      const usernameExists = accounts.some(
+        (account) => account.username === username
+      );
+
+      if (usernameExists) {
+        this.errorMessage = "Un compte avec ce nom d'utilisateur existe déjà.";
+        this.invalidFields.username = true;
+        return false;
+      }
+      this.invalidFields.username = false;
+      return true;
+    },
+
     checkSiret() {
       const siret = document.getElementById("siret").value;
       const siretRegex = /^[0-9]{9}$/;
@@ -158,6 +262,7 @@ export default {
 
 <style scoped>
 div.signup {
+  z-index: 100;
   position: absolute;
   left: 50%;
   top: 20%;

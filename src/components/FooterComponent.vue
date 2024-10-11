@@ -19,8 +19,8 @@
   
   <style scoped>
   .footer {
-    background-color: #333;
-    color: white;
+    background-color: #748284;
+    color: #e6edeb;
     padding: 20px 0;
     text-align: center;
     position: fixed;
@@ -28,10 +28,13 @@
     width: 100%;
   }
   
+  .footer p {
+    margin: 0;
+  }
+  
   .footer a {
-    color: #4CAF50;
+    color: #3f4666;
     text-decoration: none;
-    margin: 0 10px;
   }
   
   .footer a:hover {
