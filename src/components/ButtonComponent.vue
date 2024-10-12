@@ -8,9 +8,9 @@
     export default {
         props:{
             label: String,
-            color: String,
-        },
-    };
+            color: String
+        }
+    }
 </script>
 
 <style scoped>

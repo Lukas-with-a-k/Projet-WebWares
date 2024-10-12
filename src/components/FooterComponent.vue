@@ -28,10 +28,13 @@
     width: 100%;
   }
   
+  .footer p {
+    margin: 0;
+  }
+  
   .footer a {
     color: #3f4666;
     text-decoration: none;
-    margin: 0 10px;
   }
   
   .footer a:hover {
