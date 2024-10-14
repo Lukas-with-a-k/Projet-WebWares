@@ -18,7 +18,7 @@
           <span> {{ produit.count }} </span>
           <button @click="increase(produit)"> + </button>
       </td>
-     <td> <ButtonUser label="Supprimer" @click="supprimeProduit(produit)" color="red"/></td>
+     <td> <ButtonComponent label="Supprimer" @click="supprimeProduit(produit)" color="red"/></td>
       <td>Total Ligne : {{ subTotal(produit) }}</td>
   </tr>
 </tbody>
@@ -37,11 +37,11 @@
 
 <script>
 // localStorage.clear();
-import ButtonUser from '@/components/ButtonUser.vue';
+import ButtonComponent from '@/components/ButtonComponent.vue';
 
 export default {
   components:{
-      ButtonUser
+      ButtonComponent,
   },
 data(){
 return {

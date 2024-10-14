@@ -2,6 +2,7 @@ import LandingPage from '@/views/LandingPage.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 
 
+
 const routes = [
   { 
     path: '/',
@@ -19,6 +20,12 @@ const routes = [
     name: "ProductDetails",
     component: () => import("../views/ProductDetails.vue"),
   },
+  {
+  path: "/PanierUser",
+  name: "PanierUser",
+  component: () => import("../views/PanierUser.vue"),
+
+},
 ];
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
