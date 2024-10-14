@@ -140,6 +140,7 @@ body {
   margin: 0;
   padding: 0;
   background-color: #E6EDEB;
+  
 }
 
 #app {
@@ -147,7 +148,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #fafafa;
+  color: #515151;
 }
 
 nav {

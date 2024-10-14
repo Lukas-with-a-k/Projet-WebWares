@@ -3,7 +3,7 @@
     <nav class="navbar">
       <div class="logo">
 
-        <router-link to="/"><img src="@/assets/webwares.png" alt="logo" style="width: 150px ;height: 120px;"></router-link>
+        <router-link to="/"><img src="@/assets/webwares.png" alt="logo" style="width: 200px ;height: 160px;"></router-link>
       </div>
       <ul class="nav-links">
         <li>
@@ -42,7 +42,7 @@
 
         <!-- le panier qui s'affiche quand l'utilisateur est connecté -->
         <router-link to="/PanierUser" class="cart-btn" v-if="isLoggedIn"><img src="@\assets\panier.png" alt="panier"
-            class="icon"></router-link>
+            class="icon-panier"></router-link>
 
       </div>
     </nav>
@@ -113,18 +113,16 @@ export default {
   text-decoration: none;
 }
 
-.auth-buttons a ,
+.auth-buttons a,
 .auth-buttons button {
-  margin-left: 15px;
-  padding: 10px 20px;
   background-color: #3f4666;
   color: #e6edeb;
   text-decoration: none;
   border-radius: 5px;
   border: none;
   cursor: pointer;
-  width: 100px;
-
+  padding: 10px;
+  margin-left: 10px;
 }
 
 .auth-buttons a:hover,
@@ -132,12 +130,6 @@ export default {
   background-color: #4280b8;
 }
 
-.logout-btn {
-  border: none;
-  background-color: #3f4666;
-  color: #e6edeb;
-  border-radius: 5px;
-}
 
 .dropdown {
   position: relative;
@@ -145,13 +137,12 @@ export default {
 }
 
 .dropbtn {
-  background-color: #3498db;
+  background-color: #3f4666;
   color: white;
   padding: 10px;
   border: none;
   cursor: pointer;
   border-radius: 5px;
-
 }
 
 .dropdown-content {
@@ -163,27 +154,58 @@ export default {
   margin: 0;
   padding: 0;
   width: 150px;
+  display: none;
 }
 
 .dropdown-content li {
   padding: 10px;
   cursor: pointer;
   border-radius: 5px;
-
+  color: white;
 }
 
 .dropdown-content li:hover {
-  background-color: #3498db;
+  background-color: #4280b8;
 }
 
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+
+.cart-btn {
+  display: inline-flex;
+   background-color: #3498db;
+  color: white;
+  margin: 10px;
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.cart-btn:hover {
+  background-color: #4280b8;
+}
+
+
 .icon {
+  display: flex;
   width: 40px;
   height: 40px;
   border-radius: 50%;
   object-fit: cover;
   cursor: pointer;
-  background-color: #ffffff;
-  color: #ffffff;
+  background-color: #ffffff00;
 
 }
+
+.icon-panier {
+  width: 40px;
+  height: 40px;
+  border-radius: 0%;
+  cursor: pointer;
+  background-color: #ffffff00;
+}
+
 </style>

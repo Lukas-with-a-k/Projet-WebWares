@@ -19,5 +19,6 @@
 <style scoped>
 body 
 .background-color{  background-color: #3F4666;
+    color: aliceblue;
 }
 </style>
