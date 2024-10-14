@@ -143,16 +143,18 @@ saveToStorage(){
 },
 watch: {
 produitsInPanier: {
+  deep:true,
+            handler(){
+                localStorage.setItem("produitsInPanier", JSON.stringify(this.produitsInPanier))
+            }
+ },
+ total: {
 handler() {
-  this.saveToStorage();
+  localStorage.setItem("total", JSON.stringify(this.total));
 },
 },
-total: {
-handler() {
-  this.saveToStorage();
-},
-},
-},
+}
+
 // mounted(){
 //     if(localStorage.getItem('produitsInPanier')) this.produitsInPanier = JSON.parse(localStorage.getItem('produitsInPanier');
 
