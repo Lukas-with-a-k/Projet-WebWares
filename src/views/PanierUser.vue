@@ -6,7 +6,7 @@
       <tbody>
 
   <tr class="produit" v-for="(produit, index) in produitsInPanier" :key="index">
-     <td> <img  :src=" produit.image " alt=""></td>
+     <td> <img  :src="require(`@/assets/${produit.image}`)"></td>
       <td>{{ produit.titre }}</td>
       <td>{{ produit.description }}</td>
       <td> <p>{{ produit.prix }}</p></td>
@@ -29,7 +29,7 @@
       Total : {{ panierTotal() }}
   </div>
   <div>
-      <ButtonUser label="Passer au command" @click="passerAuCommand()" color="green"/>
+      <ButtonComponent label="Passer au command" @click="passerAuCommand()" color="green"/>
   </div>
 </div>
 </div>
@@ -39,16 +39,17 @@
 // localStorage.clear();
 import ButtonComponent from '@/components/ButtonComponent.vue';
 
+
 export default {
   components:{
-      ButtonComponent,
+      ButtonComponent
   },
 data(){
 return {
 produitsInPanier: [
 {
 id: 1,
-image: 'mobilier-5.jpg',
+image: "mobilier-5.jpg",
 titre: 'Table à manger en bois',
 description: 'Table à manger en bois massif avec finition élégante.',
 prix: 299.99,
