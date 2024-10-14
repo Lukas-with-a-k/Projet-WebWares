@@ -3,7 +3,7 @@
     <nav class="navbar">
       <div class="logo">
 
-        <router-link to="/">WebWares</router-link>
+        <router-link to="/"><img src="@/assets/webwares.png" alt="logo"></router-link>
       </div>
       <ul class="nav-links">
         <li>
