@@ -26,6 +26,12 @@ const routes = [
   component: () => import("../views/PanierUser.vue"),
 
 },
+{
+  path: "/UserCommands",
+  name: "commands",
+  component: () => import("../views/CommandsUser.vue"),
+
+},
 ];
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),

@@ -8,7 +8,6 @@
   <tr class="produit" v-for="(produit, index) in produitsInPanier" :key="index">
      <td> <img  :src="require(`@/assets/${produit.image}`)"></td>
       <td>{{ produit.titre }}</td>
-      <td>{{ produit.description }}</td>
       <td> <p>{{ produit.prix }}</p></td>
      
   
@@ -18,7 +17,7 @@
           <span> {{ produit.count }} </span>
           <button @click="increase(produit)"> + </button>
       </td>
-     <td> <ButtonComponent label="Supprimer" @click="supprimeProduit(produit)" color="red"/></td>
+      <td> <ButtonComponent label="Supprimer" @click="supprimeProduit(produit)" color="red"/></td>
       <td>Total Ligne : {{ subTotal(produit) }}</td>
   </tr>
 </tbody>
@@ -88,7 +87,7 @@ count: 20,
 categorieId: 4
 },
 ],
-total: ""
+total: 0
 }
 
 },
@@ -118,12 +117,15 @@ subTotal(item) {
    return (item.prix * item.count).toFixed(2);
       },
 panierTotal(){
-  let total =  this.produitsInPanier.reduce((acc, product) =>{
+  return this.produitsInPanier.reduce((acc, product) =>{
       
          return acc + parseFloat(this.subTotal(product), 0)
   
   }, 0).toFixed(2);
-  return total
+
+},
+addTotal(){
+
 },
 
 supprimeProduit(ind){
@@ -138,30 +140,35 @@ supprimeProduit(ind){
 saveToStorage(){
       localStorage.setItem("produitsInPanier", JSON.stringify(this.produitsInPanier));
       localStorage.setItem("total", JSON.stringify(this.total));
-      
-      
   },
+updateTotal() {
+      this.total = this.panierTotal();
+      this.saveToStorage();
+    },
+    chekPanier(){
+      if (this.produitsInPanier.length <= 0){
+        alert("Votre panier est vide") 
+      }
+    }
 },
 watch: {
-produitsInPanier: {
-  deep:true,
-            handler(){
-                localStorage.setItem("produitsInPanier", JSON.stringify(this.produitsInPanier))
-            }
- },
- total: {
-handler() {
-  localStorage.setItem("total", JSON.stringify(this.total));
-},
-},
-}
-
+    produitsInPanier: {
+      deep: true,
+      handler() {
+        this.updateTotal();
+      }
+    }
+  },
+created(){
+       this.total = localStorage.getItem("total")?JSON.parse(localStorage.getItem("total")):this.panierTotal()
+   },
 // mounted(){
-//     if(localStorage.getItem('produitsInPanier')) this.produitsInPanier = JSON.parse(localStorage.getItem('produitsInPanier');
+//     if(localStorage.getItem('produitsInPanier')) {this.produitsInPanier = JSON.parse(localStorage.getItem('produitsInPanier'))
+//       }else {
+//     alert("Votre panier est vide")
+//     }
 
-// //         // récupérer les paramètre passé depuis le composant userList
-// //         let userId = this.$route.params.id;
-// //         this.products = JSON.parse(localStorage.getItem(`user_${userId}`));
+
 
 //     }
   
@@ -183,7 +190,7 @@ gap: 15px;
 }
 .produit img{
 
-height: 100px;
+width: 100px;
 }
 span{
 margin: 0 7px;
