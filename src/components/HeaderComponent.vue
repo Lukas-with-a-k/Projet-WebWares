@@ -35,7 +35,7 @@
           <button class="dropbtn" @click="toggleDropdown"><img src="@\assets\profil.png" alt="user"
               class="icon"></button>
           <ul class="dropdown-content" v-if="isOpen">
-            <li>Bienvenue[Raison sociale]</li>
+            <li>Bienvenue {{ userId }}</li>
             <li class="logout-btn" v-if="isLoggedIn" @click="logout">Déconnexion</li>
           </ul>
         </div>
@@ -52,7 +52,7 @@
 <script>
 
 export default {
-  name: "HeaderComponent",
+  name: "HeaderComponent", 
   props: {
     isLoggedIn: {
       type: Boolean,
@@ -63,13 +63,17 @@ export default {
   data() {
     return {
       isOpen: false,
-    };
+      userId: "",
+    }; 
   },
   
   methods: {
    
     logout() {
       this.$emit("logout");
+      this.isOpen = false;
+      localStorage.removeItem("userId");
+      localStorage.removeItem("userType");
     },
     
     // fonction qui permet d'afficher le menu déroulant
@@ -77,6 +81,14 @@ export default {
       this.isOpen = !this.isOpen;
     },
   },
+  created() {
+    const storedUserId = localStorage.getItem("userId");
+    if (storedUserId) {
+      this.userId = storedUserId;
+  }
+
+  }
+
 };
 
 </script>
@@ -85,12 +97,14 @@ export default {
 .header {
   background-color: #748284;
   padding: 0px;
+  font-size: 24px;
 }
 
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  
 }
 
 .logo a {
@@ -123,6 +137,7 @@ export default {
   cursor: pointer;
   padding: 10px;
   margin-left: 10px;
+  font-size: 15px;
 }
 
 .auth-buttons a:hover,
@@ -155,6 +170,7 @@ export default {
   padding: 0;
   width: 150px;
   display: none;
+  font-size: 16px;
 }
 
 .dropdown-content li {
@@ -176,7 +192,7 @@ export default {
 .cart-btn {
   display: inline-flex;
    background-color: #3498db;
-  color: white;
+  color: rgb(255, 255, 255);
   margin: 10px;
   padding: 10px;
   border: none;
@@ -196,8 +212,8 @@ export default {
   border-radius: 50%;
   object-fit: cover;
   cursor: pointer;
-  background-color: #ffffff00;
-
+  
+  
 }
 
 .icon-panier {
@@ -205,7 +221,7 @@ export default {
   height: 40px;
   border-radius: 0%;
   cursor: pointer;
-  background-color: #ffffff00;
+
 }
 
 </style>
