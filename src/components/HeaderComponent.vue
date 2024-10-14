@@ -3,7 +3,7 @@
     <nav class="navbar">
       <div class="logo">
 
-        <router-link to="/"><img src="@/assets/webwares.png" alt="logo"></router-link>
+        <router-link to="/"><img src="@/assets/webwares.png" alt="logo" style="width: 150px ;height: 120px;"></router-link>
       </div>
       <ul class="nav-links">
         <li>
@@ -41,7 +41,7 @@
         </div>
 
         <!-- le panier qui s'affiche quand l'utilisateur est connecté -->
-        <router-link to="/panier" class="cart-btn" v-if="isLoggedIn"><img src="@\assets\panier.png" alt="panier"
+        <router-link to="/PanierUser" class="cart-btn" v-if="isLoggedIn"><img src="@\assets\panier.png" alt="panier"
             class="icon"></router-link>
 
       </div>
@@ -84,7 +84,7 @@ export default {
 <style scoped>
 .header {
   background-color: #748284;
-  padding: 20px;
+  padding: 0px;
 }
 
 .navbar {
