@@ -1,7 +1,7 @@
 <template>
   <div class="login">
     <h3>Connexion</h3>
-    <input id="username" type="text" placeholder="Nom d'utilisateur" />
+    <input id="username" type="text" placeholder="Adresse e-mail" />
     <br />
     <input
       class="pw"
@@ -93,16 +93,16 @@ div.login {
   font-family: sans-serif;
   padding-top: 10px;
   background-color: #e6edeb;
-  width: 40%;
+  width: 60%;
   height: auto;
   box-shadow: 0px 0px 6px 2px #3f4666;
 }
 
 input {
   padding-left: 10px;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  width: 80%;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  width: 60%;
   height: 40px;
   font-size: 18px;
   border-radius: 15px;
@@ -126,9 +126,9 @@ input.pw {
 }
 
 button {
-  margin-top: 10px;
+  margin-top: 20px;
   margin-bottom: 50px;
-  width: 82%;
+  width: 62%;
   height: 40px;
   font-size: 18px;
   border-radius: 15px;
