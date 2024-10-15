@@ -1,6 +1,5 @@
-import LandingPage from '@/views/LandingPage.vue'
-import { createRouter, createWebHistory } from 'vue-router'
-
+import LandingPage from '@/views/LandingPage.vue';
+import { createRouter, createWebHistory } from 'vue-router';
 
 
 const routes = [
@@ -32,6 +31,17 @@ const routes = [
   component: () => import("../views/CommandsUser.vue"),
 
 },
+{
+  // ici on récupère l'id de la catégorie dans l'url
+  path: '/category/:id',
+  name: 'ProductCategory',
+  component: () => import("../components/ProductCategory.vue"),
+},
+{
+  path: '/contact'
+  , name: 'ContactPage'
+  , component: () => import("../components/ContactPage.vue")
+}
 ];
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),

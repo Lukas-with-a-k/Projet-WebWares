@@ -140,6 +140,7 @@ body {
   margin: 0;
   padding: 0;
   background-color: #E6EDEB;
+  box-sizing: border-box;
   
 }
 

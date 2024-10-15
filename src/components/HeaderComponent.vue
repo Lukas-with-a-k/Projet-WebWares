@@ -6,29 +6,19 @@
         <router-link to="/"><img src="@/assets/webwares.png" alt="logo" style="width: 200px ;height: 160px;"></router-link>
       </div>
       <ul class="nav-links">
+        <router-link to="/">Accueil</router-link>
         <li>
-          <router-link to="/">Accueil</router-link>
+          <router-link to="/ProductList">Tous les produits</router-link>
         </li>
-        <li>
-          <router-link to="/deco">Déco</router-link>
-        </li>
-        <li>
-          <router-link to="/luminaires">Luminaires</router-link>
-        </li>
-        <li>
-          <router-link to="/mobilier">Mobilier</router-link>
-        </li>
-        <li>
-          <router-link to="/tapis">Tapis</router-link>
-        </li>
-        <li>
-          <router-link to="/ProductList">Liste des produits</router-link>
+         <!-- Affichage dynamique des catégories -->
+         <li v-for="category in categories" :key="category.id">
+          <router-link :to="`/category/${category.id}`">{{ category.name }}</router-link>
         </li>
       </ul>
       <div class="auth-buttons">
         <!-- Bouton Connexion qui ouvre le formulaire -->
           <button v-if="!isLoggedIn" @click="$emit('toggleLogin')">Connexion</button>
-          <button @click="$emit('toggleSignup')" v-if="!isLoggedIn">S'inscrire</button>        
+          <button v-if="!isLoggedIn" @click="$emit('toggleSignup')">S'inscrire</button>        
 
         <!-- Menu déroulant qui s'affiche quand l'utilisateur est connecté -->
         <div class="dropdown" v-if="isLoggedIn">
@@ -58,12 +48,17 @@ export default {
       type: Boolean,
       userType: String,
     },
-
   },
   data() {
     return {
       isOpen: false,
       userId: "",
+      categories: [
+        { id: 1, name: 'Mobilier' },
+        { id: 2, name: 'Luminaires' },
+        { id: 3, name: 'Tapis' },
+        { id: 4, name: 'Déco'  },
+      ],
     }; 
   },
   
@@ -87,7 +82,15 @@ export default {
       this.userId = storedUserId;
   }
 
-  }
+  },
+  watch: {
+    isLoggedIn() {
+      const storedUserId = localStorage.getItem("userId");
+      if (storedUserId) {
+        this.userId = storedUserId;
+      }
+    },
+  },
 
 };
 
@@ -111,11 +114,15 @@ export default {
   color: #e6edeb;
   font-size: 24px;
   text-decoration: none;
+  margin-left: 10px;
 }
 
 .nav-links {
   list-style: none;
   display: flex;
+  align-items: center;
+  margin: 0;
+  padding: 0;
 }
 
 .nav-links li {
@@ -136,8 +143,9 @@ export default {
   border: none;
   cursor: pointer;
   padding: 10px;
-  margin-left: 10px;
+  margin-right: 20px;
   font-size: 15px;
+  font-weight: bold;
 }
 
 .auth-buttons a:hover,
@@ -149,6 +157,7 @@ export default {
 .dropdown {
   position: relative;
   display: inline-block;
+  margin-right: 10px;
 }
 
 .dropbtn {
@@ -165,6 +174,7 @@ export default {
   background-color: #3f4666;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
   border-radius: 5px;
+  z-index: 1;
   list-style: none;
   margin: 0;
   padding: 0;
@@ -177,6 +187,7 @@ export default {
   padding: 10px;
   cursor: pointer;
   border-radius: 5px;
+  border: 0.2px solid #505152b8;
   color: white;
 }
 
@@ -208,7 +219,8 @@ export default {
 .icon {
   display: flex;
   width: 40px;
-  height: 40px;
+  height: 5
+  40px;
   border-radius: 50%;
   object-fit: cover;
   cursor: pointer;

@@ -6,25 +6,38 @@
             src="@/assets/wewa.mp4" frameborder="0" 
             autoplay 
             loop>
-        </video> 
+        </video>
+        <h1>Voulez-vous en savoir plus?</h1> 
+        <button @click="contact" class="button">Nous contacter</button>
     </div>
 
     </div>
 </template>
 
 <script>
+
 export default {
   name: "LandingPage",
   data() {
     return {
-   
+
     };
   },
-  methods: {
+  components: {
     
   },
+ 
+  methods: {
+    contact() {
+      this.$router.push({ name: "ContactPage" });
+    },
+  },
+
 };
 </script>
+
+
+
 
 
 <style scoped>
@@ -45,12 +58,17 @@ video {
   object-fit: cover;
   object-position: center 30%;
  
+}
 
-  
- 
-
-  
-
+.button {
+  background-color: #3f4666;
+  color: #e6edeb;
+  font-size: 28px;
+  margin: 10px;
+  padding: 15px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
 }
 
 </style>
