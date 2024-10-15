@@ -4,20 +4,8 @@
     <input
       id="name"
       type="text"
-      placeholder="Nom"
+      placeholder="Raison sociale"
       :class="{ 'input-error': invalidFields.name }"
-    />
-    <input
-      id="name2"
-      type="text"
-      placeholder="Prénom"
-      :class="{ 'input-error': invalidFields.name2 }"
-    />
-    <input
-      id="username"
-      type="text"
-      placeholder="Nom d'utilisateur"
-      :class="{ 'input-error': invalidFields.username }"
     />
     <input
       id="siret"
@@ -25,6 +13,19 @@
       placeholder="Numéro de SIRET"
       :class="{ 'input-error': invalidFields.siret }"
       :title="getErrorMessage('siret')"
+    />
+    <input
+      id="username"
+      type="text"
+      placeholder="Adresse e-mail"
+      :class="{ 'input-error': invalidFields.username }"
+    />
+    <input
+      id="phone"
+      type="text"
+      placeholder="Numéro de téléphone"
+      :class="{ 'input-error': invalidFields.phone }"
+      :title="getErrorMessage('phone')"
     />
     <input
       class="pw"
@@ -49,23 +50,17 @@
       :class="{ 'input-error': invalidFields.adress }"
     />
     <input
-      id="postal"
-      type="text"
-      placeholder="Code Postal"
-      :class="{ 'input-error': invalidFields.postal }"
-    />
-    <input
       id="city"
       type="text"
       placeholder="Ville"
       :class="{ 'input-error': invalidFields.city }"
     />
     <input
-      id="phone"
+      class="postal"
+      id="postal"
       type="text"
-      placeholder="Numéro de téléphone"
-      :class="{ 'input-error': invalidFields.phone }"
-      :title="getErrorMessage('phone')"
+      placeholder="Code Postal"
+      :class="{ 'input-error': invalidFields.postal }"
     />
 
     <br />
@@ -119,7 +114,6 @@ export default {
 
       const requiredFields = [
         "name",
-        "name2",
         "username",
         "siret",
         "password",
@@ -156,7 +150,6 @@ export default {
           password: document.getElementById("password").value,
           type: "member",
           name: document.getElementById("name").value,
-          lastname: document.getElementById("name2").value,
           siret: document.getElementById("siret").value,
           adress: document.getElementById("adress").value,
           postal: document.getElementById("postal").value,
@@ -175,16 +168,30 @@ export default {
 
     checkUsername() {
       const username = document.getElementById("username").value;
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       const accounts = JSON.parse(localStorage.getItem("accounts")) || [];
       const usernameExists = accounts.some(
         (account) => account.username === username
       );
 
-      if (usernameExists) {
-        this.errorMessage = "Un compte avec ce nom d'utilisateur existe déjà.";
+      if (!emailRegex.test(username)) {
+        this.errorMessage = "Adresse e-mail invalide.";
         this.invalidFields.username = true;
+        document.getElementById("username").classList.add("input-error");
         return false;
+      } else {
+        document.getElementById("username").classList.remove("input-error");
       }
+
+      if (usernameExists) {
+        this.errorMessage = "Un compte avec cette adresse e-mail existe déjà.";
+        this.invalidFields.username = true;
+        document.getElementById("username").classList.add("input-error");
+        return false;
+      } else {
+        document.getElementById("username").classList.remove("input-error");
+      }
+
       this.invalidFields.username = false;
       return true;
     },
@@ -271,18 +278,18 @@ div.signup {
   font-family: sans-serif;
   padding-top: 10px;
   background-color: #e6edeb;
-  width: 40%;
+  width: 60%;
   height: auto;
   box-shadow: 0px 0px 6px 2px #3f4666;
 }
 
 input {
   padding-left: 10px;
-  margin-top: 10px;
-  margin-left: 5px;
-  margin-right: 5px;
-  margin-bottom: 10px;
-  width: 38%;
+  margin-top: 20px;
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-bottom: 20px;
+  width: 35%;
   height: 40px;
   font-size: 18px;
   border-radius: 15px;
@@ -305,14 +312,26 @@ input.pw {
   -webkit-text-security: disc;
 }
 
+input#postal {
+  width: 15%;
+}
+
+input#city {
+  width: 26%;
+}
+
+input#adress {
+  width: 26%;
+}
+
 .input-error {
   border-color: red;
 }
 
 button {
-  margin-top: 10px;
+  margin-top: 20px;
   margin-bottom: 50px;
-  width: 82%;
+  width: 75%;
   height: 40px;
   font-size: 18px;
   border-radius: 15px;

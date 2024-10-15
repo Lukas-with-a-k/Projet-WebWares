@@ -48,10 +48,10 @@ export default {
     defaultAccounts() {
       return [
         {
-          username: "paulo",
+          username: "paulo@gmail.com",
           password: "paulino27",
           type: "member",
-          name: "paul",
+          name: "Paulo industries",
           lastname: "kayou",
           siret: "624455987",
           adress: "19 rue poulet",
@@ -60,11 +60,10 @@ export default {
           phone: "0633154875",
         },
         {
-          username: "admin",
+          username: "admin@gmail.com",
           password: "admin1234",
           type: "admin",
-          name: "admin",
-          lastname: "user",
+          name: "Societe de l'admin",
           siret: "123456789",
           adress: "1 rue de l'admin",
           postal: "28000",
