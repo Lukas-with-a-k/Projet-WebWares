@@ -24,46 +24,66 @@
   </script>
   
   <style scoped>
-  .footer {
-    background-color: #748284;
-    color: #e6edeb;
-    padding: 10px 0;
-    text-align: center;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
+ .footer {
+  background-color: #748284;
+  color: #e6edeb;
+  padding: 20px 0;
+  text-align: center;
+  width: 100%;
+  position: fixed;
+  bottom: 0;
 }
-  
+
+.footer p {
+  margin: 5px 0;
+}
+
+.footer a {
+  color: #e6edeb;
+  text-decoration: none;
+}
+
+.footer a:hover {
+  text-decoration: underline;
+}
+
+.social {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.social a {
+  margin: 0 10px;
+  text-decoration: none;
+}
+
+.social img {
+  width: 30px;
+  height: 30px;
+  filter: invert(90%);
+  -webkit-filter: invert(90%);
+}
+
+@media (max-width: 768px) {
+  .social img {
+    width: 25px;
+    height: 25px;
+  }
+}
+
+@media (max-width: 480px) {
   .footer p {
-    margin: 0;
-    position: relative;
-    bottom: 20px;
+    font-size: 14px;
   }
-  
-  .footer a {
-    color: #3f4666;
-    text-decoration: none;
+
+  .social img {
+    width: 20px;
+    height: 20px;
   }
-  
-  .footer a:hover {
-    text-decoration: underline;
-  }
-  
-  .social {
-    display: flex;
-    justify-content: start;
-    align-items: center;
-   position: relative;
-    left: 20px;
-    top: 20px;
-  }
-  
-  .social a {
-    filter: invert(90%);
-    -webkit-filter: invert(90%);
-    margin: 0 10px;
-    text-decoration: none;
-  }
+}
+
   
   
   </style>

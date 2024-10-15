@@ -2,21 +2,21 @@
   <HeaderComponent :isLoggedIn="isLoggedIn" @toggleLogin="toggleLogin" @toggleSignup="toggleSignup" @logout="logout" />
   <nav>
     <LoginComp
-      :accounts="accounts"
-      v-if="showLogin"
-      @toggleSignup="toggleSignup"
-      @closeForms="closeForms"
-       @loginSuccess="loginSuccess"
+    :accounts="accounts"
+    v-if="showLogin"
+    @toggleSignup="toggleSignup"
+    @closeForms="closeForms"
+    @loginSuccess="loginSuccess"
     />
     <SignupComp
-      v-if="showSignup"
-      @toggleLogin="toggleLogin"
-      @accountCreated="accountCreated"
+    v-if="showSignup"
+    @toggleLogin="toggleLogin"
+    @accountCreated="accountCreated"
     />
     <div
-      v-if="showLogin || showSignup"
-      class="dark-overlay"
-      @click="closeForms"
+    v-if="showLogin || showSignup"
+    class="dark-overlay"
+    @click="closeForms"
     ></div>
   </nav>
   <router-view />
@@ -27,8 +27,6 @@ import HeaderComponent from './components/HeaderComponent.vue';
 import FooterComponent from './components/FooterComponent.vue';
 import LoginComp from "./components/LoginComp.vue";
 import SignupComp from "./components/SignupComp.vue";
-
-
 export default {
   name: 'App',
   components: { 
@@ -36,7 +34,6 @@ export default {
     FooterComponent,
     LoginComp,
     SignupComp,
-   
   },
   data() {
     return {
@@ -135,6 +132,10 @@ export default {
 </script>
 
 <style>
+html {
+  overflow-y: scroll;
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -158,7 +159,7 @@ nav a {
 }
 
 nav a.router-link-exact-active {
-  color: #42b983;
+  color: #2c3e50;
 }
 
 .dark-overlay {
