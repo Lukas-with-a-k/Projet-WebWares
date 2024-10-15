@@ -170,4 +170,5 @@ nav a.router-link-exact-active {
   background-color: rgba(0, 0, 0, 0.7);
   z-index: 99;
 }
+
 </style>

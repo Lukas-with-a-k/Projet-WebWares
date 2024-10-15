@@ -93,10 +93,10 @@ export default {
   },
 
 };
-
 </script>
+<style>
 
-<style scoped>
+
 .header {
   background-color: #748284;
   padding: 0px;
@@ -107,14 +107,7 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  
-}
-
-.logo a {
-  color: #e6edeb;
-  font-size: 24px;
-  text-decoration: none;
-  margin-left: 10px;
+  padding: 0 30px; 
 }
 
 .nav-links {
@@ -153,22 +146,6 @@ export default {
   background-color: #4280b8;
 }
 
-
-.dropdown {
-  position: relative;
-  display: inline-block;
-  margin-right: 10px;
-}
-
-.dropbtn {
-  background-color: #3f4666;
-  color: white;
-  padding: 10px;
-  border: none;
-  cursor: pointer;
-  border-radius: 5px;
-}
-
 .dropdown-content {
   position: absolute;
   background-color: #3f4666;
@@ -179,7 +156,6 @@ export default {
   margin: 0;
   padding: 0;
   width: 150px;
-  display: none;
   font-size: 16px;
 }
 
@@ -187,7 +163,6 @@ export default {
   padding: 10px;
   cursor: pointer;
   border-radius: 5px;
-  border: 0.2px solid #505152b8;
   color: white;
 }
 
@@ -195,45 +170,104 @@ export default {
   background-color: #4280b8;
 }
 
-.dropdown:hover .dropdown-content {
-  display: block;
-}
-
-
 .cart-btn {
   display: inline-flex;
-   background-color: #3498db;
+  background-color: #3498db;
   color: rgb(255, 255, 255);
-  margin: 10px;
-  padding: 10px;
   border: none;
   cursor: pointer;
   border-radius: 5px;
+  margin-right: 10px;
 }
-
-.cart-btn:hover {
-  background-color: #4280b8;
-}
-
 
 .icon {
-  display: flex;
   width: 40px;
-  height: 5
-  40px;
+  height: 40px;
   border-radius: 50%;
   object-fit: cover;
   cursor: pointer;
-  
-  
+  filter: invert(90%);
 }
 
 .icon-panier {
   width: 40px;
   height: 40px;
-  border-radius: 0%;
+  object-fit: cover;
   cursor: pointer;
-
+  filter: invert(90%);
 }
 
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .nav-links {
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+  }
+
+  .nav-links li {
+    margin-left: 0;
+    margin-bottom: 10px;
+  }
+
+  .auth-buttons {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  .auth-buttons a,
+  .auth-buttons button {
+    width: 100%;
+    text-align: center;
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar {
+    padding: 10px;
+  }
+
+  .logo img {
+    width: 150px;
+    height: auto;
+  }
+
+  .auth-buttons {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .auth-buttons a,
+  .auth-buttons button {
+    padding: 8px;
+    font-size: 14px;
+  }
+
+  .nav-links a {
+    font-size: 16px;
+  }
+
+  .icon,
+  .icon-panier {
+    width: 30px;
+    height: 30px;
+  }
+  /* Couleur du lien actif */
+.nav-links .router-link-active {
+  color: rgb(209, 10, 10) !important;
+}
+
+/* Couleur du lien actif au survol */
+.router-link-active:hover {
+  color: rgb(161, 169, 50) !important;
+}
+}
 </style>
