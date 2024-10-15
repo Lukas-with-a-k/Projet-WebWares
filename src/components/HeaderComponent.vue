@@ -260,14 +260,6 @@ export default {
     width: 30px;
     height: 30px;
   }
-  /* Couleur du lien actif */
-.nav-links .router-link-active {
-  color: rgb(209, 10, 10) !important;
-}
-
-/* Couleur du lien actif au survol */
-.router-link-active:hover {
-  color: rgb(161, 169, 50) !important;
-}
+ 
 }
 </style>
