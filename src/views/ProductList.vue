@@ -1,33 +1,17 @@
 <template>
-    <h1>Product List</h1>
-    <div
-      v-for="(prod, index) in produits"
-      :key="index"
-      @click="toggleSelection(prod)"
-      :class="[{ selected: prod.isSelected }, 'product']"
-    >
-      <div class="produits" style="cursor: pointer">
-        <img  :src="require(`@/assets/${prod.image}`)">
-      </div>
-      <div class="description">
-        <span class="name">{{ prod.titre }}</span>
-        <span class="price">{{ prod.prix }}</span>
-        <span class="minimum quantity">{{ prod.moq }}</span>
-        <div class="quantity-area" v-if="prod.isSelected">
-          <!-- <button
-            @click.stop="decrement(prod)"
-            v-bind:disabled="isDisabled(prod)"
-          >
-            - -->
-          <!-- </button> --> 
-        <span class="quantity">{{ prod.moq }}</span>
-          <!-- <button @click.stop="increment(prod)">+</button> -->
-        </div>
-      </div>
-    </div>
-  </template>
+<div class="bkg">
+  <h1>Product List</h1>
+  <div class="card-container">
+  <div class="card" v-for="(prod, index) in produits" :key="index">
+      <img  :src="require(`@/assets/${prod.image}`)" :alt="prod.titre" />
+      <h4>{{ prod.titre }}</h4>
+      <p v-if="isConnected">{{ prod.prix }} €</p>
+  </div>
+  </div>
+</div>  
+</template>
   
-  <script>
+<script>
   export default {
     data() {
       return {
@@ -218,25 +202,107 @@
         categorieId: 1,
         },
         ],
-      }
+        isConnected: false,
+      };
     },
-    methods: {
-      toggleSelection(item) {
-        item.isSelected = !item.isSelected;
-        item.compteur = 1;
-      },
+  methods: {
+    toggleSelection(item) {
+      item.isSelected = !item.isSelected;
+      item.compteur = 1;
     },
-    computed: {
-      filterProduct() {
-        return this.products.filter((prod) => prod.isSelected);
-      },
-      isDisabled() {
-        return (prod) => prod.compteur <= 1;
-      },
-    }
-  };
-  </script>
+  },
+  computed: {
+    filterProduct() {
+      return this.products.filter((prod) => prod.isSelected);
+    },
+    isDisabled() {
+      return (prod) => prod.compteur <= 1;
+    },
+  }
+};
+</script>
 
-  <style lang="scss" scoped>
+<style scoped>
+.bkg {
+  background: linear-gradient( rgba(230,237,235,1) 0%, rgba(63,70,102,1) 60%, rgba(116,130,132,1) 84%);
+}
 
-  </style>
+h1 {
+  color: #3F4666;
+  padding: 50px;
+}
+
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+.card {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  color: whitesmoke;
+  border: none;
+  padding-bottom: 70px;
+  text-align: center;
+  width: 500px;
+}
+
+.card img {  
+  height: 500px;
+  width: 500px;
+  margin-bottom: 15px;
+  object-fit: cover;
+}
+
+.card h4 {
+  font-size: 1.2em;
+  margin: 10px 0;
+}
+
+.card p {
+  display: none;  
+  color: whitesmoke;
+  font-size: 1em;
+}
+/* Media query 945px */
+@media (max-width: 945px) {
+    .bkg {
+    background-image: none;
+  }  
+  .card-container {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .card {
+    background-color: #3F4666;
+    width: auto;
+    margin-bottom: 20px;
+  }
+}
+
+/* Media query 360px */
+@media (max-width: 360px) {
+  .bkg {
+    background-image: none;
+  }  
+  .card-container {
+    flex-direction: column;
+    align-items: center;
+    padding-left: 60%;
+  }
+  .card {
+    background-color: #3F4666;
+    width: auto;
+    padding: 15px;
+  }
+  .card h4 {
+    font-size: 1em;
+  }
+  .card p {
+    font-size: 0.9em;
+  }
+}
+</style>

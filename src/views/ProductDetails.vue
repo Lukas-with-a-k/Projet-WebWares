@@ -1,19 +1,15 @@
 <template>
     <div>
-        <ButtonComponent/>
+
     </div>
 </template>
 
 <script>
-
-import ButtonComponent from '/components/ButtonComponent.vue';
-export default {
-    components: {
-        ButtonComponent
-    },
-}
+    export default {
+        
+    }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 
 </style>
