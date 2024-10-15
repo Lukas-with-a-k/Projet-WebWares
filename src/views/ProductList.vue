@@ -1,11 +1,11 @@
 <template>
 <div class="bkg">
-  <h1>Product List</h1>
+  <h1>Nos Produits</h1>
   <div class="card-container">
   <div class="card" v-for="(prod, index) in produits" :key="index">
       <img  :src="require(`@/assets/${prod.image}`)" :alt="prod.titre" />
       <h4>{{ prod.titre }}</h4>
-      <p v-if="isConnected">{{ prod.prix }} €</p>
+      <p v-if="isMember">{{ prod.prix }} €</p><br><br>
   </div>
   </div>
 </div>  
@@ -13,10 +13,11 @@
   
 <script>
   export default {
+    name: "ProductList", 
     data() {
       return {
         produits: [
-        {
+          {
           id: 1,
           image: "mobilier-5.jpg",
           titre: "Table à manger en bois",
@@ -24,8 +25,8 @@
           prix: 259.99,
           moq: 5,
           categorieId: 1,
-        },
-        {
+          },
+          {
           id: 2,
           image: "luminaire-1.jpg",
           titre: "Lampe moderne",
@@ -33,8 +34,8 @@
           prix: 129.99,
           moq: 10,
           categorieId: 2,
-        },
-        {
+          },
+          {
           id: 3,
           image: "tapis-2.jpg",
           titre: "Tapis en laine",
@@ -42,8 +43,8 @@
           prix: 89.99,
           moq: 20,
           categorieId: 3,
-        },
-        {
+          },
+          {
           id: 4,
           image: "deco-3.jpg",
           titre: "Vase éthnique en argile",
@@ -51,28 +52,26 @@
           prix: 49.99,
           moq: 20,
           categorieId: 4,
-        },
-        {
+          },
+          {
           id: 5,
           image: "luminaire-3.jpg",
           titre: "Suspension en jute",
-          description:
-            "Suspension esthétique avec abat-jour en jute finition naturelle.",
+          description: "Suspension esthétique avec abat-jour en jute finition naturelle.",
           prix: 69.99,
           moq: 20,
           categorieId: 2,
-        },
-        {
+          },
+          {
           id: 6,
           image: "tapis-5.jpg",
           titre: "Tapis poils longs",
-          description:
-            "Tapis poils longs tellement doux et durable. Tissé à la main, 100% polyester recylcé!",
+          description: "Tapis poils longs tellement doux et durable. Tissé à la main, 100% polyester recylcé!",
           prix: 129.99,
           moq: 4,
           categorieId: 3,
-        },
-        {
+          },
+          {
           id: 7,
           image: "deco-1.jpg",
           titre: " Vase en bois",
@@ -80,38 +79,35 @@
           prix: 29.99,
           moq: 20,
           categorieId: 4,
-        },
-        {
+          },
+          {
           id: 8,
           image: "mobilier-3.jpg",
           titre: "Canapé en cuir 3 places",
-          description:
-            "Canapé en cuir à la teinte riche et chaleureuse. Silhouette minimaliste et design indémodable.",
+          description: "Canapé en cuir à la teinte riche et chaleureuse. Silhouette minimaliste et design indémodable.",
           prix: 599.99,
           moq: 2,
           categorieId: 1,
-        },
-        {
+          },
+          {
           id: 9,
           image: "tapis-3.jpg",
           titre: "Tapis oriental tissé",
-          description:
-            "Tapis motif ethnique type Poils ras. Antistatique, antiacarien et il ne blanchit pas avec le temps.",
+          description: "Tapis motif ethnique type Poils ras. Antistatique, antiacarien et il ne blanchit pas avec le temps.",
           prix: 119.99,
           moq: 4,
           categorieId: 3,
-        },
-        {
+          },
+          {
           id: 10,
           image: "luminaire-5.jpg",
           titre: "Applique en frêne",
-          description:
-            "Applique murale en bois. Design durable et éco-responsable.",
+          description: "Applique murale en bois. Design durable et éco-responsable.",
           prix: 59.99,
           moq: 20,
           categorieId: 2,
-        },
-        {
+          },
+          {
           id: 11,
           image: "deco-4.jpg",
           titre: "Vase ceramique",
@@ -119,8 +115,8 @@
           prix: 79.99,
           moq: 20,
           categorieId: 4,
-        },
-        {
+          },
+          {
           id: 12,
           image: "mobilier-1.jpg",
           titre: "Table de chevet",
@@ -128,17 +124,17 @@
           prix: 59.99,
           moq: 20,
           categorieId: 1,
-        },
-        {
+          },
+          {
           id: 13,
           image: "luminaire-4.jpg",
           titre: "Suspension forme dôme",
-        description: "Suspension forme dôme en métal noir. Cette suspension opte pour un style résolument industriel et vintage",
-        prix: 39.99,
-        moq: 20,
+          description: "Suspension forme dôme en métal noir. Cette suspension opte pour un style résolument industriel et vintage",
+          prix: 39.99,
+          moq: 20,
           categorieId: 2,
-        },
-        {
+          },
+          {
           id: 14,
           image: "tapis-1.jpg",
           titre: "Tapis imitation fourrure",
@@ -146,17 +142,17 @@
           prix: 109.99,
           moq: 15,
           categorieId: 3,
-        },
-        {
+          },
+          {
           id: 15,
           image: "mobilier-4.jpg",
           titre: "Canapé convertible express 3 places en velours",
-          description: " Avec son revêtement en velours composé d'un support 91% polyester - 9% coton et d'une surface 100% polyester à la finition passepoilée, il joue la carte de l'élégance.",
+          description: "Avec son revêtement en velours composé d'un support 91% polyester - 9% coton et d'une surface 100% polyester à la finition passepoilée, il joue la carte de l'élégance.",
           prix: 349.99,
           moq: 5,
           categorieId: 1,
-        },
-        {
+          },
+          {
           id: 16,
           image: "deco-2.jpg",
           titre: "Vase céramique bleu",
@@ -164,8 +160,8 @@
           prix: 49.99,
           moq: 20,
           categorieId: 4,
-        },
-        {
+          },
+          {
           id: 17,
           image: "tapis-4.jpg",
           titre: "Tapis crocheté téte d'éléphant",
@@ -173,8 +169,8 @@
           prix: 89.99,
           moq: 20,
           categorieId: 3,
-        },
-        {
+          },
+          {
           id: 18,
           image: "luminaire-2.jpg",
           titre: "Suspension en béton clair et bois",
@@ -182,17 +178,17 @@
           prix: 49.99,
           moq: 20,
           categorieId: 2,
-        },
-        {
+          },
+          {
           id: 19,
           image: "deco-5.jpg",
           titre: "Vase en céramique raku, turquoise",
-        description: "Vase en céramique raku, couleur turquoise. Ce vase prendra naturellement sa place dans votre intérieur.",
-        prix: 69.99,
-        moq: 20,
+          description: "Vase en céramique raku, couleur turquoise. Ce vase prendra naturellement sa place dans votre intérieur.",
+          prix: 69.99,
+          moq: 20,
           categorieId: 4,
-        },
-        {
+          },
+          {
           id: 20,
           image: "mobilier-2.jpg",
           titre: "Etagère murale en pin",
@@ -200,16 +196,22 @@
           prix: 49.99,
           moq: 20,
           categorieId: 1,
-        },
+          },
         ],
-        isConnected: false,
+        isMember: false,
       };
     },
+  created() {
+    this.checkMembershipStatus();
+  },
   methods: {
-    toggleSelection(item) {
-      item.isSelected = !item.isSelected;
-      item.compteur = 1;
+    goToDetails(productId) {
+      this.$router.push({ name: `@/views/ProductDetails/${this.produits.id}`, params: { id: productId }});
     },
+    checkMembershipStatus() {
+      const userType = localStorage.getItem('userType');
+      this.isMember = userType === 'member';
+    }  
   },
   computed: {
     filterProduct() {
@@ -218,7 +220,7 @@
     isDisabled() {
       return (prod) => prod.compteur <= 1;
     },
-  }
+  },
 };
 </script>
 
@@ -242,7 +244,7 @@ h1 {
   display: flex;
   justify-content: center;
   flex-direction: column;
-  color: whitesmoke;
+  color: #e6edeb;
   border: none;
   padding-bottom: 70px;
   text-align: center;
@@ -262,8 +264,8 @@ h1 {
 }
 
 .card p {
-  display: none;  
-  color: whitesmoke;
+  /*display: none; */  
+  color: #e6edeb;
   font-size: 1em;
 }
 /* Media query 945px */
