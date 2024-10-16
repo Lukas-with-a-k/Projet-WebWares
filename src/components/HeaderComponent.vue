@@ -173,9 +173,26 @@ export default {
   color: #4280b8;
 }
 
-.cart-btn {
-  margin-right: 20px;
+.dropbtn {
   background-color: #3f4666;
+  color: #e6edeb;
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.cart-btn {
+  display: flex;
+  margin: 20px;
+  padding: 5px;
+  background-color: #3f4666;
+  width: 50px;
+  height: 50px;
+  border-radius: 5px;
+  justify-content: center;
+  align-items: center;
 }
 
 

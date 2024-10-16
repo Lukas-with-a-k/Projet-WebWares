@@ -16,7 +16,7 @@
           <button @click="increase(produit)"> + </button>
       </td>
       <td>Total TH : {{ subTotal(produit) }}</td>
-      <td> <ButtonComponent label="Supprimer" @click="supprimeProduit(produit)" color="darkgray" hcolor="gray"/></td>
+      <td> <ButtonComponent label="Supprimer" @click="supprimeProduit(index)" color="darkgray" hcolor="gray"/></td>
    </tr>
 </tbody>
 </table>
