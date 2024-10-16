@@ -3,12 +3,12 @@
   <h1>Nos Produits</h1>
   <div class="card-container">
     <div class="card" v-for="(prod, index) in produits" :key="index">
-      <div class="image-container">  
+      <div class="image-container">  //ajouté
         <img :src="require(`@/assets/${prod.image}`)" :alt="prod.titre" />
         <button v-if="isMember" class="add-to-cart" @click="addToCart(prod, prod.moq)">+</button>
-      </div>
+      </div> //ajouté
       <h4>{{ prod.titre }}</h4>
-      <p v-if="isMember">{{ prod.prix }} € | MOQ: {{prod.moq}}</p><br><br>
+      <p v-if="isMember">{{ prod.prix }} € | MOQ: {{prod.moq}}</p><br><br> //moq
     </div>
   </div>
 </div>  
@@ -244,23 +244,41 @@ h1 {
   gap: 20px;
 }
 .card {
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  color: #e6edeb;
-  border: none;
-  padding-bottom: 70px;
-  text-align: center;
-  width: 500px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    color: #e6edeb;
+    border: none;
+    padding-bottom: 70px;
+    text-align: center;
+    width: 500px;
 }
-
+.image-container {
+  position: relative;
+  width: 100%;
+}  
 .card img {  
-  height: 500px;
-  width: 500px;
-  margin-bottom: 15px;
-  object-fit: cover;
+    height: 500px;
+    width: 500px;
+    margin-bottom: 15px;
+    object-fit: cover;
+} 
+.add-to-cart { /*  ajouté add to cart & image container hover*/
+  display: none;
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 10px 20px;
+  background-color: #4280b8;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
 }
-
+.image-container:hover .add-to-cart {
+  display: block;
+}
 .card h4 {
   font-size: 1.2em;
   margin: 10px 0;
