@@ -139,6 +139,10 @@ export default {
   background-color: #748284;
 }
 
+.auth-buttons {
+  display: flex;
+ 
+}
 
 .navbar {
   display: flex;
