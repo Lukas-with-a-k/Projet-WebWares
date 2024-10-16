@@ -1,33 +1,40 @@
 <template>
-    <div>
-        <div class="banner"> 
-            <video  
-            src="@/assets/wewa.mp4" frameborder="0" 
-            autoplay 
-            loop>
-        </video>
-        <div class="action">
-        <h1>Pas encore membre?</h1>
-        <button @click="toggleSignup" class="button">Inscrivez-vous!</button>
-        <h1 >Voulez-vous en savoir plus?</h1> 
-        <button @click="contact" class="button">Nous contacter</button>
+    <div class="bkg">
+      <div class="banner"> 
+        <video  
+        src="@/assets/wewa.mp4" frameborder="0" 
+        autoplay 
+        loop>
+      </video>
     </div>
-    </div>
+    <div class="action">
+    <h1 v-if="!userType">Pas encore membre?</h1>
+    <SignupComp
+    v-if="showSignup"
+    @toggleLogin="toggleLogin"
+    @accountCreated="accountCreated"
+    />
+    <button v-if="!userType" @click="toggleSignup" class="button">Inscrivez-vous!</button>
+    <h1 >Voulez-vous en savoir plus?</h1> 
+    <button @click="contact" class="button">Nous contacter</button>
+</div>
+  </div>
 
-    </div>
 </template>
 
 <script>
+import SignupComp from '@/components/SignupComp.vue';
 
 export default {
   name: "LandingPage",
   data() {
     return {
-
+      showSignup: false,
+      userType: null,
     };
   },
   components: {
-
+  SignupComp,
     
   },
  
@@ -36,12 +43,27 @@ export default {
       this.$router.push({ name: "ContactPage" });
     },
     toggleSignup() {
-      this.$emit("toggleSignup");
-      console.log("toggleSignup");
-      
+      this.showSignup = !this.showSignup;
+    },
+    getUserType() {
+      const userType = localStorage.getItem('userType');
+      if (userType) {
+        this.userType = userType; 
+      }
     }
   },
-
+  mounted() {
+    this.getUserType();  
+  },
+ 
+  watch: {
+    userType(newValue, oldValue) {
+      if (newValue !== oldValue) {
+        console.log('User type changed:', newValue);
+      }
+      
+    }
+  }
 };
 </script>
 
@@ -50,26 +72,22 @@ export default {
 
 
 <style scoped>
-body {
-  margin: 0;
-  box-sizing: border-box;
-}
-.banner {
-  width: 100%;
-  height: 700px;
-  background-color: #3f4666;
-  }
 
 .action {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  position: absolute;
-  top: 77%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  height: 25vh;
+  color: #2a2a2a;
 }
+.bkg {
+    background: linear-gradient( rgba(230,237,235,1) 0%, rgba(63,70,102,1) 60%, rgba(116,130,132,1) 84%);
+  }
+
+.banner {
+  width: 100%;
+  }
 
 video {
   width: 100%;

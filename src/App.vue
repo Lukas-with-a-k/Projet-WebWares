@@ -80,6 +80,8 @@ export default {
       this.isLoggedIn = true;
       this.userType = user.type;  
       localStorage.setItem('userType', user.type);
+      this.$root.$emit('userTypeChanged');
+      window.location.reload();
       this.closeForms();
     },
     checkIfLoggedIn() {
@@ -115,6 +117,8 @@ export default {
       this.isLoggedIn = false;
       this.userType = null;
       localStorage.removeItem("userType");
+      window.location.reload();
+      this.$root.$emit('userTypeChanged'); 
     },
   },
   mounted() {

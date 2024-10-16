@@ -30,7 +30,7 @@
   padding: 20px 0;
   text-align: center;
   width: 100%;
-  position: fixed;
+  position: relative;
   bottom: 0;
 }
 
