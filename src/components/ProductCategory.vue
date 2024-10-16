@@ -22,7 +22,7 @@
   export default {
     data() {
       return {
-        produits: [
+        products: [
           {
           id: 1,
           image: "mobilier-5.jpg",
