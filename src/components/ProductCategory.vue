@@ -6,7 +6,7 @@
         <div v-for="product in filteredProducts" :key="product.id" class="card">
           <img :src="require(`@/assets/${product.image}`)" :alt="product.titre" class="product-image" />
           <h4>{{ product.titre }}</h4>
-          <p v-if="isMember">Moq: {{ product.moq }} | Prix: {{ product.prix }} €</p>  <!-- j'ai rajouté ma method pour cacher cet info quand pas connecté  -->
+          <p v-if="isMember">Moq: {{ product.moq }} | Prix: {{ product.prix }} €</p>
           <router-link :to="`/product-details/${product.id}`">Voir Détails</router-link>
         </div>
       </div>
@@ -71,7 +71,7 @@
           description:
             "Tapis poils longs tellement doux et durable. Tissé à la main, 100% polyester recylcé!",
           prix: 129.99,
-          moq: 10, //attn j'ai changé ce quantité
+          moq: 10,
           categorieId: 3,
         },
         {
@@ -100,7 +100,7 @@
           description:
             "Tapis motif ethnique type Poils ras. Antistatique, antiacarien et il ne blanchit pas avec le temps.",
           prix: 119.99,
-          moq: 10,  //j'ai changé ce quantité pour uniformité
+          moq: 10,
           categorieId: 3,
         },
         {
@@ -204,16 +204,15 @@
           categorieId: 1,
         },
       ],
-        isMember: false, //faut gardé ca pour cacher les prix
+        isMember: false, 
         categoryName: '',
       };
     },
-  created() { //guard pour method "checkMembershipStatus"
+  created() { 
     this.checkMembershipStatus();
   },
     computed: {
       filteredProducts() {
-        // Filtrer les produits par catégorie
         return this.products.filter((product) => product.categorieId === parseInt(this.$route.params.id));
       },
     },
@@ -252,86 +251,105 @@
   </script>
   
   <style scoped>
-  .bkg {
-    background: linear-gradient( rgba(230,237,235,1) 0%, rgba(63,70,102,1) 60%, rgba(116,130,132,1) 84%);
-  }
-  
-  h1 {
-    color: #3F4666;
-    padding: 50px;
-  }
-  
-  .card-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px;
-  }
-  .card {
+.bkg {  /*adapté pour ptit page*/
+  background: linear-gradient( rgba(230,237,235,1) 0%, rgba(63,70,102,1) 40%, rgba(116,130,132,1) 84%);
+}
+
+h1 {
+  color: #3F4666;
+  padding: 50px;
+}
+
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+.card {
     display: flex;
     justify-content: center;
     flex-direction: column;
     color: #e6edeb;
     border: none;
-    padding-bottom: 70px;
+    padding-bottom: 20px; /*changé */
     text-align: center;
     width: 500px;
-  }
-  
-  .card img {  
+}
+.image-container {
+  position: relative;
+  width: 100%;
+}  
+.card img {  
     height: 500px;
     width: 500px;
     margin-bottom: 15px;
     object-fit: cover;
+} 
+.add-to-cart { 
+  display: none;
+  position: absolute;
+  bottom: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 10px 20px;
+  background-color: #4280b8;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.image-container:hover .add-to-cart {
+  display: block;
+}
+.card h4 {
+  font-size: 1.2em;
+  margin: 10px 0;
+}
+
+.card p {
+  /*display: none; */  
+  color: #e6edeb;
+  font-size: 1em;
+}
+/* Media query 945px */
+@media (max-width: 945px) {
+    .bkg {
+    background-image: none;
+  }  
+  .card-container {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
   }
-  
+  .card {
+    background-color: #3F4666;
+    width: auto;
+    margin-bottom: 15px; /*changé */
+  }
+}
+
+/* Media query 360px */
+@media (max-width: 360px) {
+  .bkg {
+    background-image: none;
+  }  
+  .card-container {
+    flex-direction: column;
+    align-items: center;
+    padding-left: 60%;
+  }
+  .card {
+    background-color: #3F4666;
+    width: auto;
+    padding: 15px;
+  }
   .card h4 {
-    font-size: 1.2em;
-    margin: 10px 0;
-  }
-  
-  .card p {  
-    color: #e6edeb;
     font-size: 1em;
   }
-  /* Media query 945px */
-  @media (max-width: 945px) {
-      .bkg {
-      background-image: none;
-    }  
-    .card-container {
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-    }
-    .card {
-      background-color: #3F4666;
-      width: auto;
-      margin-bottom: 20px;
-    }
+  .card p {
+    font-size: 0.9em;
   }
-  
-  /* Media query 360px */
-  @media (max-width: 360px) {
-    .bkg {
-      background-image: none;
-    }  
-    .card-container {
-      flex-direction: column;
-      align-items: center;
-      padding-left: 60%;
-    }
-    .card {
-      background-color: #3F4666;
-      width: auto;
-      padding: 15px;
-    }
-    .card h4 {
-      font-size: 1em;
-    }
-    .card p {
-      font-size: 0.9em;
-    }
-  }
+}
   </style>
   

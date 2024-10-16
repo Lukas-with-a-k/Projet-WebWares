@@ -94,12 +94,12 @@ console.log(id);
     },  
     
     commander(){
-      localStorage.setItem(`user_${this.user.id}`, JSON.stringify(...this.userCommands, this.userCommand));
-      localStorage.removeItem("produitsInPanier")
+      // localStorage.setItem(`user_${this.user.id}`, JSON.stringify(...this.userCommands, this.userCommand));
+      // localStorage.removeItem("produitsInPanier")
       }
  },
  created(){
-  // this.userCommands = localStorage.getItem("userCommands")?JSON.parse(localStorage.getItem("userCommands")):this.userCommand
+   this.userCommands = localStorage.getItem("userCommands")?JSON.parse(localStorage.getItem("userCommands")):this.userCommand
    },
  mounted(){
     
