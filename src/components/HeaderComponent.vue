@@ -217,8 +217,8 @@ export default {
 }
 
 .dropdown {
-  position: relative;
   display: flex;
+  justify-content: center;
   align-items: center;
   padding: 10px;
   margin: 10px;
