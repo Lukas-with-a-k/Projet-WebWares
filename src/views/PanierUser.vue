@@ -5,32 +5,32 @@
   <table>
       <tbody>
 
-  <tr class="produit" v-for="(produit, index) in produitsInPanier" :key="index">
+  <tr v-for="(produit, index) in produitsInPanier" :key="index">
      <td> <img  :src="require(`@/assets/${produit.image}`)"></td>
       <td>{{ produit.titre }}</td>
-      <td> <p>{{ produit.prix }}</p></td>
-     
-  
+      <!-- <td> <p>{{ produit.prix }}</p></td> -->
       <td>
           <span> Quantity : </span>
           <button @click="decrease(produit)"> - </button>
           <span> {{ produit.count }} </span>
           <button @click="increase(produit)"> + </button>
       </td>
-      <td> <ButtonComponent label="Supprimer" @click="supprimeProduit(produit)" color="red"/></td>
-      <td>Total Ligne : {{ subTotal(produit) }}</td>
-  </tr>
+      <td>Total TH : {{ subTotal(produit) }}</td>
+      <td> <ButtonComponent label="Supprimer" @click="supprimeProduit(produit)" color="darkgray" hcolor="gray"/></td>
+   </tr>
 </tbody>
 </table>
 </div>
 <div class="container2">
-  <div>
-      Total : {{ panierTotal() }}
+  <div class="prix">
+   <p> Total HT : {{ htTotal() }}</p>
+    <p>TTC : {{ tva() }}</p>
+   <p> A payer : {{ prixTotal() }} </p>
   </div>
-  <div>
-      <ButtonComponent label="Passer au command" @click="passerAuCommand()" color="green"/>
+    <div class="button">
+      <ButtonComponent label="Passer au command" @click="passerAuCommand()" color="green" hcolor="darkgreen"/>
+    </div>
   </div>
-</div>
 </div>
 </template>
 
@@ -87,20 +87,14 @@ count: 20,
 categorieId: 4
 },
 ],
-total: 0
+userCommands:[],
+prix: {},
 }
 
 },
 
 methods:{
-// counter(produit){
-//  let countmin = produit.moq;
-//  if (this.count){
-//     return this.count
-// }else{
-//     return countmin
-// }
-//   },
+
 decrease(prod){
   if (prod.count > prod.moq){
  return prod.count --;
@@ -116,36 +110,40 @@ increase(prod){
 subTotal(item) {
    return (item.prix * item.count).toFixed(2);
       },
-panierTotal(){
+htTotal(){
   return this.produitsInPanier.reduce((acc, product) =>{
-      
-         return acc + parseFloat(this.subTotal(product), 0)
-  
-  }, 0).toFixed(2);
-
+     return acc + parseFloat(this.subTotal(product), 0)
+    }, 0).toFixed(2);
 },
-addTotal(){
-
+tva() {  
+    let tvaRate = 5.5; 
+    let ht = this.htTotal();
+    return (ht * tvaRate / 100).toFixed(2); 
 },
-
+prixTotal(){
+  let th = parseFloat(this.htTotal());
+  let tva = parseFloat(this.tva());
+return (th +tva).toFixed(2)
+},
 supprimeProduit(ind){
   if(confirm("Etes vous sur devouloir supprimer ce produit ?")){
       this.produitsInPanier.splice(ind, 1);
   }
   },
   passerAuCommand(){
-      this.$router.push({name:'commands'})
-   
-      }, 
+      this.$router.push({name:'commands'});
+         }, 
 saveToStorage(){
       localStorage.setItem("produitsInPanier", JSON.stringify(this.produitsInPanier));
-      localStorage.setItem("total", JSON.stringify(this.total));
+      localStorage.setItem("prix", JSON.stringify(this.prix));
   },
 updateTotal() {
-      this.total = this.panierTotal();
+      this.prix = {ht:this.htTotal(), 
+        tva: this.tva(), 
+        priTotal: this.prixTotal()};
       this.saveToStorage();
     },
-    chekPanier(){
+    checkPanier(){
       if (this.produitsInPanier.length <= 0){
         alert("Votre panier est vide") 
       }
@@ -153,24 +151,30 @@ updateTotal() {
 },
 watch: {
     produitsInPanier: {
-      deep: true,
-      handler() {
-        this.updateTotal();
-      }
+        deep: true,
+        handler() {
+          this.updateTotal();
+    },
+    // prix: {
+    //     deep: true,
+    //     handler() {
+    //         this.updateTotal();
+    //     }
     }
-  },
+},
 created(){
-       this.total = localStorage.getItem("total")?JSON.parse(localStorage.getItem("total")):this.panierTotal()
+       this.prix = localStorage.getItem("prix")?JSON.parse(localStorage.getItem("prix")):this.prix
    },
-// mounted(){
+mounted(){
 //     if(localStorage.getItem('produitsInPanier')) {this.produitsInPanier = JSON.parse(localStorage.getItem('produitsInPanier'))
 //       }else {
 //     alert("Votre panier est vide")
 //     }
-
-
-
-//     }
+this.userId = localStorage.getItem("userId");
+    },
+    computed: {
+      
+    }
   
 }
 </script>
@@ -178,21 +182,35 @@ created(){
 <style scoped>
 .container {
 display: flex;
+justify-content: space-around;
+min-width: 100px;
+flex-wrap: wrap;
 }
-.produit{
-display: flex;
-justify-content: space-between;
-align-items: center;
+.container2{
+/* flex-direction: column; */
+position: sticky;
+top:0;
+margin: 10px;
+/* justify-content: space-around; */
+}
+.prix{
+  flex-direction: column;
+  margin: 5px;
+  justify-content: space-around;
+  border: 1px solid black;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+/* align-items: center;
 /* flex-direction: column; */
 /* width: 50%; */
-margin: 50px auto;
-gap: 15px;
-}
-.produit img{
+/* margin: 50px auto; */
 
-width: 100px;
+tr img{
+height: 50px;
+width: 50px;
 }
 span{
-margin: 0 7px;
+margin: 7px 7px;
 }
 </style>
