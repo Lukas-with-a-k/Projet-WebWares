@@ -8,7 +8,8 @@
     export default {
         props:{
             label: String,
-            color: String
+            color: String,
+            hcolor: String
         }
     }
 </script>
@@ -17,5 +18,9 @@
     button{
         background-color: v-bind(color);
         padding: 7px 20px;
+        cursor: pointer;
+}
+button:hover{
+    background-color: v-bind(hcolor);
 }
 </style>
