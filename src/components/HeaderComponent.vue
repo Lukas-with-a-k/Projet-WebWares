@@ -1,11 +1,46 @@
 <template>
   <header class="header">
-    <nav class="navbar">
+    <nav class="navbar" style="font-size: 26px;">
       <div class="logo">
-
-        <router-link to="/"><img src="@/assets/webwares.png" alt="logo" style="width: 200px ;height: 160px;"></router-link>
+        <router-link to="/"><img src="@/assets/webwares.png" alt="logo"></router-link>
       </div>
-      <ul class="nav-links">
+      <!-- Menu burger responsive -->
+      <div class="container" v-if="isMobile">
+        <ul class="burger" v-if="isMobile">
+          <button class="menubtn" @click="toggleBurger">Menu</button>
+          <ul class="burger-links" v-if="showBurger">
+            <li>
+              <router-link to="/">Accueil</router-link>
+            </li>
+            <li>
+              <router-link to="/ProductList">Tous les produits</router-link>
+            </li>
+            <li v-for="category in categories" :key="category.id">
+              <router-link :to="`/category/${category.id}`">{{ category.name }}</router-link>
+            </li>
+          </ul>
+          <div class="auth-buttons">
+            <!-- Bouton Connexion qui ouvre le formulaire -->
+            <button v-if="!isLoggedIn" @click="$emit('toggleLogin')">Connexion</button>
+            <button v-if="!isLoggedIn" @click="$emit('toggleSignup')">S'inscrire</button>
+
+            <!-- Menu déroulant qui s'affiche quand l'utilisateur est connecté -->
+            <div class="dropdown" v-if="isLoggedIn">
+              <button class="dropbtn" @click="toggleDropdown"><img src="@\assets\profil.png" alt="user"
+                  class="icon"></button>
+              <!-- le panier qui s'affiche quand l'utilisateur est connecté -->
+              <ul class="dropdown-content" v-if="isOpen">
+                <li v-on:click="toggleDropdown">Bienvenue {{ userId }}</li>
+                <li class="logout-btn" v-if="isLoggedIn" @click="logout">Déconnexion</li>
+              </ul>
+              <router-link to="/PanierUser" class="cart-btn" v-if="isLoggedIn"><img src="@\assets\panier.png"
+                  alt="panier" class="icon-panier"></router-link>
+            </div>
+          </div>
+        </ul>
+      </div>
+      <!-- Barre de navigation dynamique -->
+      <ul class="nav-links" v-else>
         <router-link to="/">Accueil</router-link>
         <li>
           <router-link to="/ProductList">Tous les produits</router-link>
@@ -15,25 +50,25 @@
           <router-link :to="`/category/${category.id}`">{{ category.name }}</router-link>
         </li>
       </ul>
-      <div class="auth-buttons">
+      <div class="auth-buttons" v-if="!isMobile">
         <!-- Bouton Connexion qui ouvre le formulaire -->
         <button v-if="!isLoggedIn" @click="$emit('toggleLogin')">Connexion</button>
-        <button v-if="!isLoggedIn" @click="$emit('toggleSignup')">S'inscrire</button>        
-        
+        <button v-if="!isLoggedIn" @click="$emit('toggleSignup')">S'inscrire</button>
+
         <!-- Menu déroulant qui s'affiche quand l'utilisateur est connecté -->
         <div class="dropdown" v-if="isLoggedIn">
           <button class="dropbtn" @click="toggleDropdown"><img src="@\assets\profil.png" alt="user"
-            class="icon"></button>
-            <!-- le panier qui s'affiche quand l'utilisateur est connecté -->
-            <router-link to="/PanierUser" class="cart-btn" v-if="isLoggedIn"><img src="@\assets\panier.png" alt="panier"
-                class="icon-panier"></router-link>
-            <ul class="dropdown-content" v-if="isOpen">
+              class="icon"></button>
+          <!-- le panier qui s'affiche quand l'utilisateur est connecté -->
+          <ul class="dropdown-content" v-if="isOpen">
             <li v-on:click="toggleDropdown">Bienvenue {{ userId }}</li>
             <li class="logout-btn" v-if="isLoggedIn" @click="logout">Déconnexion</li>
           </ul>
+          <router-link to="/PanierUser" class="cart-btn" v-if="isLoggedIn"><img src="@\assets\panier.png"
+              alt="panier" class="icon-panier"></router-link>
         </div>
-        
-      </div>   
+      </div>
+
     </nav>
   </header>
 </template>
@@ -41,7 +76,7 @@
 <script>
 
 export default {
-  name: "HeaderComponent", 
+  name: "HeaderComponent",
   props: {
     isLoggedIn: {
       type: Boolean,
@@ -50,44 +85,49 @@ export default {
   },
   data() {
     return {
+      showBurger: false,
+      isMobile: window.innerWidth <= 768,
       isOpen: false,
       userId: "",
       categories: [
         { id: 1, name: 'Mobilier' },
         { id: 2, name: 'Luminaires' },
         { id: 3, name: 'Tapis' },
-        { id: 4, name: 'Déco'  },
+        { id: 4, name: 'Déco' },
       ],
-    }; 
+    };
   },
-  
+
   methods: {
-   
+
     logout() {
       this.$emit("logout");
       this.isOpen = false;
       localStorage.removeItem("userId");
       localStorage.removeItem("userType");
     },
-    
+
     // fonction qui permet d'afficher le menu déroulant
     toggleDropdown() {
       this.isOpen = !this.isOpen;
     },
+    toggleBurger() {
+      this.showBurger = !this.showBurger;
+    },
   },
-  
+
   created() {
     const storedUserId = localStorage.getItem("userId");
     if (storedUserId) {
       this.userId = storedUserId;
-  }
+    }
 
   },
   watch: {
     isLoggedIn() {
       const storedUserId = localStorage.getItem("userId");
       if (storedUserId) {
-        this.userId = storedUserId;  
+        this.userId = storedUserId;
       }
     },
   },
@@ -95,17 +135,21 @@ export default {
 };
 </script>
 <style>
-
 .header {
   background-color: #748284;
-  padding: 0px;
-  font-size: 24px;
- }
+}
+
 
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.logo img {
+  height: 150px;
+  width: 170px;
+  margin-left: 20px;
 }
 
 .nav-links {
@@ -130,7 +174,7 @@ export default {
 }
 
 
-.auth-buttons button {
+.auth-buttons button a {
   background-color: #3f4666;
   color: #e6edeb;
   text-decoration: none;
@@ -149,57 +193,42 @@ export default {
 
 .dropdown {
   position: relative;
+  display: inline-block;
 }
+
+ul {
+  margin: 0;
+  padding: 0;
+}
+
 
 .dropdown-content {
   position: absolute;
-  top: 65px;
-  right: 110px;
   background-color: #3f4666;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
   border-radius: 5px;
   list-style: none;
-  z-index: 1000;
   margin: 0;
   padding: 0;
-  font-size: 16px;
   width: 150px;
+  z-index: 10000;
 }
 
 .dropdown-content li {
   padding: 10px;
+  color: white;
   cursor: pointer;
   border-radius: 5px;
-  color: white;
+  font-size: 16px;
+
 }
 
 .dropdown-content li:hover {
-  background-color: #4280b8;
+  background-color: #3498db;
 }
 
-.dropbtn {
-  background-color: #3f4666;
-  color: rgb(255, 255, 255);
-  border: none;
-  cursor: pointer;
-  border-radius: 5px;
-  min-width: 40px; 
-}
 
-.cart-btn {
- background-color: #3f4666;
-  border: none;
-  cursor: pointer;
-  border-radius: 5px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 75px;
-  height: 63px;
-  padding-top: 1px;
-  padding-bottom: 1px;
-  margin-right: 20px;
- }
+
 
 .cart-btn:hover {
   background-color: #4280b8;
@@ -220,39 +249,104 @@ export default {
   object-fit: cover;
   cursor: pointer;
   filter: invert(90%);
+
 }
 
 @media (max-width: 768px) {
+  .burger {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .cart-btn {
+    padding: 15px;
+  }
+  
+  .container {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
+ 
   .navbar {
     flex-direction: column;
-    align-items: flex-start;
+    padding: 10px;
+}
+
+  .logo {
+    margin-bottom: 10px;
+    border-bottom: #000000 1px solid;
+    width: 100%;
+  }
+
+  .logo img {
+    width: 160px;
+    height: 140px;
+    margin-right: 0px;
+
+  }
+
+  .menubtn {
+    background-color: #3f4666;
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+
+  .burger-links {
+    position: absolute;
+    background-color: #3f4666;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    width: 150px;
+    z-index: 99999;
+  }
+
+  .burger-links li {
+    text-decoration: none;
+    padding: 5px;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+
+  .burger-links li:hover {
+    background-color: #3498db;
+  }
+
+  .burger-links a {
+    text-decoration: none;
+    color: white;
   }
 
   .nav-links {
     flex-direction: column;
     align-items: flex-start;
     width: 100%;
+    margin: 10px;
   }
 
   .nav-links li {
-    margin-left: 0;
-    margin-bottom: 10px;
+    margin: 5px;
   }
 
-  .auth-buttons {
-    display: flex;
+  .dropdown {
+padding: 10px;
     width: 100%;
-    margin-top: 10px;
-    flex-direction: row;
-    justify-content: space-between;
+    text-align: left;
   }
 
-  .auth-buttons a,
-  .auth-buttons button {
-    width: 100%;
-    text-align: center;
-    margin-bottom: 10px;
-  }
+    
+
+
 }
 
 @media (max-width: 480px) {
@@ -260,9 +354,17 @@ export default {
     padding: 10px;
   }
 
+  .logo {
+    margin-bottom: 10px;
+    border-bottom: #000000 1px solid;
+    width: 100%;
+  }
+
   .logo img {
-    width: 150px;
-    height: auto;
+    width: 90px;
+    height: 80px;
+    margin-right: 300px;
+
   }
 
   .auth-buttons {
@@ -272,7 +374,7 @@ export default {
 
   .auth-buttons a,
   .auth-buttons button {
-    padding: 8px;
+
     font-size: 14px;
   }
 
@@ -285,6 +387,10 @@ export default {
     width: 30px;
     height: 30px;
   }
-}
 
+  .cart-btn {
+    width: 50px;
+    height: 50px;
+  }
+}
 </style>

@@ -3,12 +3,12 @@
   <h1>Nos Produits</h1>
   <div class="card-container">
     <div class="card" v-for="(prod, index) in produits" :key="index">
-      <div class="image-container">  //ajouté
+      <div class="image-container">  
         <img :src="require(`@/assets/${prod.image}`)" :alt="prod.titre" />
         <button v-if="isMember" class="add-to-cart" @click="addToCart(prod, prod.moq)">+</button>
-      </div> //ajouté
+      </div>
       <h4>{{ prod.titre }}</h4>
-      <p v-if="isMember">{{ prod.prix }} € | MOQ: {{prod.moq}}</p><br><br> //moq
+      <p v-if="isMember">{{ prod.prix }} € | MOQ: {{prod.moq}}</p><br><br>
     </div>
   </div>
 </div>  

@@ -180,7 +180,13 @@ this.userId = localStorage.getItem("userId");
 </script>
 
 <style scoped>
+
+template {
+  height: 100%;
+}
+
 .container {
+  height: 72vh;
 display: flex;
 justify-content: space-around;
 min-width: 100px;
