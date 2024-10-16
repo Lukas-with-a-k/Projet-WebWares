@@ -6,8 +6,7 @@
         <div v-for="product in filteredProducts" :key="product.id" class="card">
           <img :src="require(`@/assets/${product.image}`)" :alt="product.titre" class="product-image" />
           <h4>{{ product.titre }}</h4>
-          <p>Moq: {{ product.moq }}</p>
-          <p>Prix: {{ product.prix }} €</p>
+          <p v-if="isMember">Moq: {{ product.moq }} | Prix: {{ product.prix }} €</p>  <!-- j'ai rajouté ma method pour cacher cet info quand pas connecté  -->
           <router-link :to="`/product-details/${product.id}`">Voir Détails</router-link>
         </div>
       </div>
@@ -72,7 +71,7 @@
           description:
             "Tapis poils longs tellement doux et durable. Tissé à la main, 100% polyester recylcé!",
           prix: 129.99,
-          moq: 4,
+          moq: 10, //attn j'ai changé ce quantité
           categorieId: 3,
         },
         {
@@ -101,7 +100,7 @@
           description:
             "Tapis motif ethnique type Poils ras. Antistatique, antiacarien et il ne blanchit pas avec le temps.",
           prix: 119.99,
-          moq: 4,
+          moq: 10,  //j'ai changé ce quantité pour uniformité
           categorieId: 3,
         },
         {
@@ -115,11 +114,11 @@
           categorieId: 2,
         },
         {
-          id: 11,
+          id: 11, //j'ai changé 11-20 inclus
           image: "deco-4.jpg",
           titre: "Vase ceramique",
-          description: "Vase decoratif en ceramique. Aporte",
-          prix: 49.99,
+          description: "Vase decoratif en ceramique. A la fois majestueux et raffiné ce vase peut s'intégrer dans tout style d'intérieur.",
+          prix: 79.99,
           moq: 20,
           categorieId: 4,
         },
@@ -127,43 +126,43 @@
           id: 12,
           image: "mobilier-1.jpg",
           titre: "Table de chevet",
-          description: "Table de chevet.",
-          prix: 249.99,
-          moq: 4,
+          description: "Ses lignes d'inspiration scandinave apportent une touche originale et unique, très agréable à vivre au quotidien.",
+          prix: 59.99,
+          moq: 20,
           categorieId: 1,
         },
         {
           id: 13,
           image: "luminaire-4.jpg",
-          titre: "Suspension",
-          description: "Suspension.",
-          prix: 49.99,
+          titre: "Suspension forme dôme",
+          description: "Suspension forme dôme en métal noir. Cette suspension opte pour un style résolument industriel et vintage",
+          prix: 39.99,
           moq: 20,
           categorieId: 2,
-        },
-        {
+          },
+          {
           id: 14,
           image: "tapis-1.jpg",
-          titre: "Tapis",
-          description: "Tapis.",
-          prix: 159.99,
-          moq: 20,
+          titre: "Tapis imitation fourrure",
+          description: "Tapis imitation fourrure couleur gris. Très doux et confortable, il apporte une touche déco à la chambre ou au salon.",
+          prix: 109.99,
+          moq: 15,
           categorieId: 3,
         },
         {
           id: 15,
           image: "mobilier-4.jpg",
-          titre: "Canapé",
-          description: "Canapé.",
+          titre: "Canapé convertible express 3 places en velours",
+          description: "Avec son revêtement en velours composé d'un support 91% polyester - 9% coton et d'une surface 100% polyester à la finition passepoilée, il joue la carte de l'élégance.",
           prix: 349.99,
-          moq: 2,
+          moq: 5,
           categorieId: 1,
         },
         {
           id: 16,
           image: "deco-2.jpg",
-          titre: "Vase éthnique en argile",
-          description: "Vase éthnique en argile avec motifs gravés à la main.",
+          titre: "Vase céramique bleu",
+          description: "Ce vase en céramique est un véritable chef-d'œuvre de design moderne",
           prix: 49.99,
           moq: 20,
           categorieId: 4,
@@ -171,17 +170,17 @@
         {
           id: 17,
           image: "tapis-4.jpg",
-          titre: "Tapis",
-          description: "Tapis.",
-          prix: 209.99,
-          moq: 2,
+          titre: "Tapis crocheté téte d'éléphant",
+          description: "Tapis crocheté à main en forme d'éléphant, 100% laine recyclée",
+          prix: 89.99,
+          moq: 20,
           categorieId: 3,
         },
         {
           id: 18,
           image: "luminaire-2.jpg",
-          titre: "Lampe",
-          description: "Lampe.",
+          titre: "Suspension en béton clair et bois",
+          description: "Une suspension en béton clair qui s'intègre parfaitement dans une décoration industrielle ou dans un intérieur loft.",
           prix: 49.99,
           moq: 20,
           categorieId: 2,
@@ -189,25 +188,29 @@
         {
           id: 19,
           image: "deco-5.jpg",
-          titre: "Vase éthnique en argile",
-          description: "Vase éthnique en argile avec motifs gravés à la main.",
-          prix: 49.99,
+          titre: "Vase en céramique raku, turquoise",
+          description: "Vase en céramique raku, couleur turquoise. Ce vase prendra naturellement sa place dans votre intérieur.",
+          prix: 69.99,
           moq: 20,
           categorieId: 4,
         },
         {
           id: 20,
           image: "mobilier-2.jpg",
-          titre: "Etagère",
-          description: "Eh oui, une étagère.",
-          prix: 149.99,
-          moq: 3,
+          titre: "Etagère murale en pin",
+          description: "Etagère murale en pin. Ideale pour un design moderne.",
+          prix: 49.99,
+          moq: 20,
           categorieId: 1,
         },
       ],
+        isMember: false, //faut gardé ca pour cacher les prix
         categoryName: '',
       };
     },
+  created() { //guard pour method "checkMembershipStatus"
+    this.checkMembershipStatus();
+  },
     computed: {
       filteredProducts() {
         // Filtrer les produits par catégorie
@@ -240,6 +243,10 @@
         ];
         return categories.find((cat) => cat.id === parseInt(id));
       },
+      checkMembershipStatus() {  //method pour demasquer les prix/moq
+        const userType = localStorage.getItem('userType');
+        this.isMember = userType === 'member';
+      }
     },
   };
   </script>
@@ -283,8 +290,7 @@
     margin: 10px 0;
   }
   
-  .card p {
-    /*display: none; */  
+  .card p {  
     color: #e6edeb;
     font-size: 1em;
   }

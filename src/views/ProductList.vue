@@ -2,11 +2,14 @@
 <div class="bkg">
   <h1>Nos Produits</h1>
   <div class="card-container">
-  <div class="card" v-for="(prod, index) in produits" :key="index">
-      <img  :src="require(`@/assets/${prod.image}`)" :alt="prod.titre" />
+    <div class="card" v-for="(prod, index) in produits" :key="index">
+      <div class="image-container">  
+        <img :src="require(`@/assets/${prod.image}`)" :alt="prod.titre" />
+        <button v-if="isMember" class="add-to-cart" @click="addToCart(prod, prod.moq)">+</button>
+      </div>
       <h4>{{ prod.titre }}</h4>
-      <p v-if="isMember">{{ prod.prix }} €</p><br><br>
-  </div>
+      <p v-if="isMember">{{ prod.prix }} € | MOQ: {{prod.moq}}</p><br><br>
+    </div>
   </div>
 </div>  
 </template>
@@ -68,7 +71,7 @@
           titre: "Tapis poils longs",
           description: "Tapis poils longs tellement doux et durable. Tissé à la main, 100% polyester recylcé!",
           prix: 129.99,
-          moq: 4,
+          moq: 10, //changement a intégrer
           categorieId: 3,
           },
           {
@@ -95,7 +98,7 @@
           titre: "Tapis oriental tissé",
           description: "Tapis motif ethnique type Poils ras. Antistatique, antiacarien et il ne blanchit pas avec le temps.",
           prix: 119.99,
-          moq: 4,
+          moq: 10, //changement a intégrer 
           categorieId: 3,
           },
           {
@@ -211,7 +214,7 @@
     checkMembershipStatus() {
       const userType = localStorage.getItem('userType');
       this.isMember = userType === 'member';
-    }  
+    },
   },
   computed: {
     filterProduct() {
