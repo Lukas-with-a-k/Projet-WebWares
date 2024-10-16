@@ -10,7 +10,7 @@
         </button>  
       </div> 
       <h4>{{ prod.titre }}</h4>
-      <p v-if="isMember">{{ prod.prix }} € | MOQ: {{prod.moq}}</p> /*enlevé les br*/
+      <p v-if="isMember">{{ prod.prix }} € | MOQ: {{prod.moq}}</p>
     </div>
   </div>
 </div>  

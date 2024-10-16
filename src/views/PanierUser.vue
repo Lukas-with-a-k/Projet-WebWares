@@ -1,6 +1,6 @@
 <template>
   <h1>Mon panier</h1>
-<div class="container">
+<div class="container bkg">
   <div class="container1">
   <table>
       <tbody>
@@ -181,8 +181,8 @@ this.userId = localStorage.getItem("userId");
 
 <style scoped>
 
-template {
-  height: 100%;
+.bkg {
+  background: linear-gradient( rgba(230,237,235,1) 0%, rgba(63,70,102,1) 60%, rgba(116,130,132,1) 84%);
 }
 
 .container {

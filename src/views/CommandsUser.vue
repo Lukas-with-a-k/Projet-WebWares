@@ -1,127 +1,114 @@
 <template>
-    <div class="container">
-        <div class="container1">
-        <h4>Information pour livrason</h4> 
-       <form><UserForm :user="user" @userdata="user = $event"/></form>
-     <!-- <label for="name">Raison sociale</label>
-    <input name="name" :value="user.name"/>
-    <label for="phone">Numéro de téléphone</label>
-    <input name="phone" :value="user.phone"/>
-    <label for="postal">Code Postal</label>
-    <input name="postal" :value="user.postal"/>
-    <label for="city">Ville</label>
-    <input name="city" :value="user.city"/>
-    <label for="adress">Adresse</label>
-    <input name="adress" :value="user.adress"/> -->
-       <!-- <button class="verif" >Utiliser cette information</button> -->
-    <ButtonComponent label="Confirmer l'information" @click="verifier()" color="darkgray" hcolor="gray"/>
+  <div class="container bkg">
+      <div class="container1">
+          <h4>Information pour livrason</h4>
+          <form>
+              <UserForm :user="user" @userdata="user = $event" @validationResults="handlerRes"></UserForm>
+          </form>
+          <ButtonComponent label="Confirmer l'information" @click="verifier" color="darkgray" hcolor="gray" />
+          <p v-if="isError" style="color: red;"> {{ errorMessage }}</p>
       </div>
-       <div class="container2">
-        <div class="prix">
-   <p>HT : {{ prix.ht }} €</p>
-    <p>TTC :  {{ prix.tva }} €</p>
-   <p> A payer :  {{ prix.prixTotal }} €</p>
+      <div class="container2">
+          <div class="prix">
+              <p>HT : {{ prix.ht }} €</p>
+              <p>TVA : {{ prix.tva }} €</p>
+              <p>A payer : {{ prix.prixTotal }} €</p>
+          </div>
+          <div class="button">
+              <ButtonComponent label="Commander" :isDisabled="isDisabled" @click="commander" color="green" hcolor="darkgreen" />
+          </div>
+      </div>
   </div>
-    <div class="button">
-      <ButtonComponent label="Commander" isDisabled @click="commander()" color="green" hcolor="darkgreen"/>
-      <p v-if="isError">erreur : {{ errorMessage }}</p>
-    </div>
-  </div>
-    </div>
-
 </template>
 
 <script>
 import ButtonComponent from '@/components/ButtonComponent.vue';
 import UserForm from '@/components/UserForm.vue';
 
+export default {
+  components: { ButtonComponent, UserForm },
+  data() {
+      return {
+          usersData: [],
+          user: {},
+          userCommand: [],
+          userCommands: [],
+          userId: "",
+          prix: {},
+          errorMessage: '',
+          isError: false,
+          isDisabled: false,
+          validationErrors: {}
+      };
+  },
+  methods: {
+      userData() {
+          let id = this.userId;
+          let user = this.usersData.find(user => user.username === id);
+          if (user) {
+              this.user = user;
+          }
+      },
+      verifier() {
+          this.phoneValid = this.checkPhone();
+          this.usernameValid = this.checkUsername();
 
-    export default {
-        components: {
-ButtonComponent,
-UserForm
-        },
-        data(){
-return {
-  usersData: [],
-  user: {},
-  userCommand:[],
-  userCommands: [],
-  userId: "",
-    prix: {},
-    errorMessage:'',
-    isError:false,
-    isDisabled: false
-}
-
- }, 
-
- methods: {
-    userData(){
-        let id = this.userId;
-            let user = this.usersData.find((user) => user.username === id);
-            if (user) {
-                this.user = user;
-}
-console.log(user);
-console.log(id);
-    },
-    verifier(){
-        if(!this.user.name || !this.user.phone || !this.user.postal || !this.user.city || !this.user.adress){
-                    this.errorMessage='Veuillez remplir tous les champs';
-                    this.isError=true;
-                    return;
-                }
-               
-                //  enregistrer les modifs dans le localStorage
-                
-                // faire une redirection après mise à jour
-                this.isError=false;
-                this.isDisabled=true;
-             
-                // this.user = {};
-            },
-            checkPhone() {
-      const phoneRegex =
-        /^(0[1-9]([-. ]?[0-9]{2}){4}|(\+33|0033)[1-9]([-. ]?[0-9]{2}){4})$/;
-      if (!phoneRegex.test(this.user.phone)) {
-        this.errorMessage = "Numéro de téléphone invalide";
-        this.invalidFields.phone = true;
-        return false;
+          if (!this.user.name || !this.user.phone || !this.user.postal || !this.user.city || !this.user.adress) {
+              this.errorMessage = 'Veuillez remplir tous les champs correctement';
+              this.isError = true;
+              return;
+          }
+          this.isError = false;
+          this.isDisabled = true;
+      },
+      handlerRes(errors) {
+          this.validationErrors = errors;
+          this.isError = Object.values(errors).some(error => error !== '');
+      },
+      checkPhone() {
+          const phoneRegex = /^(0[1-9]([-. ]?[0-9]{2}){4}|(\+33|0033)[1-9]([-. ]?[0-9]{2}){4})$/;
+          return !phoneRegex.test(this.user.phone);
+      },
+      checkUsername() {
+          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          return !emailRegex.test(this.user.mail);
+      },
+      commander() {
+          let existingCommands = JSON.parse(localStorage.getItem(`user_${this.user.id}`)) || [];
+          existingCommands.push(this.userCommand);
+          localStorage.setItem(`user_${this.user.id}`, JSON.stringify(existingCommands));
+          localStorage.removeItem("produitsInPanier");
       }
-      this.invalidFields.phone = false;
-      console.log("Numéro de téléphone valide");
-    },  
-    
-    commander(){
-      // localStorage.setItem(`user_${this.user.id}`, JSON.stringify(...this.userCommands, this.userCommand));
-      // localStorage.removeItem("produitsInPanier")
+  },
+  created() {
+      this.userId = localStorage.getItem("userId");
+      this.userCommand = JSON.parse(localStorage.getItem("produitsInPanier"));
+      this.prix = JSON.parse(localStorage.getItem("prix")) || this.prix;
+      this.usersData = JSON.parse(localStorage.getItem("accounts")) || [];
+      this.userData();
+  },
+  mounted() {
+      if (!localStorage.getItem('produitsInPanier')) {
+          alert("Votre panier est vide");
       }
- },
- created(){
-   this.userCommands = localStorage.getItem("userCommands")?JSON.parse(localStorage.getItem("userCommands")):this.userCommand
-   },
- mounted(){
-    
-            // récupérer les paramètre passé depuis le composant userList
-            this.userId = localStorage.getItem("userId");
-            // this.user = JSON.parse(localStorage.getItem(`user_${userId}`));
-          
-            this.userCommand = JSON.parse(localStorage.getItem("produitsInPanier"));
-           
-        this.prix = JSON.parse(localStorage.getItem("prix"));
-        this.usersData = JSON.parse(localStorage.getItem("accounts"));
-       this.userData()
-        
-        }
-    }
-
+  }
+};
 </script>
 
+
+
+
+
+
+
 <style scoped>
+.bkg {
+  background: linear-gradient( rgba(230,237,235,1) 0%, rgba(63,70,102,1) 60%, rgba(116,130,132,1) 84%);
+}
 .container {
 display: flex;
 justify-content: space-around;
+height: 78vh;
 }
 .container2{
 flex-direction: column;

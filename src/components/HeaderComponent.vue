@@ -173,6 +173,11 @@ export default {
   color: #4280b8;
 }
 
+.cart-btn {
+  margin-right: 20px;
+  background-color: #3f4666;
+}
+
 
 .auth-buttons button a {
   background-color: #3f4666;
