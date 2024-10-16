@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container bkg">
       <div class="container1">
           <h4>Information pour livrason</h4>
           <form>
@@ -102,9 +102,13 @@ export default {
 
 
 <style scoped>
+.bkg {
+  background: linear-gradient( rgba(230,237,235,1) 0%, rgba(63,70,102,1) 60%, rgba(116,130,132,1) 84%);
+}
 .container {
 display: flex;
 justify-content: space-around;
+height: 78vh;
 }
 .container2{
 flex-direction: column;

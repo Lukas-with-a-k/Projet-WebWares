@@ -4,23 +4,23 @@
         <input name="name" type="text" placeholder="Raison sociale" v-model="localUserData.name" disabled><br>
 
         <label for="phone">Numéro de téléphone</label>
-        <input name="phone" type="text" placeholder="Numéro de téléphone" v-model="localUserData.phone" @input="validatePhone">
+        <input name="phone" type="text" placeholder="Numéro de téléphone" v-model="localUserData.phone" @input="validPhone">
         <div class="msgError" v-if="errors.phone">{{ errors.phone }}</div><br>
 
         <label for="mail">Email</label>
-        <input name="mail" type="text" placeholder="Votre Email" v-model="localUserData.username" @input="validateEmail">
+        <input name="mail" type="text" placeholder="Votre Email" v-model="localUserData.username" @input="validEmail">
         <div class="msgError" v-if="errors.mail">{{ errors.mail }}</div><br>
 
         <label for="postal">Code Postal</label>
-        <input name="postal" type="text" placeholder="Code Postal" v-model="localUserData.postal" @input="validatePostal">
+        <input name="postal" type="text" placeholder="Code Postal" v-model="localUserData.postal" @input="validPostal">
         <div class="msgError" v-if="errors.postal">{{ errors.postal }}</div><br>
 
         <label for="city">Ville</label>
-        <input name="city" type="text" placeholder="Ville" v-model="localUserData.city" @input="validateCity"><br>
+        <input name="city" type="text" placeholder="Ville" v-model="localUserData.city" @input="validCity"><br>
         <div class="msgError" v-if="errors.city">{{ errors.city }}</div><br>
 
         <label for="adress">Adresse</label>
-        <input name="adress" type="text" placeholder="Adresse" v-model="localUserData.adress" @input="validateAdress"><br>
+        <input name="adress" type="text" placeholder="Adresse" v-model="localUserData.adress" @input="validAdress"><br>
         <div class="msgError" v-if="errors.adress">{{ errors.adress }}</div><br>
     </form>
 </template>
