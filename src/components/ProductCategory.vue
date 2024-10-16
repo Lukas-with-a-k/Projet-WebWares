@@ -1,10 +1,15 @@
 <template>
     <div class="bkg">
-      <h1>Produits pour la catégorie : {{ categoryName }}</h1>
+      <h1>Produits dans : {{ categoryName }}</h1>
   
       <div class="card-container">
         <div v-for="product in filteredProducts" :key="product.id" class="card">
-          <img :src="require(`@/assets/${product.image}`)" :alt="product.titre" class="product-image" />
+          <div class="image-container">
+            <img :src="require(`@/assets/${product.image}`)" :alt="product.titre" class="product-image" />
+            <button v-if="isMember" class="add-to-cart" @click="addToCart(prod, index)">+
+              <span v-if="productAdded === index" class="checkmark">&#10003;</span>
+            </button>
+          </div>  
           <h4>{{ product.titre }}</h4>
           <p v-if="isMember">Moq: {{ product.moq }} | Prix: {{ product.prix }} €</p>
           <router-link :to="`/product-details/${product.id}`">Voir Détails</router-link>
@@ -206,6 +211,7 @@
       ],
         isMember: false, 
         categoryName: '',
+        productAdded: null, //pour method addedToCart
       };
     },
   created() { 
@@ -245,6 +251,17 @@
       checkMembershipStatus() {  //method pour demasquer les prix/moq
         const userType = localStorage.getItem('userType');
         this.isMember = userType === 'member';
+      },
+      addToCart(product, index) {
+        let produitsInPanier = JSON.parse(localStorage.getItem('produitsInPanier')) || [];
+        produitsInPanier.push(product);
+        localStorage.setItem('produitsInPanier', JSON.stringify(produitsInPanier));
+        console.log(`${product.titre} ajouté au panier`);
+        //validation de ajout au click
+        this.productAdded = index;
+        setTimeout(() => {
+            this.productAdded = null;
+        }, 2000);
       }
     },
   };

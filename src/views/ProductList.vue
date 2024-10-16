@@ -10,7 +10,7 @@
         </button>  
       </div> 
       <h4>{{ prod.titre }}</h4>
-      <p v-if="isMember">{{ prod.prix }} € | MOQ: {{prod.moq}}</p> /*enlevé les br*/
+      <p v-if="isMember">{{ prod.prix }} € | MOQ: {{prod.moq}}</p>
     </div>
   </div>
 </div>  
@@ -224,7 +224,7 @@
           },
         ],
         isMember: false,
-        productAdded: null, //pour method addToCart
+        productAdded: null, 
       };
     },
   created() {
@@ -281,7 +281,7 @@ h1 {
     flex-direction: column;
     color: #e6edeb;
     border: none;
-    padding-bottom: 20px; /*changé */
+    padding-bottom: 20px; 
     text-align: center;
     width: 500px;
 }
@@ -334,7 +334,7 @@ h1 {
   .card {
     background-color: #3F4666;
     width: auto;
-    margin-bottom: 15px; /*changé */
+    margin-bottom: 15px; 
   }
 }
 
