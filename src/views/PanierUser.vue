@@ -23,9 +23,9 @@
 </div>
 <div class="container2">
   <div class="prix">
-   <p> Total HT : {{ htTotal() }}</p>
-    <p>TTC : {{ tva() }}</p>
-   <p> A payer : {{ prixTotal() }} </p>
+   <p> HT : {{ htTotal() }}</p>
+    <p>TVA : {{ tva() }}</p>
+   <p> TTC : {{ prixTotal() }} </p>
   </div>
     <div class="button">
       <ButtonComponent label="Passer au command" @click="passerAuCommand()" color="green" hcolor="darkgreen"/>
@@ -140,7 +140,7 @@ saveToStorage(){
 updateTotal() {
       this.prix = {ht:this.htTotal(), 
         tva: this.tva(), 
-        priTotal: this.prixTotal()};
+        prixTotal: this.prixTotal()};
       this.saveToStorage();
     },
     checkPanier(){
