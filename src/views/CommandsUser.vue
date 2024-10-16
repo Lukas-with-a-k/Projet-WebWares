@@ -5,8 +5,9 @@
           <form>
               <UserForm :user="user" @userdata="user = $event" @validationResults="handlerRes"></UserForm>
           </form>
-          <ButtonComponent label="Confirmer l'information" @click="verifier" color="darkgray" hcolor="gray" />
           <p v-if="isError" style="color: red;"> {{ errorMessage }}</p>
+          <ButtonComponent label="Confirmer l'information" @click="verifier" color="darkgray" hcolor="gray" />
+          
       </div>
       <div class="container2">
           <div class="prix">
@@ -53,7 +54,7 @@ export default {
           this.phoneValid = this.checkPhone();
           this.usernameValid = this.checkUsername();
 
-          if (!this.user.name || !this.user.phone || !this.user.postal || !this.user.city || !this.user.adress) {
+          if (!this.user.name || !this.user.phone || !this.user.postal || !this.user.city || !this.user.adress || !this.phoneValid || !this.usernameValid) {
               this.errorMessage = 'Veuillez remplir tous les champs correctement';
               this.isError = true;
               return;
