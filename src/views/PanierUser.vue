@@ -166,10 +166,10 @@ created(){
        this.prix = localStorage.getItem("prix")?JSON.parse(localStorage.getItem("prix")):this.prix
    },
 mounted(){
-//     if(localStorage.getItem('produitsInPanier')) {this.produitsInPanier = JSON.parse(localStorage.getItem('produitsInPanier'))
-//       }else {
-//     alert("Votre panier est vide")
-//     }
+    if(localStorage.getItem('produitsInPanier')) {this.produitsInPanier = JSON.parse(localStorage.getItem('produitsInPanier'))
+      }else {
+    alert("Votre panier est vide")
+    }
 this.userId = localStorage.getItem("userId");
     },
     computed: {

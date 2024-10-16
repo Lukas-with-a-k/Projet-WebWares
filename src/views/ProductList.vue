@@ -3,12 +3,14 @@
   <h1>Nos Produits</h1>
   <div class="card-container">
     <div class="card" v-for="(prod, index) in produits" :key="index">
-      <div class="image-container">  //ajouté
+      <div class="image-container">  
         <img :src="require(`@/assets/${prod.image}`)" :alt="prod.titre" />
-        <button v-if="isMember" class="add-to-cart" @click="addToCart(prod, prod.moq)">+</button>
-      </div> //ajouté
+        <button v-if="isMember" class="add-to-cart" @click="addToCart(prod, index)">+
+          <span v-if="productAdded === index" class="checkmark">&#10003;</span>
+        </button>  
+      </div> 
       <h4>{{ prod.titre }}</h4>
-      <p v-if="isMember">{{ prod.prix }} € | MOQ: {{prod.moq}}</p><br><br> //moq
+      <p v-if="isMember">{{ prod.prix }} € | MOQ: {{prod.moq}}</p> /*enlevé les br*/
     </div>
   </div>
 </div>  
@@ -27,6 +29,7 @@
           description: "Table à manger en bois massif avec finition élégante.",
           prix: 259.99,
           moq: 5,
+          count: 5,
           categorieId: 1,
           },
           {
@@ -36,6 +39,7 @@
           description: "Lampe avec un design moderne et éclairage ajustable.",
           prix: 129.99,
           moq: 10,
+          count: 10,
           categorieId: 2,
           },
           {
@@ -45,6 +49,7 @@
           description: "Tapis doux en laine avec motif géométrique.",
           prix: 89.99,
           moq: 20,
+          count: 20,
           categorieId: 3,
           },
           {
@@ -54,6 +59,7 @@
           description: "Vase éthnique en argile avec motifs gravés à la main.",
           prix: 49.99,
           moq: 20,
+          count: 20,
           categorieId: 4,
           },
           {
@@ -63,6 +69,7 @@
           description: "Suspension esthétique avec abat-jour en jute finition naturelle.",
           prix: 69.99,
           moq: 20,
+          count: 20,
           categorieId: 2,
           },
           {
@@ -71,7 +78,8 @@
           titre: "Tapis poils longs",
           description: "Tapis poils longs tellement doux et durable. Tissé à la main, 100% polyester recylcé!",
           prix: 129.99,
-          moq: 10, //changement a intégrer
+          moq: 10,
+          count: 10, 
           categorieId: 3,
           },
           {
@@ -81,6 +89,7 @@
           description: "Vase en bois d'acacia.",
           prix: 29.99,
           moq: 20,
+          count: 20,
           categorieId: 4,
           },
           {
@@ -90,6 +99,7 @@
           description: "Canapé en cuir à la teinte riche et chaleureuse. Silhouette minimaliste et design indémodable.",
           prix: 599.99,
           moq: 2,
+          count: 2,
           categorieId: 1,
           },
           {
@@ -98,7 +108,8 @@
           titre: "Tapis oriental tissé",
           description: "Tapis motif ethnique type Poils ras. Antistatique, antiacarien et il ne blanchit pas avec le temps.",
           prix: 119.99,
-          moq: 10, //changement a intégrer 
+          moq: 10,
+          count: 10, 
           categorieId: 3,
           },
           {
@@ -108,6 +119,7 @@
           description: "Applique murale en bois. Design durable et éco-responsable.",
           prix: 59.99,
           moq: 20,
+          count: 20,
           categorieId: 2,
           },
           {
@@ -117,6 +129,7 @@
           description: "Vase decoratif en ceramique. A la fois majestueux et raffiné ce vase peut s'intégrer dans tout style d'intérieur.",
           prix: 79.99,
           moq: 20,
+          count: 20,
           categorieId: 4,
           },
           {
@@ -126,6 +139,7 @@
           description: "Ses lignes d'inspiration scandinave apportent une touche originale et unique, très agréable à vivre au quotidien.",
           prix: 59.99,
           moq: 20,
+          count: 20,
           categorieId: 1,
           },
           {
@@ -135,6 +149,7 @@
           description: "Suspension forme dôme en métal noir. Cette suspension opte pour un style résolument industriel et vintage",
           prix: 39.99,
           moq: 20,
+          count: 20,
           categorieId: 2,
           },
           {
@@ -144,6 +159,7 @@
           description: "Tapis imitation fourrure couleur gris. Très doux et confortable, il apporte une touche déco à la chambre ou au salon.",
           prix: 109.99,
           moq: 15,
+          count: 15,
           categorieId: 3,
           },
           {
@@ -153,6 +169,7 @@
           description: "Avec son revêtement en velours composé d'un support 91% polyester - 9% coton et d'une surface 100% polyester à la finition passepoilée, il joue la carte de l'élégance.",
           prix: 349.99,
           moq: 5,
+          count: 5,
           categorieId: 1,
           },
           {
@@ -162,6 +179,7 @@
           description: "Ce vase en céramique est un véritable chef-d'œuvre de design moderne",
           prix: 49.99,
           moq: 20,
+          count: 20,
           categorieId: 4,
           },
           {
@@ -171,6 +189,7 @@
           description: "Tapis crocheté à main en forme d'éléphant, 100% laine recyclée",
           prix: 89.99,
           moq: 20,
+          count: 20,
           categorieId: 3,
           },
           {
@@ -180,6 +199,7 @@
           description: "Une suspension en béton clair qui s'intègre parfaitement dans une décoration industrielle ou dans un intérieur loft.",
           prix: 49.99,
           moq: 20,
+          count: 20,
           categorieId: 2,
           },
           {
@@ -189,6 +209,7 @@
           description: "Vase en céramique raku, couleur turquoise. Ce vase prendra naturellement sa place dans votre intérieur.",
           prix: 69.99,
           moq: 20,
+          count: 20,
           categorieId: 4,
           },
           {
@@ -198,10 +219,12 @@
           description: "Etagère murale en pin. Ideale pour un design moderne.",
           prix: 49.99,
           moq: 20,
+          count: 20,
           categorieId: 1,
           },
         ],
         isMember: false,
+        productAdded: null, //pour method addToCart
       };
     },
   created() {
@@ -215,16 +238,25 @@
       const userType = localStorage.getItem('userType');
       this.isMember = userType === 'member';
     },
+    addToCart(product, index) {
+        let produitsInPanier = JSON.parse(localStorage.getItem('produitsInPanier')) || [];
+        produitsInPanier.push(product);
+        localStorage.setItem('produitsInPanier', JSON.stringify(produitsInPanier));
+        console.log(`${product.titre} ajouté au panier`);
+        //validation de ajout au click
+        this.productAdded = index;
+        setTimeout(() => {
+            this.productAdded = null;
+        }, 2000);
+    }
   },
-  computed: {
-    filterProduct() {
-      return this.products.filter((prod) => prod.isSelected);
-    },
-    isDisabled() {
-      return (prod) => prod.compteur <= 1;
-    },
-  },
-};
+  };
+//   computed: {
+//     filterProduct() {
+//       return this.products.filter((prod) => prod.isSelected);
+//     };
+//   },
+// };
 </script>
 
 <style scoped>
@@ -249,7 +281,7 @@ h1 {
     flex-direction: column;
     color: #e6edeb;
     border: none;
-    padding-bottom: 70px;
+    padding-bottom: 20px; /*changé */
     text-align: center;
     width: 500px;
 }
@@ -263,10 +295,10 @@ h1 {
     margin-bottom: 15px;
     object-fit: cover;
 } 
-.add-to-cart { /*  ajouté add to cart & image container hover*/
+.add-to-cart { 
   display: none;
   position: absolute;
-  bottom: 10px;
+  bottom: 4px;
   left: 50%;
   transform: translateX(-50%);
   padding: 10px 20px;
@@ -302,7 +334,7 @@ h1 {
   .card {
     background-color: #3F4666;
     width: auto;
-    margin-bottom: 20px;
+    margin-bottom: 15px; /*changé */
   }
 }
 
