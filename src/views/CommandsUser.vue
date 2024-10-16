@@ -53,7 +53,7 @@ export default {
           this.phoneValid = this.checkPhone();
           this.usernameValid = this.checkUsername();
 
-          if (!this.user.name || !this.user.phone || !this.user.postal || !this.user.city || !this.user.adress || this.phoneValid || this.usernameValid) {
+          if (!this.user.name || !this.user.phone || !this.user.postal || !this.user.city || !this.user.adress) {
               this.errorMessage = 'Veuillez remplir tous les champs correctement';
               this.isError = true;
               return;

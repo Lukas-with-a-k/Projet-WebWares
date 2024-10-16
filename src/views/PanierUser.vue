@@ -16,7 +16,7 @@
           <button @click="increase(produit)"> + </button>
       </td>
       <td>Total TH : {{ subTotal(produit) }}</td>
-      <td> <ButtonComponent label="Supprimer" @click="supprimeProduit(produit)" color="darkgray" hcolor="gray"/></td>
+      <td> <ButtonComponent label="Supprimer" @click="supprimeProduit(index)" color="darkgray" hcolor="gray"/></td>
    </tr>
 </tbody>
 </table>
@@ -166,10 +166,10 @@ created(){
        this.prix = localStorage.getItem("prix")?JSON.parse(localStorage.getItem("prix")):this.prix
    },
 mounted(){
-//     if(localStorage.getItem('produitsInPanier')) {this.produitsInPanier = JSON.parse(localStorage.getItem('produitsInPanier'))
-//       }else {
-//     alert("Votre panier est vide")
-//     }
+    // if(localStorage.getItem('produitsInPanier')) {this.produitsInPanier = JSON.parse(localStorage.getItem('produitsInPanier'))
+    //   }else {
+    // alert("Votre panier est vide")
+    // }
 this.userId = localStorage.getItem("userId");
     },
     computed: {
