@@ -10,7 +10,7 @@
             <span v-if="productAdded === index" class="checkmark">&#10003;</span>
           </button>
         </div>  
-        <h4>{{ products.titre }}</h4>
+        <h4>{{ product.titre }}</h4>
         <p v-if="isMember">Moq: {{ product.moq }} | Prix: {{ product.prix }} €</p>
         <router-link :to="`/product-details/${product.id}`">Voir Détails</router-link>
       </div>

@@ -21,8 +21,8 @@
           </ul>
           <div class="auth-buttons">
             <!-- Bouton Connexion qui ouvre le formulaire -->
-            <button v-if="!isLoggedIn" @click="$emit('toggleLogin')">Connexion</button>
-            <button v-if="!isLoggedIn" @click="$emit('toggleSignup')">S'inscrire</button>
+            <button v-if="!isLoggedIn" @click="$emit('toggleLogin')" class="bouts">Connexion</button>
+            <button v-if="!isLoggedIn" @click="$emit('toggleSignup')" class="bouts">S'inscrire</button>
 
             <!-- Menu déroulant qui s'affiche quand l'utilisateur est connecté -->
             <div class="dropdown" v-if="isLoggedIn">
@@ -139,10 +139,6 @@ export default {
   background-color: #748284;
 }
 
-.auth-buttons {
-  display: flex;
- 
-}
 
 .navbar {
   display: flex;
@@ -191,18 +187,16 @@ export default {
   margin: 20px;
   padding: 5px;
   background-color: #3f4666;
-  width: 50px;
-  height: 50px;
+  width: 65px;
+  height: 55px;
   border-radius: 5px;
   justify-content: center;
   align-items: center;
 }
 
-
-.auth-buttons button a {
+.auth-buttons button {
   background-color: #3f4666;
   color: #e6edeb;
-  text-decoration: none;
   border-radius: 5px;
   border: none;
   cursor: pointer;
@@ -215,6 +209,7 @@ export default {
 .auth-buttons button:hover {
   background-color: #4280b8;
 }
+
 
 .dropdown {
   display: flex;
@@ -232,6 +227,8 @@ ul {
 
 .dropdown-content {
   position: absolute;
+  top: 110px;
+  right: 85px;
   background-color: #3f4666;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
   border-radius: 5px;
@@ -316,17 +313,20 @@ ul {
   }
 
   .menubtn {
-    background-color: #3f4666;
-    color: white;
-    padding: 10px;
-    border: none;
-    cursor: pointer;
-    border-radius: 5px;
-    font-size: 16px;
-  }
+  background-color: #3f4666;
+  color: #e6edeb;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  padding: 25px 20px;
+  transition: background-color 0.3s ease;
+}
+
 
   .burger-links {
     position: absolute;
+    top: 280px;
+    left: 10px;
     background-color: #3f4666;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
     border-radius: 5px;
@@ -372,7 +372,23 @@ padding: 10px;
     text-align: left;
   }
 
-    
+  .dropdown-content {
+    position: absolute;
+    top: 280px;
+    left: 120px;
+    background-color: #3f4666;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    z-index: 10000;
+  }
+  .cart-btn {
+    width: 50px;
+    height: 35px;
+  }
+ 
 
 
 }
