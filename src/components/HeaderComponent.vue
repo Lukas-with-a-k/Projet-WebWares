@@ -180,7 +180,6 @@ export default {
 .dropbtn {
   background-color: #3f4666;
   color: #e6edeb;
-  padding: 10px;
   border-radius: 5px;
   border: none;
   cursor: pointer;
@@ -219,7 +218,10 @@ export default {
 
 .dropdown {
   position: relative;
-  display: inline-block;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  margin: 10px;
 }
 
 ul {
