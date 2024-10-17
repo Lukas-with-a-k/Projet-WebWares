@@ -14,7 +14,7 @@
       <h4>{{ prod.titre }}</h4>
       <p v-if="isMember">{{ prod.prix }} € | MOQ: {{prod.moq}}</p>
       <td v-if="isMember && chosen(prod)">
-        <span> Quantity : </span>
+        <span> Quantité : </span>
           <button @click="decrease(prod)"> - </button>
           <span> {{ prod.count }} </span>
           <button @click="increase(prod)"> + </button>

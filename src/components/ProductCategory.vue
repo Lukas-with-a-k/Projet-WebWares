@@ -17,7 +17,7 @@
         <p v-if="isMember">Quantité Minimum de Commande: {{ product.moq }}</p>
         <p v-if="isMember">Prix unitaire: {{ product.prix }} €</p><br>
         <td v-if="isMember && chosen(product)">
-        <span> Quantity : </span>
+        <span> Quantité : </span>
           <button @click="decrease(product)"> - </button>
           <span> {{ product.count }} </span>
           <button @click="increase(product)"> + </button>
