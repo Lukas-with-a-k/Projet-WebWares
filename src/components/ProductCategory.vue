@@ -6,13 +6,18 @@
       <div v-for="product in filteredProducts" :key="product.id" class="card">
         <div class="image-container">
           <img :src="require(`@/assets/${product.image}`)" :alt="product.titre" class="product-image" />
-          <button v-if="isMember" class="add-to-cart" @click="addToCart(product, index)">+
+          <button v-if="isMember" class="add-to-cart" @click="addToCart(product, index)">Ajouter au panier
             <span v-if="productAdded === index" class="checkmark">&#10003;</span>
           </button>
-        </div>  
-        <h4>{{ products.titre }}</h4>
-        <p v-if="isMember">Moq: {{ product.moq }} | Prix: {{ product.prix }} €</p>
+        </div>
+        <div class="info-container">
+            
+        <h2>{{ product.titre }}</h2><br>
+        <h3>{{ product.description }}</h3><br><br> 
+        <p v-if="isMember">Quantité Minimum de Commande: {{ product.moq }}</p>
+        <p v-if="isMember">Prix unitaire: {{ product.prix }} €</p><br><br>
         <router-link :to="`/product-details/${product.id}`">Voir Détails</router-link>
+        </div>
       </div>
     </div>
   </div>
@@ -283,8 +288,8 @@ created() {
 </script>
 
 <style scoped>
-.bkg {  /*adapté pour ptit page*/
-background: linear-gradient( rgba(230,237,235,1) 0%, rgba(63,70,102,1) 40%, rgba(116,130,132,1) 84%);
+.bkg {  
+background: linear-gradient( rgba(230,237,235,1) 0%, rgba(63,70,102,1) 30%, rgba(116,130,132,1) 98%);
 }
 
 h1 {
@@ -295,22 +300,30 @@ padding: 50px;
 .card-container {
 display: flex;
 flex-wrap: wrap;
-justify-content: center;
-gap: 20px;
+
 }
 .card {
   display: flex;
-  justify-content: center;
-  flex-direction: column;
+  flex-direction: row;
   color: #e6edeb;
   border: none;
-  padding-bottom: 20px; /*changé */
-  text-align: center;
-  width: 500px;
+  padding: 20px;
+  width: 1000px;
 }
 .image-container {
 position: relative;
-width: 100%;
+height: 100%;
+}
+.info-container {
+  display: flex;
+  background-color: rgba(0, 0, 0, 0.151);
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+  padding: 20px;
+  height: 461px;
+  width: 461px;
+ 
 }  
 .card img {  
   height: 500px;
@@ -321,13 +334,13 @@ width: 100%;
 .add-to-cart { 
 display: none;
 position: absolute;
-bottom: 4px;
+bottom: 250px;
 left: 50%;
 transform: translateX(-50%);
-padding: 10px 20px;
+padding: 20px 30px;
 background-color: #4280b8;
 color: white;
-border: none;
+border: solid #e6edeb;
 border-radius: 5px;
 cursor: pointer;
 }
