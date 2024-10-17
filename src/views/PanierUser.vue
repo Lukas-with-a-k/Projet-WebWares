@@ -87,12 +87,10 @@ prixTotal(){
 return (th +tva).toFixed(2)
 },
 supprimeProduit(ind){
-  if(confirm("Etes vous sur devouloir supprimer ce produit ?")){
-      this.produitsInPanier.splice(ind, 1);
-  }
+  this.produitsInPanier.splice(ind, 1)
   },
   passerAuCommand(){
-      this.$router.push({name:'commands'});
+      this.$router.push({name:'commands'})
          }, 
 saveToStorage(){
       localStorage.setItem("produitsInPanier", JSON.stringify(this.produitsInPanier));
@@ -118,11 +116,7 @@ watch: {
           this.checkPanier();
           this.updateTotal();
     },
-    // prix: {
-    //     deep: true,
-    //     handler() {
-    //         this.updateTotal();
-    //     }
+  
     }
 },
 created(){
