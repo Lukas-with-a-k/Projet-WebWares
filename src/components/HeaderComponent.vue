@@ -13,7 +13,7 @@
         </li>
         <!-- Menu déroulant pour les catégories -->
         <li>
-          <button @click="toggleCategoryDropdown" class="dropdown-btn">
+          <button @click="toggleCategoryDropdown" class="dropdown-btn" ref="dropdownMenu">
             Catégories
           </button>
           <ul class="dropdown-cat" v-if="isCategoryDropdownOpen">
@@ -31,7 +31,7 @@
         <!-- Menu déroulant qui s'affiche quand l'utilisateur est connecté -->
         <div class="dropdown" v-if="isLoggedIn">
           <button class="dropbtn" @click="toggleDropdown"><img src="@/assets/profil.png" alt="user"
-              class="icon"></button>
+              class="icon" ref="dropdownMenu"></button>
           <ul class="dropdown-content" v-if="isOpen">
             <li v-on:click="toggleDropdown">Bienvenue {{ userName }}</li>
             <li class="logout-btn" v-if="isLoggedIn" @click="logout">Déconnexion</li>
@@ -84,7 +84,12 @@ export default {
     toggleDropdown() {
       this.isOpen = !this.isOpen;
     },
-
+    closeDropdown(event) {
+      // Vérifier si le clic est à l'extérieur du dropdown
+      if (this.isOpen && this.$refs.dropdownMenu && !this.$refs.dropdownMenu.contains(event.target)) {
+        this.isOpen = false;
+      } 
+    },
     // Fonction pour afficher/cacher le dropdown des catégories
     toggleCategoryDropdown() {
       this.isCategoryDropdownOpen = !this.isCategoryDropdownOpen;
@@ -100,8 +105,14 @@ export default {
   if (storedName) {
     this.userName = storedName;
   }
-  
-  },
+},
+mounted() {
+document.addEventListener('click', this.closeDropdown);
+},
+beforeUnmount() {
+  document.removeEventListener('click', this.closeDropdown);
+},
+   
   watch: {
     isLoggedIn() {
       const storedUserId = localStorage.getItem("userId");

@@ -278,7 +278,7 @@ div.signup {
   font-family: sans-serif;
   padding-top: 10px;
   background-color: #e6edeb;
-  width: 60%;
+  width: 40%;
   height: auto;
   box-shadow: 0px 0px 6px 2px #3f4666;
 }

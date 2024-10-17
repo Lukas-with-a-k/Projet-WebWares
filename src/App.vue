@@ -171,7 +171,7 @@ nav a {
 }
 
 nav a.router-link-exact-active {
-  color: #2f5b79;
+  color: #282828;
 }
 
 .dark-overlay {

@@ -93,7 +93,7 @@ div.login {
   font-family: sans-serif;
   padding-top: 10px;
   background-color: #e6edeb;
-  width: 60%;
+  width: 30%;
   height: auto;
   box-shadow: 0px 0px 6px 2px #3f4666;
 }
@@ -103,7 +103,7 @@ input {
   margin-top: 20px;
   margin-bottom: 20px;
   width: 60%;
-  height: 40px;
+  height: 60px;
   font-size: 18px;
   border-radius: 15px;
   border: 2px solid #3f4666;
@@ -129,7 +129,7 @@ button {
   margin-top: 20px;
   margin-bottom: 50px;
   width: 62%;
-  height: 40px;
+  height: 50px;
   font-size: 18px;
   border-radius: 15px;
   border: 2px solid #3f4666;
