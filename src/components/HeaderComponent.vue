@@ -4,77 +4,48 @@
       <div class="logo">
         <router-link to="/"><img src="@/assets/webwares.png" alt="logo"></router-link>
       </div>
-      <!-- Menu burger responsive -->
-      <div class="container" v-if="isMobile">
-        <ul class="burger" v-if="isMobile">
-          <button class="menubtn" @click="toggleBurger">Menu</button>
-          <ul class="burger-links" v-if="showBurger">
-            <li>
-              <router-link to="/">Accueil</router-link>
-            </li>
-            <li>
-              <router-link to="/ProductList">Tous les produits</router-link>
-            </li>
+
+      <!-- Barre de navigation dynamique -->
+      <ul class="nav-links">
+        <router-link to="/">Accueil</router-link>
+        <li>
+          <router-link to="/ProductList">Nos produits</router-link>
+        </li>
+        <!-- Menu déroulant pour les catégories -->
+        <li>
+          <button @click="toggleCategoryDropdown" class="dropdown-btn">
+            Catégories
+          </button>
+          <ul class="dropdown-content" v-if="isCategoryDropdownOpen">
             <li v-for="category in categories" :key="category.id">
               <router-link :to="`/category/${category.id}`">{{ category.name }}</router-link>
             </li>
           </ul>
-          <div class="auth-buttons">
-            <!-- Bouton Connexion qui ouvre le formulaire -->
-            <button v-if="!isLoggedIn" @click="$emit('toggleLogin')" class="bouts">Connexion</button>
-            <button v-if="!isLoggedIn" @click="$emit('toggleSignup')" class="bouts">S'inscrire</button>
-
-            <!-- Menu déroulant qui s'affiche quand l'utilisateur est connecté -->
-            <div class="dropdown" v-if="isLoggedIn">
-              <button class="dropbtn" @click="toggleDropdown"><img src="@\assets\profil.png" alt="user"
-                  class="icon"></button>
-              <!-- le panier qui s'affiche quand l'utilisateur est connecté -->
-              <ul class="dropdown-content" v-if="isOpen">
-                <li v-on:click="toggleDropdown">Bienvenue {{ userId }}</li>
-                <li class="logout-btn" v-if="isLoggedIn" @click="logout">Déconnexion</li>
-              </ul>
-              <router-link to="/PanierUser" class="cart-btn" v-if="isLoggedIn"><img src="@\assets\panier.png"
-                  alt="panier" class="icon-panier"></router-link>
-            </div>
-          </div>
-        </ul>
-      </div>
-      <!-- Barre de navigation dynamique -->
-      <ul class="nav-links" v-else>
-        <router-link to="/">Accueil</router-link>
-        <li>
-          <router-link to="/ProductList">Tous les produits</router-link>
-        </li>
-        <!-- Affichage dynamique des catégories -->
-        <li v-for="category in categories" :key="category.id">
-          <router-link :to="`/category/${category.id}`">{{ category.name }}</router-link>
         </li>
       </ul>
-      <div class="auth-buttons" v-if="!isMobile">
+      <div class="buttons">
         <!-- Bouton Connexion qui ouvre le formulaire -->
         <button v-if="!isLoggedIn" @click="$emit('toggleLogin')">Connexion</button>
         <button v-if="!isLoggedIn" @click="$emit('toggleSignup')">S'inscrire</button>
 
         <!-- Menu déroulant qui s'affiche quand l'utilisateur est connecté -->
         <div class="dropdown" v-if="isLoggedIn">
-          <button class="dropbtn" @click="toggleDropdown"><img src="@\assets\profil.png" alt="user"
+          <button class="dropbtn" @click="toggleDropdown"><img src="@/assets/profil.png" alt="user"
               class="icon"></button>
-          <!-- le panier qui s'affiche quand l'utilisateur est connecté -->
           <ul class="dropdown-content" v-if="isOpen">
-            <li v-on:click="toggleDropdown">Bienvenue {{ userId }}</li>
+            <li v-on:click="toggleDropdown">Bienvenue {{ name }}</li>
             <li class="logout-btn" v-if="isLoggedIn" @click="logout">Déconnexion</li>
           </ul>
-          <router-link to="/PanierUser" class="cart-btn" v-if="isLoggedIn"><img src="@\assets\panier.png"
-              alt="panier" class="icon-panier"></router-link>
+          <router-link to="/PanierUser" class="cart-btn" v-if="isLoggedIn"><img src="@/assets/panier.png" alt="panier"
+              class="icon-panier"></router-link>
         </div>
       </div>
-
     </nav>
   </header>
 </template>
 
-<script>
 
+<script>
 export default {
   name: "HeaderComponent",
   props: {
@@ -85,9 +56,9 @@ export default {
   },
   data() {
     return {
-      showBurger: false,
-      isMobile: window.innerWidth <= 768,
       isOpen: false,
+      isCategoryDropdownOpen: false,
+      name: "", 
       userId: "",
       categories: [
         { id: 1, name: 'Mobilier' },
@@ -99,7 +70,6 @@ export default {
   },
 
   methods: {
-
     logout() {
       this.$emit("logout");
       this.isOpen = false;
@@ -107,21 +77,23 @@ export default {
       localStorage.removeItem("userType");
     },
 
-    // fonction qui permet d'afficher le menu déroulant
+    // Fonction pour afficher le menu déroulant
     toggleDropdown() {
       this.isOpen = !this.isOpen;
     },
-    toggleBurger() {
-      this.showBurger = !this.showBurger;
-    },
+
+    // Fonction pour afficher/cacher le dropdown des catégories
+    toggleCategoryDropdown() {
+      this.isCategoryDropdownOpen = !this.isCategoryDropdownOpen;
+    }
   },
 
   created() {
     const storedUserId = localStorage.getItem("userId");
     if (storedUserId) {
       this.userId = storedUserId;
-    }
-
+  }
+  
   },
   watch: {
     isLoggedIn() {
@@ -131,20 +103,72 @@ export default {
       }
     },
   },
-
 };
 </script>
-<style>
-.header {
-  background-color: #748284;
-}
 
+<style>
 
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 10px;
+  
 }
+
+.dropdown {
+  display: flex;
+  
+}
+.dropdown-btn {
+  background-color: #3f4666;
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.dropdown-content {
+  position: absolute;
+  background-color: #3f4666;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  list-style: none;
+  padding: 10px;
+  z-index: 1000;
+  font-size: medium;
+}
+
+.dropdown-content li {
+  margin-bottom: 10px;
+  padding: 10px;
+  color: white;
+  cursor: pointer;
+}
+
+.dropdown-content li:hover {
+  background-color: #3498db;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.dropdown-content a {
+  text-decoration: none;
+  color: white;
+}
+
+.is-open {
+  display: block;
+}
+
+
+.header {
+  background-color: #748284;
+}
+
+
+
 
 .logo img {
   height: 150px;
@@ -160,13 +184,13 @@ export default {
   padding: 0;
 }
 
-.nav-links li {
-  margin-left: 20px;
-}
-
 .nav-links a {
   color: #e6edeb;
   text-decoration: none;
+  padding: 10px;
+}
+.nav-links li {
+  padding: 10px;
 }
 
 .nav-links a:hover {
@@ -179,81 +203,27 @@ export default {
   border-radius: 5px;
   border: none;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  padding: 20px;
+  margin: 10px;
 }
 
 .cart-btn {
-  display: flex;
-  margin: 20px;
-  padding: 5px;
-  background-color: #3f4666;
-  width: 65px;
-  height: 55px;
-  border-radius: 5px;
-  justify-content: center;
-  align-items: center;
-}
-
-.auth-buttons button {
   background-color: #3f4666;
   color: #e6edeb;
   border-radius: 5px;
   border: none;
   cursor: pointer;
-  padding: 10px 20px;
-  margin-right: 20px;
-  font-size: 16px;
-  transition: background-color 0.3s ease;
-}
-
-.auth-buttons button:hover {
-  background-color: #4280b8;
-}
-
-
-.dropdown {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 10px;
+  padding: 20px;
   margin: 10px;
 }
+
+
+
 
 ul {
   margin: 0;
   padding: 0;
 }
-
-
-.dropdown-content {
-  position: absolute;
-  top: 110px;
-  right: 85px;
-  background-color: #3f4666;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-  border-radius: 5px;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  width: 150px;
-  z-index: 10000;
-}
-
-.dropdown-content li {
-  padding: 10px;
-  color: white;
-  cursor: pointer;
-  border-radius: 5px;
-  font-size: 16px;
-
-}
-
-.dropdown-content li:hover {
-  background-color: #3498db;
-}
-
-
-
 
 .cart-btn:hover {
   background-color: #4280b8;
@@ -278,26 +248,17 @@ ul {
 }
 
 @media (max-width: 768px) {
-  .burger {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-  }
 
-  .cart-btn {
-    padding: 15px;
-  }
-  
   .container {
     width: 100%;
     display: flex;
     justify-content: space-between;
   }
- 
+
   .navbar {
     flex-direction: column;
     padding: 10px;
-}
+  }
 
   .logo {
     margin-bottom: 10px;
@@ -312,49 +273,6 @@ ul {
 
   }
 
-  .menubtn {
-  background-color: #3f4666;
-  color: #e6edeb;
-  border-radius: 5px;
-  border: none;
-  cursor: pointer;
-  padding: 25px 20px;
-  transition: background-color 0.3s ease;
-}
-
-
-  .burger-links {
-    position: absolute;
-    top: 280px;
-    left: 10px;
-    background-color: #3f4666;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-    border-radius: 5px;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    width: 150px;
-    z-index: 99999;
-  }
-
-  .burger-links li {
-    text-decoration: none;
-    padding: 5px;
-    color: white;
-    cursor: pointer;
-    border-radius: 5px;
-    font-size: 16px;
-  }
-
-  .burger-links li:hover {
-    background-color: #3498db;
-  }
-
-  .burger-links a {
-    text-decoration: none;
-    color: white;
-  }
-
   .nav-links {
     flex-direction: column;
     align-items: flex-start;
@@ -365,31 +283,6 @@ ul {
   .nav-links li {
     margin: 5px;
   }
-
-  .dropdown {
-padding: 10px;
-    width: 100%;
-    text-align: left;
-  }
-
-  .dropdown-content {
-    position: absolute;
-    top: 280px;
-    left: 120px;
-    background-color: #3f4666;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-    border-radius: 5px;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    z-index: 10000;
-  }
-  .cart-btn {
-    width: 50px;
-    height: 35px;
-  }
- 
-
 
 }
 
@@ -411,16 +304,6 @@ padding: 10px;
 
   }
 
-  .auth-buttons {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .auth-buttons a,
-  .auth-buttons button {
-
-    font-size: 14px;
-  }
 
   .nav-links a {
     font-size: 16px;

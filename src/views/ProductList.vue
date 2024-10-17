@@ -1,14 +1,16 @@
 <template>
 <div class="bkg">
   <h1>Nos Produits</h1>
-  <div class="card-container">
-    <div class="card" v-for="(prod, index) in produits" :key="index">
-      <div class="image-container">  
-        <img :src="require(`@/assets/${prod.image}`)" :alt="prod.titre" />
-        <button v-if="isMember" class="add-to-cart" @click="addToCart(prod, index)">+
-          <span v-if="productAdded === index" class="checkmark">&#10003;</span>
-        </button>  
-      </div> 
+  <!-- barre de recherche -->
+    <input type="search" name="search" id="query" placeholder="Rechercher..." v-model="query" @input="filterProducts(query)"/>
+    <div class="card-container">
+      <div class="card" v-for="(prod, index) in filteredProduits" :key="index">
+        <div class="image-container">  
+          <img :src="require(`@/assets/${prod.image}`)" :alt="prod.titre" />
+          <button v-if="isMember" class="add-to-cart" @click="addToCart(prod, index)">+
+            <span v-if="productAdded === index" class="checkmark">&#10003;</span>
+          </button>  
+        </div> 
       <h4>{{ prod.titre }}</h4>
       <p v-if="isMember">{{ prod.prix }} € | MOQ: {{prod.moq}}</p>
     </div>
@@ -223,14 +225,24 @@
           categorieId: 1,
           },
         ],
+        filteredProduits: [],
         isMember: false,
-        productAdded: null, 
+        productAdded: null,
+        query: '',
+       
       };
     },
   created() {
     this.checkMembershipStatus();
+    this.filteredProduits = this.produits;
   },
   methods: {
+    filterProducts() {
+    const searchTerm = this.query ? this.query.toLowerCase() : ''; // Vérification de sécurité pour `query`
+    this.filteredProduits = this.produits.filter((product) => {
+      return product.titre && product.titre.toLowerCase().includes(searchTerm); // Vérification de sécurité pour `titre`
+    });
+  },
     goToDetails(productId) {
       this.$router.push({ name: `@/views/ProductDetails/${this.produits.id}`, params: { id: productId }});
     },
@@ -262,6 +274,15 @@
 <style scoped>
 .bkg {
   background: linear-gradient( rgba(230,237,235,1) 0%, rgba(63,70,102,1) 30%, rgba(116,130,132,1) 84%);
+}
+
+#query {
+  margin-bottom: 20px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 300px;
+  font-size: 18px;
 }
 
 h1 {
