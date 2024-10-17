@@ -13,10 +13,10 @@
         </li>
         <!-- Menu déroulant pour les catégories -->
         <li>
-          <button @click="toggleCategoryDropdown" class="dropdown-btn">
+          <button @click="toggleCategoryDropdown" class="dropdown-btn" ref="dropdownMenu">
             Catégories
           </button>
-          <ul class="dropdown-content" v-if="isCategoryDropdownOpen">
+          <ul class="dropdown-cat" v-if="isCategoryDropdownOpen">
             <li v-for="category in categories" :key="category.id">
               <router-link :to="`/category/${category.id}`">{{ category.name }}</router-link>
             </li>
@@ -31,9 +31,9 @@
         <!-- Menu déroulant qui s'affiche quand l'utilisateur est connecté -->
         <div class="dropdown" v-if="isLoggedIn">
           <button class="dropbtn" @click="toggleDropdown"><img src="@/assets/profil.png" alt="user"
-              class="icon"></button>
+              class="icon" ref="dropdownMenu"></button>
           <ul class="dropdown-content" v-if="isOpen">
-            <li v-on:click="toggleDropdown">Bienvenue {{ name }}</li>
+            <li v-on:click="toggleDropdown">Bienvenue {{ userName }}</li>
             <li class="logout-btn" v-if="isLoggedIn" @click="logout">Déconnexion</li>
           </ul>
           <router-link to="/PanierUser" class="cart-btn" v-if="isLoggedIn"><img src="@/assets/panier.png" alt="panier"
@@ -53,12 +53,15 @@ export default {
       type: Boolean,
       userType: String,
     },
+    name: { 
+    type: String,
+    default: "",
+  },
   },
   data() {
     return {
       isOpen: false,
-      isCategoryDropdownOpen: false,
-      name: "", 
+      isCategoryDropdownOpen: false, 
       userId: "",
       categories: [
         { id: 1, name: 'Mobilier' },
@@ -81,7 +84,12 @@ export default {
     toggleDropdown() {
       this.isOpen = !this.isOpen;
     },
-
+    closeDropdown(event) {
+      // Vérifier si le clic est à l'extérieur du dropdown
+      if (this.isOpen && this.$refs.dropdownMenu && !this.$refs.dropdownMenu.contains(event.target)) {
+        this.isOpen = false;
+      } 
+    },
     // Fonction pour afficher/cacher le dropdown des catégories
     toggleCategoryDropdown() {
       this.isCategoryDropdownOpen = !this.isCategoryDropdownOpen;
@@ -93,8 +101,18 @@ export default {
     if (storedUserId) {
       this.userId = storedUserId;
   }
-  
-  },
+  const storedName = localStorage.getItem("userName");
+  if (storedName) {
+    this.userName = storedName;
+  }
+},
+mounted() {
+document.addEventListener('click', this.closeDropdown);
+},
+beforeUnmount() {
+  document.removeEventListener('click', this.closeDropdown);
+},
+   
   watch: {
     isLoggedIn() {
       const storedUserId = localStorage.getItem("userId");
@@ -127,9 +145,31 @@ export default {
   padding: 10px;
   cursor: pointer;
   border-radius: 5px;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.dropdown-btn:hover {
+  background-color: #f2f2f2;
+  color: #3f4666;
 }
 
 .dropdown-content {
+  position: absolute;
+  top: 130px;
+  right: 120px;
+  background-color: #3f4666;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  list-style: none;
+  padding: 10px;
+  z-index: 1000;
+  font-size: medium;
+  animation: fade-in 0.2s ease-in-out;
+}
+
+
+.dropdown-cat {
   position: absolute;
   background-color: #3f4666;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
@@ -138,10 +178,10 @@ export default {
   padding: 10px;
   z-index: 1000;
   font-size: medium;
+  animation: fade-in 0.2s ease-in-out;
 }
 
 .dropdown-content li {
-  margin-bottom: 10px;
   padding: 10px;
   color: white;
   cursor: pointer;
@@ -318,6 +358,15 @@ ul {
   .cart-btn {
     width: 50px;
     height: 50px;
+  }
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
   }
 }
 </style>

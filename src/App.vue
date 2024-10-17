@@ -40,6 +40,7 @@ export default {
       userType: null,
       showLogin: false,
       showSignup: false,
+      userName: "",
       accounts: [],
       isLoggedIn: false,
     };
@@ -78,20 +79,25 @@ export default {
     },
     loginSuccess(user) {
       this.isLoggedIn = true;
-      this.userType = user.type;  
+      this.userType = user.type;
+      this.userName = user.name;  
       localStorage.setItem('userType', user.type);
+      localStorage.setItem('userName', user.name);
       this.$root.$emit('userTypeChanged');
       window.location.reload();
       this.closeForms();
     },
     checkIfLoggedIn() {
       const userType = localStorage.getItem("userType");
+      const userName = localStorage.getItem("userName");
       if (userType) {
         this.isLoggedIn = true;
         this.userType = userType;
+        this.userName = userName || "";
       } else {
         this.isLoggedIn = false;
         this.userType = null;
+        this.userName = "";
       }
     },
     saveAccountsToLocalStorage(accounts) {
@@ -116,7 +122,9 @@ export default {
     logout() {
       this.isLoggedIn = false;
       this.userType = null;
+      this.userName = "";
       localStorage.removeItem("userType");
+      localStorage.removeItem("userName");
       window.location.reload();
       this.$root.$emit('userTypeChanged'); 
     },
@@ -163,7 +171,7 @@ nav a {
 }
 
 nav a.router-link-exact-active {
-  color: #3498db;
+  color: #282828;
 }
 
 .dark-overlay {

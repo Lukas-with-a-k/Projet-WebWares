@@ -73,7 +73,7 @@ export default {
           this.emitValidation();
         },
         emitValidation() {
-            this.$emit('validationResults', this.errors);
+            this.$emit('validResults', this.errors);
         }
     },
     watch: {
