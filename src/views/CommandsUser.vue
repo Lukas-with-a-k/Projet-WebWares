@@ -21,7 +21,7 @@
         </div>
         <div class=modal v-if="showModal" >
           <div class="modal-contenu">
-          <p>Votre commande a été bien effectué</p>
+          <p>{{ this.message }}</p>
            <ButtonComponent label="Fermer" bcolor="#3f4666" hcolor="#4280b8" @click="closeCommands(user)"/>
           </div>
         </div>
@@ -46,7 +46,9 @@
             isError: false,
             isDisabled: false,
             validationErrors: {},
-            showModal: false
+            showModal: false,
+            message: "",
+            commande: false
         };
     },
     methods: {
@@ -68,6 +70,8 @@
             }
             this.isError = false;
             this.isDisabled = true;
+            this.showModal = true;
+            this.message = "Votre infirmation pour livraison a été bien enregistré"
         },
         handlerRes(errors) {
             this.validationErrors = errors;
@@ -86,11 +90,16 @@
             existingCommands.push(this.userCommand);
             localStorage.setItem(`user_${this.user.name}`, JSON.stringify(existingCommands));
             localStorage.removeItem("produitsInPanier");
-            this.showModal = true
+            this.showModal = true;
+            this.message = "Votre commande a été bien effectué";
+            this.commande = true
             },
         closeCommands(){
-          this.showModal = false
+          this.showModal = false;
+          if (this.commande){
           this.$router.push({name:'LandingPage'});
+        }
+        this.commande = false
         }  
     },
     created() {
