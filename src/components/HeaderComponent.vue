@@ -247,6 +247,11 @@ beforeUnmount() {
   margin: 10px;
 }
 
+.dropbtn:hover {
+  background-color: #4280b8;
+  transition: all 0.3s ease-in-out;
+}
+
 .cart-btn {
   background-color: #3f4666;
   color: #e6edeb;

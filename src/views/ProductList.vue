@@ -280,12 +280,7 @@
     },
   },
 };
-//   computed: {
-//     filterProduct() {
-//       return this.products.filter((prod) => prod.isSelected);
-//     };
-//   },
-// };
+
 </script>
 
 <style scoped>
