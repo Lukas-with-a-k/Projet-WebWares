@@ -261,7 +261,7 @@
 
 <style scoped>
 .bkg {
-  background: linear-gradient( rgba(230,237,235,1) 0%, rgba(63,70,102,1) 60%, rgba(116,130,132,1) 84%);
+  background: linear-gradient( rgba(230,237,235,1) 0%, rgba(63,70,102,1) 20%, rgba(116,130,132,1) 84%);
 }
 
 h1 {
