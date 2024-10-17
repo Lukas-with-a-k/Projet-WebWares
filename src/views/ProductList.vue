@@ -5,7 +5,7 @@
     <div class="card" v-for="(prod, index) in produits" :key="index">
       <div class="image-container">  
         <img :src="require(`@/assets/${prod.image}`)" :alt="prod.titre" />
-        <button v-if="isMember" class="add-to-cart" @click="addToCart(prod, index)">+
+        <button v-if="isMember" class="add-to-cart" @click="addToCart(prod, index)">Ajouter au panier
           <span v-if="productAdded === index" class="checkmark">&#10003;</span>
         </button>  
       </div> 
@@ -247,7 +247,7 @@
         this.productAdded = index;
         setTimeout(() => {
             this.productAdded = null;
-        }, 2000);
+        }, 700);
     }
   },
   };
@@ -295,18 +295,18 @@ h1 {
     margin-bottom: 15px;
     object-fit: cover;
 } 
-.add-to-cart { 
-  display: none;
-  position: absolute;
-  bottom: 4px;
-  left: 50%;
-  transform: translateX(-50%);
-  padding: 10px 20px;
-  background-color: #4280b8;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
+.add-to-cart {  
+display: none;
+position: absolute;
+bottom: 250px;
+left: 50%;
+transform: translateX(-50%);
+padding: 20px 30px;
+background-color: #4280b8;
+color: white;
+border: solid #e6edeb;
+border-radius: 5px;
+cursor: pointer;
 }
 .image-container:hover .add-to-cart {
   display: block;

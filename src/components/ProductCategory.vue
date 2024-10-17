@@ -281,7 +281,7 @@ created() {
       this.productAdded = index;
       setTimeout(() => {
           this.productAdded = null;
-      }, 2000);
+      }, 700); //j'ai diminué le delay
     }
   },
 };
