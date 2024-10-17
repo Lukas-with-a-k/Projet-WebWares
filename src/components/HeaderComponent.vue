@@ -27,19 +27,19 @@
         <!-- Bouton Connexion qui ouvre le formulaire -->
         <button v-if="!isLoggedIn" @click="$emit('toggleLogin')">Connexion</button>
         <button v-if="!isLoggedIn" @click="$emit('toggleSignup')">S'inscrire</button>
-
+      </div>
         <!-- Menu déroulant qui s'affiche quand l'utilisateur est connecté -->
         <div class="dropdown" v-if="isLoggedIn">
           <button class="dropbtn" @click="toggleDropdown"><img src="@/assets/profil.png" alt="user"
-              class="icon" ref="dropdownMenu"></button>
-          <ul class="dropdown-content" v-if="isOpen">
-            <li v-on:click="toggleDropdown">Bienvenue {{ userName }}</li>
-            <li class="logout-btn" v-if="isLoggedIn" @click="logout">Déconnexion</li>
-          </ul>
-          <router-link to="/PanierUser" class="cart-btn" v-if="isLoggedIn"><img src="@/assets/panier.png" alt="panier"
+            class="icon" ref="dropdownMenu"></button>
+            <ul class="dropdown-content" v-if="isOpen">
+              <li v-on:click="toggleDropdown">Bienvenue {{ userName }}</li>
+              <li class="logout-btn" v-if="isLoggedIn" @click="logout">Déconnexion</li>
+            </ul>
+            <router-link to="/PanierUser" class="cart-btn" v-if="isLoggedIn"><img src="@/assets/panier.png" alt="panier"
               class="icon-panier"></router-link>
-        </div>
-      </div>
+            </div>
+      
     </nav>
   </header>
 </template>
@@ -126,11 +126,26 @@ beforeUnmount() {
 
 <style>
 
+  
+  
+.buttons button {
+  margin-right: 10px;
+  background-color: #3f4666;
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 24px;
+  font-weight: bold;
+}
+
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 10px;
+  
   
 }
 
