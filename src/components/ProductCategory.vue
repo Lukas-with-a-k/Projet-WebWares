@@ -15,7 +15,13 @@
         <h2>{{ product.titre }}</h2><br>
         <h3>{{ product.description }}</h3><br><br> 
         <p v-if="isMember">Quantité Minimum de Commande: {{ product.moq }}</p>
-        <p v-if="isMember">Prix unitaire: {{ product.prix }} €</p><br><br>
+        <p v-if="isMember">Prix unitaire: {{ product.prix }} €</p><br>
+        <td v-if="isMember && chosen(product)">
+        <span> Quantité : </span>
+          <button @click="decrease(product)"> - </button>
+          <span> {{ product.count }} </span>
+          <button @click="increase(product)"> + </button>
+      </td><br>
         <router-link :to="`/product-details/${product.id}`">Voir Détails</router-link>
         </div>
       </div>
@@ -270,7 +276,7 @@ created() {
     },
     checkMembershipStatus() {  //method pour demasquer les prix/moq
       const userType = localStorage.getItem('userType');
-      this.isMember = userType === 'member';
+      this.isMember = userType === 'member'||'admin';
     },
     addToCart(product, index) {
       let produitsInPanier = JSON.parse(localStorage.getItem('produitsInPanier')) || [];
@@ -282,7 +288,19 @@ created() {
       setTimeout(() => {
           this.productAdded = null;
       }, 700); //j'ai diminué le delay
-    }
+    },
+    chosen(product) {
+      let produitsInPanier = JSON.parse(localStorage.getItem('produitsInPanier')) || [];
+      return produitsInPanier.some(item => item.id === product.id); 
+    },
+    decrease(prod) {
+      if (prod.count > prod.moq){
+        return prod.count --;
+      }
+    },
+    increase(prod) {
+    return prod.count++
+    },
   },
 };
 </script>

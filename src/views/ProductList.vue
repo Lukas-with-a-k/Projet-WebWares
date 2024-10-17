@@ -7,12 +7,18 @@
       <div class="card" v-for="(prod, index) in filteredProduits" :key="index">
         <div class="image-container">  
           <img :src="require(`@/assets/${prod.image}`)" :alt="prod.titre" />
-          <button v-if="isMember" class="add-to-cart" @click="addToCart(prod, index)">+
-            <span v-if="productAdded === index" class="checkmark">&#10003;</span>
-          </button>  
+          <button v-if="isMember" class="add-to-cart" @click="addToCart(prod, index)">Ajouter au panier
+          <span v-if="productAdded === index" class="checkmark">&#10003;</span>
+        </button>  
         </div> 
       <h4>{{ prod.titre }}</h4>
       <p v-if="isMember">{{ prod.prix }} € | MOQ: {{prod.moq}}</p>
+      <td v-if="isMember && chosen(prod)">
+        <span> Quantité : </span>
+          <button @click="decrease(prod)"> - </button>
+          <span> {{ prod.count }} </span>
+          <button @click="increase(prod)"> + </button>
+      </td>
     </div>
   </div>
 </div>  
@@ -229,7 +235,6 @@
         isMember: false,
         productAdded: null,
         query: '',
-       
       };
     },
   created() {
@@ -242,27 +247,39 @@
     this.filteredProduits = this.produits.filter((product) => {
       return product.titre && product.titre.toLowerCase().includes(searchTerm); // Vérification de sécurité pour `titre`
     });
-  },
+    },
     goToDetails(productId) {
       this.$router.push({ name: `@/views/ProductDetails/${this.produits.id}`, params: { id: productId }});
     },
     checkMembershipStatus() {
       const userType = localStorage.getItem('userType');
-      this.isMember = userType === 'member';
+      this.isMember = userType === 'member'|| 'admin';
     },
     addToCart(product, index) {
-        let produitsInPanier = JSON.parse(localStorage.getItem('produitsInPanier')) || [];
-        produitsInPanier.push(product);
-        localStorage.setItem('produitsInPanier', JSON.stringify(produitsInPanier));
-        console.log(`${product.titre} ajouté au panier`);
-        //validation de ajout au click
-        this.productAdded = index;
-        setTimeout(() => {
-            this.productAdded = null;
-        }, 700);
-    }
+      let produitsInPanier = JSON.parse(localStorage.getItem('produitsInPanier')) || [];
+      produitsInPanier.push(product);
+      localStorage.setItem('produitsInPanier', JSON.stringify(produitsInPanier));
+      console.log(`${product.titre} ajouté au panier`);
+      //validation de ajout au click
+      this.productAdded = index;
+      setTimeout(() => {
+        this.productAdded = null;
+      }, 700);
+    },
+    chosen(product) {
+      let produitsInPanier = JSON.parse(localStorage.getItem('produitsInPanier')) || [];
+      return produitsInPanier.some(item => item.id === product.id); 
+    },
+    decrease(prod) {
+      if (prod.count > prod.moq){
+        return prod.count --;
+      }
+    },
+    increase(prod) {
+    return prod.count++
+    },
   },
-  };
+};
 //   computed: {
 //     filterProduct() {
 //       return this.products.filter((prod) => prod.isSelected);
