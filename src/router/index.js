@@ -10,6 +10,11 @@ const routes = [
     
   },
   {
+    path: "/userlist-admin",
+    name: "UserlistAdmin",
+    component: () => import("../views/UserlistAdmin.vue"),
+  },
+  {
     path: "/ProductList",
     name: "ProductList",
     component: () => import("../views/ProductList.vue"),

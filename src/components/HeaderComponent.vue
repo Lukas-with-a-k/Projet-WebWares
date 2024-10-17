@@ -1,8 +1,10 @@
 <template>
   <header class="header">
-    <nav class="navbar" style="font-size: 26px;">
+    <nav class="navbar" style="font-size: 26px">
       <div class="logo">
-        <router-link to="/"><img src="@/assets/webwares.png" alt="logo"></router-link>
+        <router-link to="/"
+          ><img src="@/assets/webwares.png" alt="logo"
+        /></router-link>
       </div>
 
       <!-- Barre de navigation dynamique -->
@@ -13,37 +15,59 @@
         </li>
         <!-- Menu déroulant pour les catégories -->
         <li>
-          <button @click="toggleCategoryDropdown" class="dropdown-btn" ref="dropdownMenu">
+          <button
+            @click="toggleCategoryDropdown"
+            class="dropdown-btn"
+            ref="dropdownMenu"
+          >
             Catégories
           </button>
           <ul class="dropdown-cat" v-if="isCategoryDropdownOpen">
             <li v-for="category in categories" :key="category.id">
-              <router-link :to="`/category/${category.id}`">{{ category.name }}</router-link>
+              <router-link :to="`/category/${category.id}`">{{
+                category.name
+              }}</router-link>
             </li>
           </ul>
+        </li>
+
+        <li v-if="isAdmin">
+          <router-link to="/userlist-admin">Userlist</router-link>
         </li>
       </ul>
       <div class="buttons">
         <!-- Bouton Connexion qui ouvre le formulaire -->
-        <button v-if="!isLoggedIn" @click="$emit('toggleLogin')">Connexion</button>
-        <button v-if="!isLoggedIn" @click="$emit('toggleSignup')">S'inscrire</button>
-      </div>
+        <button v-if="!isLoggedIn" @click="$emit('toggleLogin')">
+          Connexion
+        </button>
+        <button v-if="!isLoggedIn" @click="$emit('toggleSignup')">
+          S'inscrire
+        </button>
+
         <!-- Menu déroulant qui s'affiche quand l'utilisateur est connecté -->
         <div class="dropdown" v-if="isLoggedIn">
-          <button class="dropbtn" @click="toggleDropdown"><img src="@/assets/profil.png" alt="user"
-            class="icon" ref="dropdownMenu"></button>
-            <ul class="dropdown-content" v-if="isOpen">
-              <li v-on:click="toggleDropdown">Bienvenue {{ userName }}</li>
-              <li class="logout-btn" v-if="isLoggedIn" @click="logout">Déconnexion</li>
-            </ul>
-            <router-link to="/PanierUser" class="cart-btn" v-if="isLoggedIn"><img src="@/assets/panier.png" alt="panier"
-              class="icon-panier"></router-link>
-            </div>
-      
+          <button class="dropbtn" @click="toggleDropdown">
+            <img
+              src="@/assets/profil.png"
+              alt="user"
+              class="icon"
+              ref="dropdownMenu"
+            />
+          </button>
+          <ul class="dropdown-content" v-if="isOpen">
+            <li v-on:click="toggleDropdown">Bienvenue {{ userName }}</li>
+            <li class="logout-btn" v-if="isLoggedIn" @click="logout">
+              Déconnexion
+            </li>
+          </ul>
+          <router-link to="/PanierUser" class="cart-btn" v-if="isLoggedIn"
+            ><img src="@/assets/panier.png" alt="panier" class="icon-panier"
+          /></router-link>
+        </div>
+      </div>
     </nav>
   </header>
 </template>
-
 
 <script>
 export default {
@@ -53,21 +77,22 @@ export default {
       type: Boolean,
       userType: String,
     },
-    name: { 
-    type: String,
-    default: "",
-  },
+    name: {
+      type: String,
+      default: "",
+    },
   },
   data() {
     return {
       isOpen: false,
-      isCategoryDropdownOpen: false, 
+      isCategoryDropdownOpen: false,
+      isAdmin: false,
       userId: "",
       categories: [
-        { id: 1, name: 'Mobilier' },
-        { id: 2, name: 'Luminaires' },
-        { id: 3, name: 'Tapis' },
-        { id: 4, name: 'Déco' },
+        { id: 1, name: "Mobilier" },
+        { id: 2, name: "Luminaires" },
+        { id: 3, name: "Tapis" },
+        { id: 4, name: "Déco" },
       ],
     };
   },
@@ -86,33 +111,42 @@ export default {
     },
     closeDropdown(event) {
       // Vérifier si le clic est à l'extérieur du dropdown
-      if (this.isOpen && this.$refs.dropdownMenu && !this.$refs.dropdownMenu.contains(event.target)) {
+      if (
+        this.isOpen &&
+        this.$refs.dropdownMenu &&
+        !this.$refs.dropdownMenu.contains(event.target)
+      ) {
         this.isOpen = false;
-      } 
+      }
     },
     // Fonction pour afficher/cacher le dropdown des catégories
     toggleCategoryDropdown() {
       this.isCategoryDropdownOpen = !this.isCategoryDropdownOpen;
-    }
+    },
+    checkUserType() {
+      const userType = localStorage.getItem("userType");
+      this.isAdmin = userType === "admin";
+    },
   },
 
   created() {
     const storedUserId = localStorage.getItem("userId");
     if (storedUserId) {
       this.userId = storedUserId;
-  }
-  const storedName = localStorage.getItem("userName");
-  if (storedName) {
-    this.userName = storedName;
-  }
-},
-mounted() {
-document.addEventListener('click', this.closeDropdown);
-},
-beforeUnmount() {
-  document.removeEventListener('click', this.closeDropdown);
-},
-   
+    }
+    const storedName = localStorage.getItem("userName");
+    if (storedName) {
+      this.userName = storedName;
+    }
+  },
+  mounted() {
+    document.addEventListener("click", this.closeDropdown);
+    this.checkUserType();
+  },
+  beforeUnmount() {
+    document.removeEventListener("click", this.closeDropdown);
+  },
+
   watch: {
     isLoggedIn() {
       const storedUserId = localStorage.getItem("userId");
@@ -125,33 +159,15 @@ beforeUnmount() {
 </script>
 
 <style>
-
-  
-  
-.buttons button {
-  margin-right: 10px;
-  background-color: #3f4666;
-  color: white;
-  border: none;
-  padding: 10px;
-  cursor: pointer;
-  border-radius: 5px;
-  font-size: 24px;
-  font-weight: bold;
-}
-
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 10px;
-  
-  
 }
 
 .dropdown {
   display: flex;
-  
 }
 .dropdown-btn {
   background-color: #3f4666;
@@ -182,7 +198,6 @@ beforeUnmount() {
   font-size: medium;
   animation: fade-in 0.2s ease-in-out;
 }
-
 
 .dropdown-cat {
   position: absolute;
@@ -217,13 +232,9 @@ beforeUnmount() {
   display: block;
 }
 
-
 .header {
   background-color: #748284;
 }
-
-
-
 
 .logo img {
   height: 150px;
@@ -277,9 +288,6 @@ beforeUnmount() {
   margin: 10px;
 }
 
-
-
-
 ul {
   margin: 0;
   padding: 0;
@@ -304,11 +312,9 @@ ul {
   object-fit: cover;
   cursor: pointer;
   filter: invert(90%);
-
 }
 
 @media (max-width: 768px) {
-
   .container {
     width: 100%;
     display: flex;
@@ -330,7 +336,6 @@ ul {
     width: 160px;
     height: 140px;
     margin-right: 0px;
-
   }
 
   .nav-links {
@@ -343,7 +348,6 @@ ul {
   .nav-links li {
     margin: 5px;
   }
-
 }
 
 @media (max-width: 480px) {
@@ -361,9 +365,7 @@ ul {
     width: 90px;
     height: 80px;
     margin-right: 300px;
-
   }
-
 
   .nav-links a {
     font-size: 16px;
