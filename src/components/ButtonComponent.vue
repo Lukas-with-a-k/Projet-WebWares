@@ -8,7 +8,7 @@
     export default {
         props:{
             label: String,
-            color: String,
+            bcolor: String,
             hcolor: String
         }
     }
@@ -16,11 +16,20 @@
 
 <style scoped>
     button{
-        background-color: v-bind(color);
-        padding: 7px 20px;
+        background-color: v-bind(bcolor);
+                /* padding: 7px 20px;
+                cursor: pointer; */
+        color: #e6edeb;
+        text-decoration: none;
+        border-radius: 5px;
+        border: none;
         cursor: pointer;
+        padding: 10px 20px;
+        margin-right: 20px;
+        font-size: 16px;
+        transition: background-color 0.3s ease;
 }
-button:hover{
-    background-color: v-bind(hcolor);
+    button:hover{
+        background-color: v-bind(hcolor);
 }
 </style>

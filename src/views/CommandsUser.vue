@@ -1,12 +1,12 @@
 <template>
-  <div class="container bkg">
+  <div class="container">
       <div class="container1">
           <h4>Information pour livrason</h4>
           <form>
-              <UserForm :user="user" @userdata="user = $event" @validationResults="handlerRes"></UserForm>
+              <UserForm :user="user" @userdata="user = $event" @validResults="handlerRes"></UserForm>
           </form>
           <p v-if="isError" style="color: red;"> {{ errorMessage }}</p>
-          <ButtonComponent label="Confirmer l'information" @click="verifier" color="darkgray" hcolor="gray" />
+          <ButtonComponent label="Confirmer l'information" @click="verifier" bcolor="#3f4666" hcolor="#4280b8" />
           
       </div>
       <div class="container2">
@@ -16,8 +16,14 @@
               <p>A payer : {{ prix.prixTotal }} €</p>
           </div>
           <div class="button">
-              <ButtonComponent label="Commander" :isDisabled="isDisabled" @click="commander" color="green" hcolor="darkgreen" />
+              <ButtonComponent label="Commander" :isDisabled="isDisabled" @click="commander" bcolor="green" hcolor="darkgreen" />
           </div>
+      </div>
+      <div class=modal v-if="showModal" >
+        <div class="modal-contenu">
+        <p>Votre commande a été bien effectué</p>
+         <ButtonComponent label="Fermer" bcolor="#3f4666" hcolor="#4280b8" @click="closeCommands(user)"/>
+        </div>
       </div>
   </div>
 </template>
@@ -32,14 +38,15 @@ export default {
       return {
           usersData: [],
           user: {},
-          userCommand: [],
+          userCommand: {},
           userCommands: [],
           userId: "",
           prix: {},
           errorMessage: '',
           isError: false,
           isDisabled: false,
-          validationErrors: {}
+          validationErrors: {},
+          showModal: false
       };
   },
   methods: {
@@ -54,7 +61,7 @@ export default {
           this.phoneValid = this.checkPhone();
           this.usernameValid = this.checkUsername();
 
-          if (!this.user.name || !this.user.phone || !this.user.postal || !this.user.city || !this.user.adress || !this.phoneValid || !this.usernameValid) {
+          if (!this.user.name || !this.user.phone || !this.user.postal || !this.user.city || !this.user.adress || this.phoneValid || this.usernameValid) {
               this.errorMessage = 'Veuillez remplir tous les champs correctement';
               this.isError = true;
               return;
@@ -72,14 +79,19 @@ export default {
       },
       checkUsername() {
           const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-          return !emailRegex.test(this.user.mail);
+          return !emailRegex.test(this.user.username);
       },
       commander() {
-          let existingCommands = JSON.parse(localStorage.getItem(`user_${this.user.id}`)) || [];
+          let existingCommands = JSON.parse(localStorage.getItem(`user_${this.user.name}`)) || [];
           existingCommands.push(this.userCommand);
-          localStorage.setItem(`user_${this.user.id}`, JSON.stringify(existingCommands));
+          localStorage.setItem(`user_${this.user.name}`, JSON.stringify(existingCommands));
           localStorage.removeItem("produitsInPanier");
-      }
+          this.showModal = true
+          },
+      closeCommands(){
+        this.showModal = false
+        this.$router.push({name:'LandingPage'});
+      }  
   },
   created() {
       this.userId = localStorage.getItem("userId");
@@ -88,11 +100,7 @@ export default {
       this.usersData = JSON.parse(localStorage.getItem("accounts")) || [];
       this.userData();
   },
-  mounted() {
-      if (!localStorage.getItem('produitsInPanier')) {
-          alert("Votre panier est vide");
-      }
-  }
+
 };
 </script>
 
@@ -117,7 +125,7 @@ flex-direction: column;
 justify-content: space-around;
 }
 .prix{
-    flex-direction: column;
+  flex-direction: column;
   padding: 10px;
   justify-content: space-around;
   border: 1px solid black;
@@ -128,7 +136,7 @@ form {
     display: flex;
     flex-direction: column;
 }
-/* @media (max-width: 360px) {
+@media (max-width: 360px) {
   .bkg {
     background-image: none;
   }
@@ -142,5 +150,22 @@ form {
    
     width: auto;
     padding: 15px;
-  }} */
+  }}
+  .modal{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background-color:rgba(0,0,0,0.5);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+.modal-contenu{
+    background-color: #fff;
+    padding:40px;
+    border-radius:10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
 </style>

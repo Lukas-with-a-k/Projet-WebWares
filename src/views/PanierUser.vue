@@ -17,7 +17,7 @@
           <button @click="increase(produit)"> + </button>
       </td>
       <td>Total TH : {{ subTotal(produit) }}</td>
-      <td> <ButtonComponent label="Supprimer" @click="supprimeProduit(index)" color="darkgray" hcolor="gray"/></td>
+      <td> <ButtonComponent label="Supprimer" @click="supprimeProduit(index)" bcolor="#3f4666" hcolor="#4280b8"/></td>
    </tr>
 </tbody>
 </table>
@@ -29,7 +29,7 @@
    <p> TTC : {{ prixTotal() }} </p>
   </div>
     <div class="button">
-      <ButtonComponent label="Passer au command" @click="passerAuCommand()" color="green" hcolor="darkgreen"/>
+      <ButtonComponent label="Passer au command" @click="passerAuCommand()" bcolor="#3f4666" hcolor="#4280b8"/>
     </div>
   </div>
 </div>
@@ -130,10 +130,10 @@ created(){
    },
 mounted(){
     if(localStorage.getItem('produitsInPanier')) {this.produitsInPanier = JSON.parse(localStorage.getItem('produitsInPanier'))
-      }
-    // else {
-    // alert("Votre panier est vide");
-    //     }
+      }else{
+   this.isError = true;
+   this.errorMessage = "Votre panier est vide";
+        }
 this.userId = localStorage.getItem("userId");
     },
     computed: {
@@ -153,7 +153,7 @@ margin: 0 auto;
 font-size: large;
 }
 .container {
-  height: 72vh;
+height: 72vh;
 display: flex;
 justify-content: space-around;
 min-width: 100px;
