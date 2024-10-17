@@ -1,28 +1,26 @@
 <template>
   <div class="bkg">
     <h1>Produits dans : {{ categoryName }}</h1>
-
     <div class="card-container">
-      <div v-for="product in filteredProducts" :key="product.id" class="card">
+      <div class="card" v-for="(product, index) in filteredProducts" :key="product.id" >
         <div class="image-container">
-          <img :src="require(`@/assets/${product.image}`)" :alt="product.titre" class="product-image" />
-          <button v-if="isMember" class="add-to-cart" @click="addToCart(product, index)">Ajouter au panier
-            <span v-if="productAdded === index" class="checkmark">&#10003;</span>
+          <img :src="require(`@/assets/${product.image}`)" :alt="product.titre" />
+          <button class="add-to-cart" v-if="isMember" @click="addToCart(product, index)">Ajouter au panier
+          <span class="checkmark" v-if="productAdded === index">&#10003;</span>
           </button>
-        </div>
+            <div class="qte" v-if="isMember && chosen(product)">
+              <span> Quantité : </span>
+              <button @click="decrease(product)"> - </button>
+              <span> {{ product.count }} </span>
+              <button @click="increase(product)"> + </button>
+            </div>
+        </div>    
         <div class="info-container">
-            
-        <h2>{{ product.titre }}</h2><br>
-        <h3>{{ product.description }}</h3><br><br> 
-        <p v-if="isMember">Quantité Minimum de Commande: {{ product.moq }}</p>
-        <p v-if="isMember">Prix unitaire: {{ product.prix }} €</p><br>
-        <td v-if="isMember && chosen(product)">
-        <span> Quantité : </span>
-          <button @click="decrease(product)"> - </button>
-          <span> {{ product.count }} </span>
-          <button @click="increase(product)"> + </button>
-      </td><br>
-        <router-link :to="`/product-details/${product.id}`">Voir Détails</router-link>
+          <h2>{{ product.titre }}</h2>
+          <h3>{{ product.description }}</h3> 
+          <p v-if="isMember">Quantité Minimum de Commande: {{ product.moq }}</p>
+          <p v-if="isMember">Prix unitaire: {{ product.prix }} €</p>
+          <router-link :to="`/product-details/${product.id}`">Voir Détails</router-link>
         </div>
       </div>
     </div>
@@ -274,20 +272,31 @@ created() {
       ];
       return categories.find((cat) => cat.id === parseInt(id));
     },
-    checkMembershipStatus() {  //method pour demasquer les prix/moq
+    checkMembershipStatus() {  // pour demasquer les prix/moq
       const userType = localStorage.getItem('userType');
-      this.isMember = userType === 'member'||'admin';
+      this.isMember = userType === 'member';
     },
     addToCart(product, index) {
       let produitsInPanier = JSON.parse(localStorage.getItem('produitsInPanier')) || [];
-      produitsInPanier.push(product);
-      localStorage.setItem('produitsInPanier', JSON.stringify(produitsInPanier));
-      console.log(`${product.titre} ajouté au panier`);
-      //validation de ajout au click
-      this.productAdded = index;
-      setTimeout(() => {
-          this.productAdded = null;
-      }, 700); //j'ai diminué le delay
+      if (produitsInPanier.some(item => item.id === product.id)) {
+        console.log(`${product.id} est deja dans le panier`);
+      } else {
+        produitsInPanier.push({
+          id: product.id,
+          image: product.image,
+          titre: product.titre,
+          prix: product.prix,
+          count: product.count,
+          categorieId: product.categorieId
+        });
+        localStorage.setItem('produitsInPanier', JSON.stringify(produitsInPanier));
+        console.log(`${product.titre} ajouté au panier`);
+        //validation de ajout au click
+        this.productAdded = index;
+        setTimeout(() => {
+        this.productAdded = null;
+        }, 700);
+      }
     },
     chosen(product) {
       let produitsInPanier = JSON.parse(localStorage.getItem('produitsInPanier')) || [];
@@ -295,123 +304,139 @@ created() {
     },
     decrease(prod) {
       if (prod.count > prod.moq){
-        return prod.count --;
+        prod.count --;
+        this.updateLocalStorage(prod);
       }
     },
     increase(prod) {
-    return prod.count++
+      prod.count++;
+      this.updateLocalStorage(prod);
     },
+    updateLocalStorage(prod) {
+      let produitsInPanier = JSON.parse(localStorage.getItem('produitsInPanier')) || [];
+      const productIndex = produitsInPanier.findIndex(item => item.id === prod.id);
+      if (productIndex != -1) {
+        produitsInPanier[productIndex].count = prod.count;
+        localStorage.setItem('produitsInPanier', JSON.stringify(produitsInPanier));
+      }
+    }
   },
 };
 </script>
 
 <style scoped>
 .bkg {  
-background: linear-gradient( rgba(230,237,235,1) 0%, rgba(63,70,102,1) 30%, rgba(116,130,132,1) 98%);
+  background: linear-gradient( rgba(230,237,235,1) 0%, rgba(63,70,102,1) 30%, rgba(116,130,132,1) 98%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
 }
 
 h1 {
-color: #3F4666;
-padding: 50px;
+  color: #3F4666;
+  padding: 50px;
 }
 
 .card-container {
-display: flex;
-flex-wrap: wrap;
-
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 20px;
+  width: 100%;
+  max-width: 1000px;
 }
+
 .card {
   display: flex;
   flex-direction: row;
-  color: #e6edeb;
-  border: none;
+  background-color: rgba(0, 0, 0, 0.356);
   padding: 20px;
-  width: 1000px;
+  text-align: center;
+  align-items: center;
 }
+
 .image-container {
-position: relative;
-height: 100%;
+  position: relative;
+  flex: 0 0 500px;
+  height: 500px;
+  display:flex;
+  align-items: center;
+  justify-content: center;
 }
-.info-container {
-  display: flex;
-  background-color: rgba(0, 0, 0, 0.151);
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: stretch;
-  padding: 20px;
-  height: 461px;
-  width: 461px;
- 
-}  
+
 .card img {  
   height: 500px;
   width: 500px;
   margin-bottom: 15px;
   object-fit: cover;
 } 
-.add-to-cart { 
-display: none;
-position: absolute;
-bottom: 250px;
-left: 50%;
-transform: translateX(-50%);
-padding: 20px 30px;
-background-color: #4280b8;
-color: white;
-border: solid #e6edeb;
-border-radius: 5px;
-cursor: pointer;
+
+.add-to-cart {  
+  display: none;
+  position: absolute;
+  bottom: 240px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 20px 40px;
+  background-color: #4280b8;
+  color: white;
+  border: #4280b8;
+  border-radius: 5px;
+  cursor: pointer;
 }
+
 .image-container:hover .add-to-cart {
-display: block;
-}
-.card h4 {
-font-size: 1.2em;
-margin: 10px 0;
+  display: block;
 }
 
-.card p {
-/*display: none; */  
-color: #e6edeb;
-font-size: 1em;
-}
-/* Media query 945px */
-@media (max-width: 945px) {
-  .bkg {
-  background-image: none;
-}  
-.card-container {
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-.card {
-  background-color: #3F4666;
-  width: auto;
-  margin-bottom: 15px; /*changé */
-}
+.qte {
+  position: absolute;
+  bottom: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 5px 20px;
+  color: #3F4666;
+  background-color: #e6edeb;
+  border: solid #e6edeb;
+  border-radius: 5px;
 }
 
-/* Media query 360px */
-@media (max-width: 360px) {
-.bkg {
-  background-image: none;
-}  
-.card-container {
-  flex-direction: column;
-  align-items: center;
-  padding-left: 60%;
+.qte span {
+  font-size: 1.1;
+  margin:3px
 }
-.card {
-  background-color: #3F4666;
-  width: auto;
-  padding: 15px;
+
+.card h2, h3, p {
+  color: #e6edeb; 
+  margin: 30px;
 }
-.card h4 {
-  font-size: 1em;
+
+@media (max-width: 750px) {
+  .card {
+    flex-direction: column;
+  }
+  .image-container {
+    margin-left: 0;
+    margin-top: 10px;
+    width: 100%;
+    max-width: 200px;
+  }
 }
-.card p {
-  font-size: 0.9em;
-}
+
+@media (max-width: 200px) {
+  .card {
+    padding: 10px;
+  }
+  .info-container h2 {
+    font-size: 1em;
+  }
+  .info-container p {
+    font-size: 0.8em;
+  }
+  .image-container {
+    width: 100%;
+    max-width: 150px;
+  }
 }
 </style>
