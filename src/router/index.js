@@ -43,6 +43,12 @@ const routes = [
   component: () => import("../components/ProductCategory.vue"),
 },
 {
+  path: "/GestionProduits",
+  name: "GestionProduits",
+  component: () => import("../views/GestionProduits.vue"),
+
+},
+{
   path: '/contact'
   , name: 'ContactPage'
   , component: () => import("../components/ContactPage.vue")
