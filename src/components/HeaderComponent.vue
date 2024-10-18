@@ -44,7 +44,7 @@
             <img src="@/assets/profil.png" alt="user" class="icon" ref="dropdownMenu" />
           </button>
           <ul class="dropdown-content" v-if="isOpen">
-            <li v-on:click="toggleDropdown">Bienvenue {{ userName }}</li>
+            <li @:click="toggleDropdown">Bienvenue {{ userName }}</li>
             <li class="logout-btn" v-if="isLoggedIn" @click="logout">
               Déconnexion
             </li>
@@ -56,7 +56,6 @@
     </nav>
   </header>
 </template>
-
 <script>
 export default {
   name: "HeaderComponent",
@@ -83,6 +82,7 @@ export default {
         { id: 4, name: "Déco" },
       ],
       produitsInPanier: [],
+      
     };
   },
   computed: {
@@ -94,9 +94,13 @@ export default {
     loadCart() {
       // Charger les produits depuis localStorage
       const produits = JSON.parse(localStorage.getItem('produitsInPanier')) || [];
+      console.log("Produits chargés depuis localStorage :", produits);
       this.produitsInPanier = produits;
+      this.cartCount = produits.length;
     },
-
+    addProductToCart(product) {
+    this.produitsInPanier.push(product);
+    },
     logout() {
       this.$emit("logout");
       this.isOpen = false;
@@ -144,27 +148,27 @@ export default {
       this.userName = storedName;
     }
     this.loadCart();
+    
   },
   mounted() {
     document.addEventListener("click", this.closeDropdown);
     document.addEventListener('click', this.closeCategoryDropdown);
     this.checkUserType();
-    window.addEventListener('storage', this.loadCart);
   },
 
   beforeUnmount() {
     document.removeEventListener("click", this.closeDropdown);
     document.removeEventListener('click', this.closeCategoryDropdown);
-    window.removeEventListener('storage', this.loadCart);
   },
 
   watch: {
     produitsInPanier: {
-      handler() {
-        localStorage.setItem('produitsInPanier', JSON.stringify(this.produitsInPanier));
-      },
-      deep: true, // Permet de surveiller les changements dans les objets et tableaux
+    handler(newValue) {
+      console.log("Produits dans le panier mis à jour :", newValue);
+      localStorage.setItem('produitsInPanier', JSON.stringify(newValue));
     },
+    deep: true
+  },
     isLoggedIn() {
       const storedUserId = localStorage.getItem("userId");
       if (storedUserId) {
@@ -188,6 +192,7 @@ export default {
 }
 
 .dropdown-btn {
+
   background-color: #3f4666;
   color: white;
   border: none;
@@ -205,7 +210,7 @@ export default {
 
 .dropdown-content {
   position: absolute;
-  top: 130px;
+  top: 125px;
   right: 120px;
   background-color: #3f4666;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
@@ -219,11 +224,8 @@ export default {
 
 .cart-count {
   position: absolute;
+  top: 4px;
   color: #f5fc2aa0;
-  top: 100px;
-  right: 25px;
-  border-radius: 50%;
-  padding: 5px;
   font-size: 22px;
 }
 
@@ -319,6 +321,7 @@ export default {
 }
 
 .cart-btn {
+  position: relative;
   background-color: #3f4666;
   color: #e6edeb;
   border-radius: 5px;
@@ -363,7 +366,7 @@ ul {
 
   .navbar {
     flex-direction: column;
-    padding: 10px;
+    padding: 20px;
   }
 
   .logo {
@@ -380,14 +383,22 @@ ul {
 
   .nav-links {
     flex-direction: column;
-    align-items: flex-start;
     width: 100%;
     margin: 10px;
   }
 
-  .nav-links li {
-    margin: 5px;
+  .dropdown {
+    position: relative;
   }
+
+  .dropdown-content {
+    position: absolute;
+    top: 95px;
+    right: 110px;
+  }
+
+
+
 }
 
 @media (max-width: 480px) {
@@ -407,20 +418,6 @@ ul {
     margin-right: 300px;
   }
 
-  .nav-links a {
-    font-size: 16px;
-  }
-
-  .icon,
-  .icon-panier {
-    width: 30px;
-    height: 30px;
-  }
-
-  .cart-btn {
-    width: 50px;
-    height: 50px;
-  }
 }
 
 @keyframes fade-in {

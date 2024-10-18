@@ -113,4 +113,13 @@ video {
   transition: all 0.3s ease-in-out;
 }
 
+@media (max-width: 768px) {
+  .banner {
+   display: none;
+  }
+
+  .action {
+    height: 50vh;
+  }
+}
 </style>

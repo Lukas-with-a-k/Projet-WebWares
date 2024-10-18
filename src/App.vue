@@ -68,7 +68,7 @@ export default {
           username: "admin@gmail.com",
           password: "admin1234",
           type: "admin",
-          name: "Societe de l'admin",
+          name: "Administrateur",
           siret: "123456789",
           adress: "1 rue de l'admin",
           postal: "28000",
