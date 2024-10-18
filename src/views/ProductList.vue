@@ -333,7 +333,7 @@ h1 {
   display: flex;
   justify-content: center;
   flex-direction: column;  
-  color: #e6edeb;
+  color: #9e7c48;
   border: none;
   padding-bottom: 20px; 
   text-align: center;
