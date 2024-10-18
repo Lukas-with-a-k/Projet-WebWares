@@ -88,6 +88,7 @@ return (th +tva).toFixed(2)
 },
 supprimeProduit(ind){
   this.produitsInPanier.splice(ind, 1)
+  window.location.reload();
   },
   passerAuCommand(){
       this.$router.push({name:'commands'})

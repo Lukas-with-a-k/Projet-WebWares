@@ -307,6 +307,7 @@ created() {
         setTimeout(() => {
         this.productAdded = null;
         }, 700);
+        window.location.reload();
       }
     },
     chosen(product) {
@@ -341,6 +342,7 @@ created() {
   display: flex;
   flex-direction: column;
   align-items: center;
+  min-height: 78vh;
  
 }
 

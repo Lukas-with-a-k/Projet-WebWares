@@ -274,6 +274,7 @@
         setTimeout(() => {
         this.productAdded = null;
         }, 700);
+        window.location.reload();
       }
     },
     chosen(product) {
@@ -306,6 +307,7 @@
 <style scoped>
 .bkg {
   background: linear-gradient( rgba(230,237,235,1) 0%, rgba(63,70,102,1) 30%, rgba(116,130,132,1) 84%);
+  min-height: 78vh;
 }
 
 #query {

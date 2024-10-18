@@ -122,4 +122,9 @@ video {
     height: 50vh;
   }
 }
+@media (max-width: 480px) {
+  .bkg {
+    min-height: 7vh;
+  }
+}
 </style>

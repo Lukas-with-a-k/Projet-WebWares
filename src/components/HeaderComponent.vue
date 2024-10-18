@@ -82,10 +82,10 @@ export default {
         { id: 4, name: "Déco" },
       ],
       produitsInPanier: [],
-      
     };
   },
   computed: {
+    // Calculer le nombre de produit dans le panier 
     cartCount() {
       return this.produitsInPanier.length;
     },
@@ -122,7 +122,7 @@ export default {
         this.isOpen = false;
       }
     },
-    // Fonction pour afficher/cacher le dropdown des catégories
+    // Fonction pour afficher le dropdown des catégories
     toggleCategoryDropdown() {
       this.isCategoryDropdownOpen = !this.isCategoryDropdownOpen;
     },
@@ -162,13 +162,6 @@ export default {
   },
 
   watch: {
-    produitsInPanier: {
-    handler(newValue) {
-      console.log("Produits dans le panier mis à jour :", newValue);
-      localStorage.setItem('produitsInPanier', JSON.stringify(newValue));
-    },
-    deep: true
-  },
     isLoggedIn() {
       const storedUserId = localStorage.getItem("userId");
       if (storedUserId) {
@@ -313,6 +306,7 @@ export default {
   cursor: pointer;
   padding: 20px;
   margin: 10px;
+  
 }
 
 .dropbtn:hover {
@@ -344,7 +338,6 @@ ul {
 .icon {
   width: 40px;
   height: 40px;
-  object-fit: cover;
   cursor: pointer;
   filter: invert(90%);
 }

@@ -64,6 +64,7 @@
   .contact-page {
     padding: 20px;
     max-width: 600px;
+    height: 74vh;
     margin: 0 auto;
   }
   
