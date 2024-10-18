@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="body">
     <h1>Liste des produits</h1>
 
     <table>
@@ -16,7 +16,7 @@
       </thead>
       <tbody>
         <tr v-for="(produit, index) in productList" :key="index">
-          <td>{{ produit.image }}</td>
+          <td><img :src="require(`@/assets/${produit.image}`)" :alt="produit.titre" class="product-image" /></td>
           <td>{{ produit.titre }}</td>
           <td>{{ produit.description }}</td>
           <td>{{ produit.prix }}</td>
@@ -402,39 +402,11 @@ body {
   font-family: sans-serif;
 }
 
-main {
-  text-align: center;
-  padding: 45px;
-}
-
-main table {
-  margin: auto;
-  font-size: 14px;
-}
-
-main td,
-main th {
-  padding: 8px;
-  border-collapse: collapse;
-}
-
-main th {
-  border-bottom: 1px solid lightgrey;
-}
-
-main p {
-  margin-top: 0px;
-}
-
-main form input,
-main form select {
-  height: 24px;
-  width: 240px;
-  box-sizing: border-box;
-}
-
-main form label {
-  font-size: 12px;
+.product-image {
+    height: 100px;
+    width: 100px;
+    margin: 10px;
+    object-fit: cover;
 }
 
 section.add-more {
@@ -487,39 +459,6 @@ section.add-more {
   cursor: pointer;
   border-radius: 5px;
   transition: background-color 0.3s, color 0.3s;
-}
-
-.btn-primary {
-  background-color: #007bff;
-  color: #fff;
-}
-
-.btn-primary:hover {
-  background-color: #0056b3;
-}
-
-.btn-danger {
-  background-color: #dc3545;
-  color: #fff;
-  margin-left: 10px;
-}
-
-.btn-danger:hover {
-  background-color: #c82333;
-}
-
-.btn-success {
-  background-color: #28a745;
-  color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-  margin: 0 auto;
-}
-
-.btn-success:hover {
-  background-color: #1e7e34;
 }
 
 [v-cloak] {
