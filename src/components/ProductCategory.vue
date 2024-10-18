@@ -1,7 +1,7 @@
 <template>
   <div class="bkg">
     <h1>Produits dans : {{ categoryName }}</h1>
-
+    <input type="search" name="search" id="query" placeholder="Rechercher..." v-model="query"/>
     <div class="card-container">
       <div v-for="product in filteredProducts" :key="product.id" class="card">
         <div class="image-container">
@@ -235,18 +235,28 @@ export default {
         categorieId: 1,
         },
       ],
+      filteredProduits: [],
       isMember: false, 
       categoryName: '',
       productAdded: null, //pour method addedToCart
+      query: '',
     };
   },
 created() { 
   this.checkMembershipStatus();
+  this.filteredProducts = this.products;
 },
   computed: {
     filteredProducts() {
-      return this.products.filter((product) => product.categorieId === parseInt(this.$route.params.id));
-    },
+    const categoryId = parseInt(this.$route.params.id);
+    const searchTerm = this.query ? this.query.toLowerCase() : '';
+
+    return this.products.filter((product) => {
+      // Filtrer par catégorie et par recherche
+      return product.categorieId === categoryId &&
+             product.titre.toLowerCase().includes(searchTerm);
+    });
+  }
   },
   mounted() {
     // Récupère le nom de la catégorie basée sur l'ID
@@ -276,7 +286,7 @@ created() {
     },
     checkMembershipStatus() {  //method pour demasquer les prix/moq
       const userType = localStorage.getItem('userType');
-      this.isMember = userType === 'member'||'admin';
+      this.isMember = userType === 'member';
     },
     addToCart(product, index) {
       let produitsInPanier = JSON.parse(localStorage.getItem('produitsInPanier')) || [];
@@ -308,6 +318,15 @@ created() {
 <style scoped>
 .bkg {  
 background: linear-gradient( rgba(230,237,235,1) 0%, rgba(63,70,102,1) 30%, rgba(116,130,132,1) 98%);
+}
+
+#query {
+  margin-bottom: 20px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 300px;
+  font-size: 18px;
 }
 
 h1 {

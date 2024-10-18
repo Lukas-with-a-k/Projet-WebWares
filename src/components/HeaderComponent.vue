@@ -2,9 +2,7 @@
   <header class="header">
     <nav class="navbar" style="font-size: 26px">
       <div class="logo">
-        <router-link to="/"
-          ><img src="@/assets/webwares.png" alt="logo"
-        /></router-link>
+        <router-link to="/"><img src="@/assets/webwares.png" alt="logo" /></router-link>
       </div>
 
       <!-- Barre de navigation dynamique -->
@@ -15,11 +13,7 @@
         </li>
         <!-- Menu déroulant pour les catégories -->
         <li>
-          <button
-            @click="toggleCategoryDropdown"
-            class="dropdown-btn"
-            ref="dropdownMenu"
-          >
+          <button @click="toggleCategoryDropdown" class="dropdown-btn" ref="categoryDropdown">
             Catégories
           </button>
           <ul class="dropdown-cat" v-if="isCategoryDropdownOpen">
@@ -37,22 +31,17 @@
       </ul>
       <div class="buttons">
         <!-- Bouton Connexion qui ouvre le formulaire -->
-        <button v-if="!isLoggedIn" @click="$emit('toggleLogin')">
+        <button class="btn" v-if="!isLoggedIn" @click="$emit('toggleLogin')">
           Connexion
         </button>
-        <button v-if="!isLoggedIn" @click="$emit('toggleSignup')">
+        <button class="btn" v-if="!isLoggedIn" @click="$emit('toggleSignup')">
           S'inscrire
         </button>
 
         <!-- Menu déroulant qui s'affiche quand l'utilisateur est connecté -->
         <div class="dropdown" v-if="isLoggedIn">
           <button class="dropbtn" @click="toggleDropdown">
-            <img
-              src="@/assets/profil.png"
-              alt="user"
-              class="icon"
-              ref="dropdownMenu"
-            />
+            <img src="@/assets/profil.png" alt="user" class="icon" ref="dropdownMenu" />
           </button>
           <ul class="dropdown-content" v-if="isOpen">
             <li v-on:click="toggleDropdown">Bienvenue {{ userName }}</li>
@@ -60,9 +49,8 @@
               Déconnexion
             </li>
           </ul>
-          <router-link to="/PanierUser" class="cart-btn" v-if="isLoggedIn"
-            ><img src="@/assets/panier.png" alt="panier" class="icon-panier"
-          /></router-link>
+          <router-link to="/PanierUser" class="cart-btn" v-if="isLoggedIn"><img src="@/assets/panier.png" alt="panier"
+              class="icon-panier" /><span v-if="cartCount > 0" class="cart-count">{{ cartCount }}</span></router-link>
         </div>
       </div>
     </nav>
@@ -94,10 +82,21 @@ export default {
         { id: 3, name: "Tapis" },
         { id: 4, name: "Déco" },
       ],
+      produitsInPanier: [],
     };
   },
-
+  computed: {
+    cartCount() {
+      return this.produitsInPanier.length;
+    },
+  },
   methods: {
+    loadCart() {
+      // Charger les produits depuis localStorage
+      const produits = JSON.parse(localStorage.getItem('produitsInPanier')) || [];
+      this.produitsInPanier = produits;
+    },
+
     logout() {
       this.$emit("logout");
       this.isOpen = false;
@@ -123,6 +122,12 @@ export default {
     toggleCategoryDropdown() {
       this.isCategoryDropdownOpen = !this.isCategoryDropdownOpen;
     },
+    closeCategoryDropdown(event) {
+      // Vérifier si le clic est à l'extérieur du dropdown des catégories
+      if (this.isCategoryDropdownOpen && this.$refs.categoryDropdown && !this.$refs.categoryDropdown.contains(event.target)) {
+        this.isCategoryDropdownOpen = false;
+      }
+    },
     checkUserType() {
       const userType = localStorage.getItem("userType");
       this.isAdmin = userType === "admin";
@@ -138,16 +143,28 @@ export default {
     if (storedName) {
       this.userName = storedName;
     }
+    this.loadCart();
   },
   mounted() {
     document.addEventListener("click", this.closeDropdown);
+    document.addEventListener('click', this.closeCategoryDropdown);
     this.checkUserType();
+    window.addEventListener('storage', this.loadCart);
   },
+
   beforeUnmount() {
     document.removeEventListener("click", this.closeDropdown);
+    document.removeEventListener('click', this.closeCategoryDropdown);
+    window.removeEventListener('storage', this.loadCart);
   },
 
   watch: {
+    produitsInPanier: {
+      handler() {
+        localStorage.setItem('produitsInPanier', JSON.stringify(this.produitsInPanier));
+      },
+      deep: true, // Permet de surveiller les changements dans les objets et tableaux
+    },
     isLoggedIn() {
       const storedUserId = localStorage.getItem("userId");
       if (storedUserId) {
@@ -169,6 +186,7 @@ export default {
 .dropdown {
   display: flex;
 }
+
 .dropdown-btn {
   background-color: #3f4666;
   color: white;
@@ -197,6 +215,16 @@ export default {
   z-index: 1000;
   font-size: medium;
   animation: fade-in 0.2s ease-in-out;
+}
+
+.cart-count {
+  position: absolute;
+  color: #f5fc2aa0;
+  top: 100px;
+  right: 25px;
+  border-radius: 50%;
+  padding: 5px;
+  font-size: 22px;
 }
 
 .dropdown-cat {
@@ -236,6 +264,17 @@ export default {
   background-color: #748284;
 }
 
+.btn {
+  background-color: #3f4666;
+  color: #e6edeb;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  padding: 20px;
+  margin: 10px;
+  font-size: 18px;
+}
+
 .logo img {
   height: 150px;
   width: 170px;
@@ -255,6 +294,7 @@ export default {
   text-decoration: none;
   padding: 10px;
 }
+
 .nav-links li {
   padding: 10px;
 }
@@ -387,6 +427,7 @@ ul {
   0% {
     opacity: 0;
   }
+
   100% {
     opacity: 1;
   }

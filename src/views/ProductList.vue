@@ -253,7 +253,7 @@
     },
     checkMembershipStatus() {
       const userType = localStorage.getItem('userType');
-      this.isMember = userType === 'member'|| 'admin';
+      this.isMember = userType === 'member';
     },
     addToCart(product, index) {
       let produitsInPanier = JSON.parse(localStorage.getItem('produitsInPanier')) || [];
