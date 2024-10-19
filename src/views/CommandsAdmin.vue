@@ -30,9 +30,10 @@
                     <td>
                         <p v-if="command.status === 'nouveau'"> Nouveau !</p>
                         <select v-model="command.status" @change="updateStatus(command)" >
+                            <option value="nouveau">Nouveau</option>
                             <option value="enCour">En cour</option>
                             <option value="envoyé">Envoyé</option>
-                            <option value="nouveau">Nouveau</option>
+                            <option value="livré">Livré</option>
                         </select>
                     </td>
                 </tr>
@@ -76,7 +77,7 @@ export default {
         },
         changeBackground(status) {
             
-            return status === "enCour" ? "background-color: #edd1d1;" : status === "nouveau" ? "background-color: #cfeacf;": "";
+            return status === "enCour" ? "background-color: #edd1d1;" : status === "nouveau" ? "background-color: #cfeacf;" : status === "livré" ? "background-color: #c2c2c2;": "";
         }
     },
     created() {
@@ -97,6 +98,7 @@ td, select {
   border: 1px solid #ddd;
   padding: 8px;
   font-size: 24px;
+  
   }
 
 th {
