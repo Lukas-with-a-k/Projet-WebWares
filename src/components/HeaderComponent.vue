@@ -24,10 +24,6 @@
             </li>
           </ul>
         </li>
-
-        <li v-if="isAdmin">
-          <router-link to="/userlist-admin">Userlist</router-link>
-        </li>
       </ul>
       <div class="buttons">
         <!-- Bouton Connexion qui ouvre le formulaire -->
@@ -257,6 +253,8 @@ export default {
 
 .header {
   background-color: #748284;
+  position: relative;
+  z-index: 9;
 }
 
 .btn {
@@ -273,7 +271,7 @@ export default {
 .logo img {
   height: 150px;
   width: 170px;
-  margin-left: 20px;
+  margin-right: 100px;
 }
 
 .nav-links {

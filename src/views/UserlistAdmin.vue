@@ -88,8 +88,10 @@ export default {
 
 <style scoped>
 .user-list {
-  padding: 20px;
-  height: 63vh;
+  padding-right: 250px;
+  padding-left: 250px;
+  height: 75vh;
+  width: 70%;
 }
 
 table {

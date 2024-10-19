@@ -402,6 +402,11 @@ body {
   font-family: sans-serif;
 }
 
+table {
+  width: 70%;
+  margin: 40px auto;
+}
+
 .product-image {
     height: 100px;
     width: 100px;

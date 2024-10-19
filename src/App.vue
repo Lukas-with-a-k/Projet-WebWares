@@ -1,5 +1,5 @@
 <template>
-  <HeaderComponent :isLoggedIn="isLoggedIn" @toggleLogin="toggleLogin" @toggleSignup="toggleSignup" @logout="logout" />
+  <HeaderComponent :isLoggedIn="isLoggedIn" @toggleLogin="toggleLogin" @toggleSignup="toggleSignup" @logout="logout"/>
   <nav>
     <LoginComp
     :accounts="accounts"
@@ -20,6 +20,7 @@
     ></div>
   </nav>
   <router-view />
+  <AdminBar/>
   <FooterComponent />
 </template>
 <script>
@@ -27,11 +28,13 @@ import HeaderComponent from './components/HeaderComponent.vue';
 import FooterComponent from './components/FooterComponent.vue';
 import LoginComp from "./components/LoginComp.vue";
 import SignupComp from "./components/SignupComp.vue";
+import AdminBar from './components/AdminBar.vue';
 export default {
   name: 'App',
   components: { 
     HeaderComponent,
     FooterComponent,
+    AdminBar,
     LoginComp,
     SignupComp,
   },
