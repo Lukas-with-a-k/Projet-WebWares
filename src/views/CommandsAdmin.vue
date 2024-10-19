@@ -1,66 +1,114 @@
 <template>
-    <div>
+    <div class="command-list">
+        <h1>Liste des commandes</h1>
         <table>
             <thead>
                 <tr>
+                    <th>ID de Commande</th>
+                    <th>Nom du produit</th>
+                    <th>Prix</th>
+                    <th>Quantité</th>
+                    <th>Coût total</th>
                     <th>Raison sociale</th>
-                    <th>ID de Command</th>
-                    <th>Command</th>
-                    <th>Actions</th>
+                    <th>Status</th>
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="(user, index) in users " :key="index">
-                    <td>{{ user.index.name }}</td>
-                    <td>{{ user.index }}</td>
-                    <td>{{ user.index }}</td>
-                    <td>{{ user.password }}</td>
+                <tr v-for="(command, index) in userCommand" :key="index" :style="changeBackground(command.status)">
+                    <td>{{ command.id }}</td>
                     <td>
-                        <!-- <ButtonUser label="Modifier" backgroundColor="green" @click="modifyUser(index)"/>
-
-                        <ButtonUser label="Supprimer" backgroundColor="red" @click="deleteUser(index)"/> -->
-                        
-                        <ButtonUser label="Détails" backgroundColor="blue" @click="showDetail(user)"/>
-                  
+                        <div v-for="(detail, detailIndex) in showDetails(command.id)" :key="detailIndex">{{ detail.titre }}</div>
+                    </td>
+                    <td>
+                        <div v-for="(detail, detailIndex) in showDetails(command.id)" :key="detailIndex">{{ detail.prix }}</div>
+                    </td>
+                    <td>
+                        <div v-for="(detail, detailIndex) in showDetails(command.id)" :key="detailIndex">{{ detail.count }}</div>
+                    </td>
+                    <td>{{ command.ttc }}</td>
+                    <td>{{ command.user }}</td>
+                    <td>
+                        <p v-if="command.status === 'nouveau'"> Nouveau !</p>
+                        <select v-model="command.status" @change="updateStatus(command)" >
+                            <option value="enCour">En cour</option>
+                            <option value="envoyé">Envoyé</option>
+                            <option value="nouveau">Nouveau</option>
+                        </select>
                     </td>
                 </tr>
             </tbody>
         </table>
     </div>
-    
 </template>
 
+
+
+
+
+
 <script>
-import ButtonComponent from '@/components/ButtonComponent.vue';
-
-    export default {
-components: {
-    ButtonComponent
-},
-
-data() {
-return {
-    commandsList: [],
-    
-}
-},
-
-methods: {
-
-},
-
-created() {
-    this.username = localStorage.getItem("user_$user.name");
-},
-
-        mounted(){
-    if(localStorage.getItem('existingCommands')) {this.commandsList = JSON.parse(localStorage.getItem('existingCommands'))
-      }
- 
-    }, 
+export default {
+   
+    data() {
+        return {
+            userCommand: [],
+            commandDetails: []
+        };
+    },
+    methods: {
+        convertProxyToObject(proxyObject) {
+            return JSON.parse(JSON.stringify(proxyObject));
+        },
+        showDetails(commandId) {
+            let allDetails = this.commandDetails.filter(detail => detail.id === commandId);
+            let convertedDetails = allDetails.map(this.convertProxyToObject);
+            // console.log(`Command ID: ${commandId}, Details:`, convertedDetails); // Debugging
+            return convertedDetails;
+        },
+        updateStatus(command) {
+            let commands = JSON.parse(localStorage.getItem('userCommand')) || [];
+            let index = commands.findIndex(cmd => cmd.id === command.id);
+            if (index !== -1) {
+                commands[index].status = command.status;
+                localStorage.setItem('userCommand', JSON.stringify(commands));
+            }
+           
+        },
+        changeBackground(status) {
+            
+            return status === "enCour" ? "background-color: #edd1d1;" : status === "nouveau" ? "background-color: #cfeacf;": "";
+        }
+    },
+    created() {
+        this.userCommand = JSON.parse(localStorage.getItem('userCommand')) || [];
+        this.commandDetails = JSON.parse(localStorage.getItem('commandDetails')) || [];
     }
+};
 </script>
 
 <style scoped>
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
 
+th,
+td, select {
+  border: 1px solid #ddd;
+  padding: 8px;
+  font-size: 24px;
+  }
+
+th {
+  background-color: #f2f2f2;
+
+}
+td p{
+    color: white;
+    background-color: green;
+    padding: 7px;
+}
+.encour{
+    background-color: #edd1d1;
+}
 </style>

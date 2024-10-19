@@ -34,6 +34,9 @@
         <li v-if="isAdmin">
           <router-link to="/userlist-admin">Userlist</router-link>
         </li>
+        <li v-if="isAdmin">
+          <router-link to="/commands-admin">UserCommands</router-link>
+        </li>
       </ul>
       <div class="buttons">
         <!-- Bouton Connexion qui ouvre le formulaire -->
@@ -103,7 +106,8 @@ export default {
       this.isOpen = false;
       localStorage.removeItem("userId");
       localStorage.removeItem("userType");
-    },
+      localStorage.removeItem("produitsInPanier");// Ajoute ça dans ton code !!!
+      },
 
     // Fonction pour afficher le menu déroulant
     toggleDropdown() {
