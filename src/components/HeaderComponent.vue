@@ -102,7 +102,8 @@ export default {
       this.isOpen = false;
       localStorage.removeItem("userId");
       localStorage.removeItem("userType");
-    },
+      localStorage.removeItem("produitsInPanier");// Ajoute ça dans ton code !!!
+      },
 
     // Fonction pour afficher le menu déroulant
     toggleDropdown() {

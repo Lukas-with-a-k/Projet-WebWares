@@ -8,11 +8,11 @@
         
   <tr v-for="(produit, index) in produitsInPanier" :key="index">
      <td> <img  :src="require(`@/assets/${produit.image}`)"></td>
-      <td>{{ produit.titre }}</td>
+      <td> {{ produit.titre }} </td>
       <!-- <td> <p>{{ produit.prix }}</p></td> -->
       <td>
         <span> Quantity : </span>
-          <button @click="decrease(produit)"> - </button>
+          <button @click="decrease(produit)">  -  </button>
           <span> {{ produit.count }} </span>
           <button @click="increase(produit)"> + </button>
       </td>
@@ -26,7 +26,7 @@
   <div class="prix">
    <p> HT : {{ htTotal() }}</p>
     <p>TVA : {{ tva() }}</p>
-   <p> TTC : {{ prixTotal() }} </p>
+   <p> TTC :<span> {{ prixTotal() }} </span></p>
   </div>
     <div class="button">
       <ButtonComponent label="Passer au command" @click="passerAuCommand()" bcolor="#3f4666" hcolor="#4280b8"/>
@@ -61,7 +61,7 @@ decrease(prod){
  return prod.count --;
   
 }else{
-  alert(`Le quantité ne peut pas d'être moins ${prod.moq} pour ce produit`)
+  // alert(`Le quantité ne peut pas d'être moins ${prod.moq} pour ce produit`)
 }
 },
 increase(prod){
@@ -137,48 +137,139 @@ this.userId = localStorage.getItem("userId");
   
 }
 </script>
-
 <style scoped>
-
 .bkg {
-  background: linear-gradient( rgba(230,237,235,1) 0%, rgba(63,70,102,1) 60%, rgba(116,130,132,1) 84%);
+    background: linear-gradient(rgba(230,237,235,1) 0%, rgba(63,70,102,1) 60%, rgba(116,130,132,1) 84%);
+    padding: 20px;
 }
-.bkg p {
-margin: 0 auto;
-font-size: large;
-}
-.container {
-height: 72vh;
-display: flex;
-justify-content: space-around;
-min-width: 100px;
-flex-wrap: wrap;
-}
-.container2{
-/* flex-direction: column; */
-position: sticky;
-top:0;
-margin: 10px;
-/* justify-content: space-around; */
-}
-.prix{
-  flex-direction: column;
-  margin: 5px;
-  justify-content: space-around;
-  border: 1px solid black;
-  border-radius: 5px;
-  margin-bottom: 10px;
-}
-/* align-items: center;
-/* flex-direction: column; */
-/* width: 50%; */
-/* margin: 50px auto; */
 
-tr img{
-height: 50px;
-width: 50px;
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-around;
+    height: auto;
+    padding: 20px;
 }
-span{
-margin: 7px 7px;
+
+table .container2 {
+    width: 100%;
+    max-width: 600px;
+    margin-bottom: 20px;
+}
+
+
+.bkg p {
+    margin: 0 auto;
+    font-size: 30px;
+    margin-top: 10%;
+}
+
+.prix {
+    flex-direction: column;
+    padding: 10px;
+    justify-content: space-around;
+    border: 1px solid black;
+    border-radius: 5px;
+    margin: 20px 0;
+    font-size: 20px;
+   
+}
+
+.prix span {
+    font-size: 30px;
+    font-weight: 700;
+}
+
+tr img {
+    height: 70px;
+    width: 70px;
+}
+
+@media only screen and (max-width: 600px) {
+    .bkg {
+        background-image: none;
+    }
+    .container {
+    padding: 15px;
+    /* flex-direction: column;   */
+    display: flexbox;
+        height: 78vh;
+     flex-wrap: wrap;
+    align-items: center;
+    padding: 20px;
+}
+table, tbody, tr, td {
+    display: block;
+      }
+   .container1, .container2 {
+        width: 100%;
+        padding: 15px;
+       
+    }
+    .prix {
+        font-size: 16px;
+        width: auto;
+        height: auto;
+    }
+    .prix p{
+      font-size: 16px;
+    }
+    .prix span {
+        font-size: 20px;
+       
+    }
+    .button {
+        text-align: center;
+    }
+}
+
+@media only screen and (min-width: 768px) {
+    .container {
+        flex-direction: row;
+        justify-content: space-around;
+        height: auto;
+        width: 100vw;
+    }
+    .container2 {
+        width: 35%;
+        max-width: 600px;
+        margin-bottom: 20px;
+        /* flex-shrink: 2; */
+    }
+    table{
+      width: 100%;
+      color: #fff;
+      font-size: 24px;
+    }
+    .prix {
+        font-size: 24px;
+        color: white;
+    }
+    .prix span {
+        font-size: 25px;
+        
+    }
+}
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-contenu {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    width: 90%;
+    max-width: 500px;
 }
 </style>
+

@@ -14,6 +14,12 @@ const routes = [
     name: "UserlistAdmin",
     component: () => import("../views/UserlistAdmin.vue"),
   },
+  {//ajoute dans ton fichier !!!
+    path: "/commands-admin",
+    name: "CommandstAdmin",
+    component: () => import("../views/CommandsAdmin.vue"),
+  },
+  
   {
     path: "/ProductList",
     name: "ProductList",

@@ -93,24 +93,31 @@ export default {
 </script>
 <style  scoped>
 label{
-    font-size: smaller;
+    font-size: 20px;
 }
 input {
-    font-size: medium;
-    width: 400px;
-    max-width: 600px;
+    font-size: 25px;
+    /* width: 600px; */
+    height: 40px;
 }
 .msgError{
     color: red
 }
-/* form {
+form {
     display: flex;
     flex-direction: column;
    
     justify-content: center;
     
     padding: 10px;
-} */
+    
+}
+/* @media display and (max-width: 360px){
+    input {
+        max-width: fit-content;
+        font-size: small;
+   } */
+/* } */
 /* margin:  0 auto; */
  /* max-width: 600px; */ 
 </style>
