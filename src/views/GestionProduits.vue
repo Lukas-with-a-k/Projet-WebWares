@@ -1,108 +1,182 @@
 <template>
-  <div class="body">
-    <h1>Liste des produits</h1>
+<div> <!--v-if="isAdmin" ne fonctionne pas-->
+    <!-- MODAL ADD -->
+    <div id="addModal" class="modal" v-show="isAddVisible" v-cloak>
+        <div class="modal-content">
+            <span class="close" @click="closeAddModal()">X</span>
+            <h2>Ajouter un produit</h2>
+            <form @submit.prevent="addProd">
+            <label for="addImg">Produit image</label><br />
+            <input type="file" id="addImage" @change="onFileChangeAdd" /><br />
 
-    <table>
-      <thead>
-        <tr>
-          <th>Image produit</th>
-          <th>Titre produit</th>
-          <th>Description produit</th>
-          <th>Prix produit</th>
-          <th>MOQ produit</th>
-          <th>CatégorieId</th>         
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="(produit, index) in productList" :key="index">
-          <td><img :src="require(`@/assets/${produit.image}`)" :alt="produit.titre" class="product-image" /></td>
-          <td>{{ produit.titre }}</td>
-          <td>{{ produit.description }}</td>
-          <td>{{ produit.prix }}</td>
-          <td>{{ produit.moq }}</td>
-          <td>{{ produit.categorieId }}</td>          
-          <td>
-            <ButtonComponent label="Edit" bcolor="#3F4666" hcolor="#4280b8" @click="showMod(index)"/>
-            <ButtonComponent label="x" bcolor="pink" hcolor="crimson" @click="supProd(index)"/>
-              <i class="trash"></i>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+            <label for="addName">Titre produit</label><br />
+            <input
+                type="text"
+                id="titre"
+                name="titre"
+                v-model="newProd.titre"
+            /><br />
 
-  <!-- MODAL  -->
-  <div id="editModal" class="modal" v-show="isVisible" v-cloak>
-    <div class="modal-content">
-      <span class="close" @click="closeModal()">X</span>
-      <h2>Modifier le produit :</h2>
+            <label for="addDescription">Description produit</label><br />
+            <textarea
+                id="description"
+                name="description"
+                v-model="newProd.description"
+            ></textarea
+            ><br />
 
-      <form>
-        <label for="editImg">produit image:</label><br>
-        <input type="editImg" v-model="editProd.image" /><br>
+            <label for="addPrice">Prix produit</label><br />
+            <input
+                type="number"
+                id="prix"
+                name="prix"
+                size="8"
+                v-model="newProd.prix"
+            /><br />
 
-        <label for="editName">titre produit:</label><br>
-        <input type="text" id="editName" v-model="editProd.titre" /><br>
+            <label for="addMoq">MOQ produit</label><br />
+            <input
+                type="number"
+                id="moq"
+                name="moq"
+                size="4"
+                v-model="newProd.moq"
+            /><br />
 
-        <label for="editDescription">description produit:</label><br>
-        <input type="editDescription" v-model="editProd.description"/><br>
-
-        <label for="editPrice">Prix produit:</label><br />
-        <input type="number" id="editPrice" v-model="editProd.prix" /><br>
-
-        <label for="editMoq">MOQ produit:</label><br />
-        <input type="number" id="editMoq" v-model="editProd.moq" /><br>
-
-        <label for="category">Catégorie Id produit:</label><br />
-        <select id="category" name="category" v-model="editProd.categorieId">
-          <option value="1">Mobilier</option>
-          <option value="2">Luminaires</option>
-          <option value="3">Tapis</option>
-          <option value="4">Deco</option></select
-        ><br>
-
-        <br><br>
-        <ButtonComponent label="Enregistrer" bcolor="#3F4666" hcolor="#4280b8" @click="saveMod()"/>
-      </form>
+            <label for="category">Catégorie produit</label><br />
+            <select id="category" name="category" v-model="newProd.categorieId">
+                <option value="1">Mobilier</option>
+                <option value="2">Luminaires</option>
+                <option value="3">Tapis</option>
+                <option value="4">Deco</option></select
+            ><br />
+            <br /><br />
+            <ButtonComponent
+                label="Enregistrer"
+                bcolor="#3F4666"
+                hcolor="#4280b8"
+                @click="addProd"
+            />
+            </form>
+        </div>
     </div>
-  </div>
-  <!-- MODAL  -->
+    <!-- MODAL  -->
 
-  <section class="add-prod">
-    <p>Ajouter un produit</p>
-    <form>
-        <label for="addImg">Produit image:</label><br>
-        <input type="img" id="image" name="image" v-model="editProd.image" /><br>
+    <ButtonComponent
+        label="Ajouter un Produit"
+        bcolor="#4280b8"
+        hcolor="#748284"
+        @click="showAdd()"
+    />
+    <div class="body" style="overflow-x: auto">
+        <h1>Liste des produits</h1>
+        <table>
+            <thead>
+                <tr>
+                <th>Image produit</th>
+                <th>Titre produit</th>
+                <th>Description produit</th>
+                <th>Prix produit</th>
+                <th>MOQ produit</th>
+                <th>CatégorieId</th>
+                <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="(produit, index) in productList" :key="index">
+                <td>
+                <img
+                :src="require(`@/assets/${produit.image}`)"
+                :alt="produit.titre"
+                class="product-image"
+                />
+                </td>
+                <td>{{ produit.titre }}</td>
+                <td>{{ produit.description }}</td>
+                <td>{{ produit.prix }}</td>
+                <td>{{ produit.moq }}</td>
+                <td>{{ produit.categorieId }}</td>
+                <td>
+                <ButtonComponent
+                label="Edit"
+                bcolor="#3F4666"
+                hcolor="#4280b8"
+                @click="showMod(index)"
+                />
+                <button type="button" class="delete-btn" @click="supProd(index)">
+                X
+                </button>
+                </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 
-        <label for="addName">Titre produit:</label><br>
-        <input type="text" id="titre" name="titre" v-model="newProd.titre" /><br>
+    <!-- MODAL EDIT -->
+    <div id="editModal" class="modal" v-show="isVisible" v-cloak>
+        <div class="modal-content">
+            <span class="close" @click="closeModal()">X</span>
+            <h2>Modifier le produit :</h2>
 
-        <label for="addDescription">Description produit:</label><br>
-        <input type="text" id="description" name="description" v-model="newProd.description"/><br>
+            <form class="edit-form">
+            <label for="editImg">Produit image</label><br />
+            <input type="file" id="editImage" @change="onFileChange" /><br />
 
-        <label for="editPrice">Prix produit:</label><br>
-        <input type="number" id="prix" name="prix" v-model="newProd.prix" /><br>
+            <label for="editName">Titre produit</label><br />
+            <input
+                type="text"
+                id="editName"
+                size="30"
+                v-model="editProd.titre"
+            /><br />
 
-        <label for="editMoq">MOQ produit:</label><br />
-        <input type="number" id="moq" name="moq" v-model="newProd.moq" /><br>
+            <label for="editDescription">Description produit</label><br />
+            <textarea
+                id="description"
+                name="description"
+                v-model="editProd.description"
+            >Description...</textarea><br />
 
-        <label for="category">Catégorie produit:</label><br />
-        <select id="category" name="category" v-model="newProd.categ">
-        <option value="1">Mobilier</option>
-        <option value="2">Luminaires</option>
-        <option value="3">Tapis</option>
-        <option value="4">Deco</option></select
-      ><br>
+            <label for="editPrice">Prix produit</label><br />
+            <input
+                type="string"
+                id="editPrice"
+                size="10"
+                v-model="editProd.prix"
+            /><br />
 
-      <br><br>
-      <ButtonComponent label="Enregistrer" bcolor="#3F4666" hcolor="#4280b8" @click="addProd"/>
-    </form>
-  </section>
+            <label for="editMoq">MOQ produit</label><br />
+            <input
+                type="number"
+                id="editMoq"
+                size="5"
+                v-model="editProd.moq"
+            /><br />
+
+            <label for="category">Catégorie Id produit</label><br />
+            <select id="category" name="category" v-model="editProd.categorieId">
+                <option value="1">Mobilier</option>
+                <option value="2">Luminaires</option>
+                <option value="3">Tapis</option>
+                <option value="4">Deco</option></select
+            ><br />
+
+            <br /><br />
+            <ButtonComponent
+            label="Enregistrer"
+            bcolor="#3F4666"
+            hcolor="#4280b8"
+            @click="saveMod()"
+            />
+            </form>
+        </div>
+    </div>
+    <!-- MODAL  -->
+</div>
 </template>
 
 <script>
-import ButtonComponent from '@/components/ButtonComponent.vue';
+import ButtonComponent from "@/components/ButtonComponent.vue";
 
 export default {
   name: "GestionProduits",
@@ -327,27 +401,62 @@ export default {
           categorieId: 1,
         },
       ],
-      newProd: {},
+      newProd: {
+        image: "",
+        titre: "",
+        description: "",
+        prix: "",
+        moq: "",
+        categorieId: "",
+      },
+    //   isAdmin: false,
       isVisible: false,
+      isAddVisible: false,
       editProd: {},
       indexModal: -1,
     };
   },
   methods: {
     addProd() {
+      if (!this.newProd.prix || parseFloat(this.newProd.prix) <= 0) {
+        alert("merci de remplir le champ avec une valeur positive.");
+        return;
+      }
       if (
         this.newProd.image &&
         this.newProd.titre &&
         this.newProd.description &&
-        this.newProd.prix &&
-        this.newProd.moq &&
+        this.newProd.moq > 0 &&
         this.newProd.categorieId
       ) {
-        this.productList.push(this.newProd);
-        this.newProd = {};
-      } else {
-        alert("Merci de remplir tous les champs.");
+        //donne un id
+        const maxId = this.productList.reduce(
+          (max, product) => (product.id > max ? product.id : max),
+          0
+        );
+        this.newProd.id = maxId + 1;
+
+        this.newprod.prix = parseFloat(this.newProd.prix);
+
+        this.productList.push({ ...this.newProd });
+        this.newProd = {
+          image: "",
+          titre: "",
+          description: "",
+          prix: "",
+          moq: "",
+          categorieId: "",
+        };
+        this.closeAddModal();
+        // } else {
+        //   alert("Merci de remplir tous les champs.");
       }
+    },
+    showAdd() {
+      this.isAddVisible = true; // open "addProd modal"
+    },
+    closeAddModal() {
+      this.isAddVisible = false; // close addProd modal
     },
     showMod(id) {
       this.isVisible = true;
@@ -360,7 +469,7 @@ export default {
         this.editProd.titre &&
         this.editProd.description &&
         this.editProd.prix &&
-        this.editProd.moq &&
+        this.editProd.moq > 0 &&
         this.editProd.categorieId
       ) {
         this.productList[this.indexModal] = { ...this.editProd };
@@ -369,7 +478,7 @@ export default {
     },
     supProd(id) {
       if (confirm("Vous etes sur?")) {
-        this.ProductList.splice(id, 1);
+        this.productList.splice(id, 1);
       }
     },
     closeModal() {
@@ -378,6 +487,34 @@ export default {
     saveToLocalStorage() {
       localStorage.setItem("products", JSON.stringify(this.productList));
     },
+    onFileChangeAdd(e) {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          this.newProd.image = reader.result;
+        };
+        reader.readAsDataURL(file);
+      } else {
+        alert("Veuillez sélectioner un fichier image.");
+      }
+    },
+    onFileChange(e) {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          this.editProd.image = reader.result;
+        };
+        reader.readAsDataURL(file);
+      } else {
+        alert("Please select a file.");
+      }
+    },
+    // checkMembershipStatus() { 
+    //     const userType = localStorage.getItem('userType');
+    //     this.isAdmin = userType === 'isAdmin';
+    // } Ne Marche Pas ?!?
   },
   watch: {
     productList: {
@@ -388,6 +525,7 @@ export default {
     },
   },
   created() {
+    // this.checkMembershipStatus();
     let storedProd = localStorage.getItem("products");
     if (storedProd) {
       this.productList = JSON.parse(storedProd);
@@ -397,22 +535,50 @@ export default {
 </script>
 
 <style scoped>
-body {
+.body {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
   margin: 0;
   font-family: sans-serif;
+  font-size: 1.2rem;
 }
 
+tr:nth-child(even) {
+  background-color: #d2dce6;
+}
+
+table,
+th,
+td {
+  border: 1px solid;
+}
+
+table {
+  width: 80%;
+  border-collapse: collapse;
+}
 .product-image {
-    height: 100px;
-    width: 100px;
-    margin: 10px;
-    object-fit: cover;
+  height: 100px;
+  width: 100px;
+  margin: 10px;
+  object-fit: cover;
 }
 
-section.add-more {
-  background-color: rgb(241, 241, 241);
-  padding: 40px;
-  margin-top: 40px;
+.delete-btn {
+  color: #e6edeb;
+  background-color: #f167df;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  padding: 10px 20px;
+  margin: 5px;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.delete-btn:hover {
+  background-color: crimson;
 }
 
 .modal {
@@ -432,11 +598,40 @@ section.add-more {
 .modal-content {
   background-color: white;
   padding: 20px;
-  border-radius: 5px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-  max-width: 400px;
+  font-size: 18px;
+  border: solid #202020;
+  border-radius: 10px;
+  max-width: 600px;
   width: 100%;
   position: relative;
+}
+.edit-form {
+  font-size: 18px;
+}
+
+input {
+  border: 1px solid rgb(36, 36, 36);
+  border-radius: 3px;
+  padding: 12px 10px;
+  box-sizing: border-box;
+}
+
+textarea {
+  width: 260px;
+  height: 150px;
+  border: 1px solid rgb(36, 36, 36);
+  border-radius: 3px;
+  padding: 12px 10px;
+  box-sizing: border-box;
+  font-family: sans-serif;
+  font-size: 14px;
+  resize: none;
+}
+
+select {
+  padding: 10px 10px;
+  border: 1px solid rgb(36, 36, 36);
+  border-radius: 4px;
 }
 
 .close {
@@ -447,18 +642,6 @@ section.add-more {
   font-size: 18px;
   color: #333;
   z-index: 2;
-}
-
-.btn {
-  display: inline-block;
-  padding: 10px 20px;
-  font-size: 14px;
-  text-align: center;
-  text-decoration: none;
-  border: none;
-  cursor: pointer;
-  border-radius: 5px;
-  transition: background-color 0.3s, color 0.3s;
 }
 
 [v-cloak] {

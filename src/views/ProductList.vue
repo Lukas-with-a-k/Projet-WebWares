@@ -4,7 +4,7 @@
   <!-- barre de recherche -->
     <input type="search" name="search" id="query" placeholder="Rechercher..." v-model="query" @input="filterProducts(query)"/>
     <div class="card-container">
-      <div class="card" v-for="(prod, index) in filteredProduits" :key="prod.id">
+      <div class="card" v-for="(prod, index) in produits" :key="index">
         <div class="image-container">  
           <img :src="require(`@/assets/${prod.image}`)" :alt="prod.titre" />
           <button class="add-to-cart" v-if="isMember" @click="addToCart(prod, index)">Ajouter au panier <span class="checkmark" v-if="productAdded === index">&#10003;</span>
@@ -18,6 +18,7 @@
         </div> 
         <h4>{{ prod.titre }}</h4>
         <p v-if="isMember">{{ prod.prix }} € | MOQ: {{prod.moq}}</p>
+        <router-link :to="`/ProductDetails/${prod.id}`" class="details-link">Voir Détails</router-link>
       </div>
     </div>
 </div>  
@@ -277,9 +278,9 @@
         window.location.reload();
       }
     },
-    chosen(product) {
+    chosen(prod) {
       let produitsInPanier = JSON.parse(localStorage.getItem('produitsInPanier')) || [];
-      return produitsInPanier.some(item => item.id === product.id); 
+      return produitsInPanier.some(item => item.id === prod.id); 
     },
     decrease(prod) {
       if (prod.count > prod.moq){
@@ -335,7 +336,7 @@ h1 {
   display: flex;
   justify-content: center;
   flex-direction: column;  
-  color: #9e7c48;
+  color: #e6edeb;
   border: none;
   padding-bottom: 20px; 
   text-align: center;
@@ -399,6 +400,16 @@ h1 {
   font-size: 1em;
 }
 
+a {
+  display: inline-block;
+  text-decoration: none;
+  color: #e6edeb;
+}
+
+a:hover,
+a.router-link-active {
+  color: #4fb694;
+}
 /* Media query 945px */
 @media (max-width: 945px) {
     .bkg {
