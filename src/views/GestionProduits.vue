@@ -1,5 +1,26 @@
 <template>
-  <div> <!--v-if="isAdmin" ne fonctionne pas-->
+  <div>
+    <!--v-if="isAdmin" ne fonctionne pas-->
+    <!-- Add Category Modal -->
+    <div
+      id="addCategoryModal"
+      class="modal"
+      v-show="isAddCategoryVisible"
+      v-cloak
+    >
+      <div class="modal-content">
+        <span class="close" @click="closeAddCategoryModal()">X</span>
+        <h2>Ajouter une Catégorie</h2>
+        <form @submit.prevent="addCategory">
+          <label for="categoryName">Nom de la Catégorie:</label><br />
+          <input
+            type="text"
+            id="categoryName"
+            v-model="newCategory.name"
+          /><br /><br />
+        </form>
+      </div>
+    </div>
     <!-- MODAL ADD -->
     <div id="addModal" class="modal" v-show="isAddVisible" v-cloak>
       <div class="modal-content">
@@ -10,38 +31,77 @@
             <input type="file" id="addImage" @change="onFileChangeAdd" /><br />  -->
 
           <label for="addName">Titre produit</label><br />
-          <input type="text" id="titre" name="titre" v-model="newProd.titre" /><br />
+          <input
+            type="text"
+            id="titre"
+            name="titre"
+            v-model="newProd.titre"
+          /><br />
 
           <label for="addDescription">Description produit</label><br />
-          <textarea id="description" name="description" v-model="newProd.description"></textarea><br />
+          <textarea
+            id="description"
+            name="description"
+            v-model="newProd.description"
+          ></textarea
+          ><br />
 
           <label for="addPrice">Prix produit</label><br />
-          <input type="string" id="prix" name="prix" size="8" v-model="newProd.prix" /><br />
+          <input
+            type="string"
+            id="prix"
+            name="prix"
+            size="8"
+            v-model="newProd.prix"
+          /><br />
 
           <label for="addMoq">MOQ produit</label><br />
-          <input type="number" id="moq" name="moq" size="4" v-model="newProd.moq" /><br />
+          <input
+            type="number"
+            id="moq"
+            name="moq"
+            size="4"
+            v-model="newProd.moq"
+          /><br />
 
           <label for="category">Catégorie produit</label><br />
           <select id="category" name="category" v-model="newProd.categorieId">
             <option value="1">Mobilier</option>
             <option value="2">Luminaires</option>
             <option value="3">Tapis</option>
-            <option value="4">Deco</option>
-          </select><br />
+            <option value="4">Deco</option></select
+          ><br />
           <br /><br />
-          <ButtonComponent label="Enregistrer" bcolor="#3F4666" hcolor="#4280b8" @click="addProd" />
+          <ButtonComponent
+            label="Enregistrer"
+            bcolor="#3F4666"
+            hcolor="#4280b8"
+            @click="addProd"
+          />
+          <ButtonComponent
+            label="Enregistrer"
+            bcolor="#4280b8"
+            hcolor="#3f4666"
+            @click="addCategory"
+          />
         </form>
       </div>
     </div>
     <!-- MODAL  -->
 
-    <ButtonComponent label="Ajouter un Produit" bcolor="#4280b8" hcolor="#748284" @click="showAdd()" />
+    <ButtonComponent
+      label="Ajouter un Produit"
+      bcolor="#4280b8"
+      hcolor="#748284"
+      @click="showAdd()"
+    />
     <div class="body" style="overflow-x: auto">
       <h1>Liste des produits</h1>
       <table>
         <thead>
           <tr>
-            <!-- <th>Image produit</th> -->
+            <th>Image produit</th>
+            <th>Image nom</th>
             <th>Titre produit</th>
             <th>Description produit</th>
             <th>Prix produit</th>
@@ -52,16 +112,26 @@
         </thead>
         <tbody>
           <tr v-for="(produit, index) in productList" :key="index">
-            <!-- <td>
-              <img :src="(`@/assets/${produit.image}`)" :alt="produit.titre" class="product-image" />
-            </td> -->
+            <td>
+              <img
+                :src="require(`@/assets/${produit.image}`)"
+                :alt="produit.titre"
+                class="produit-image"
+              />
+            </td>
+            <td>{{ produit.image }}</td>
             <td>{{ produit.titre }}</td>
             <td>{{ produit.description }}</td>
             <td>{{ produit.prix }}</td>
             <td>{{ produit.moq }}</td>
             <td>{{ produit.categorieId }}</td>
             <td>
-              <ButtonComponent label="Edit" bcolor="#3F4666" hcolor="#4280b8" @click="showMod(index)" />
+              <ButtonComponent
+                label="Edit"
+                bcolor="#3F4666"
+                hcolor="#4280b8"
+                @click="showMod(index)"
+              />
               <button type="button" class="delete-btn" @click="supProd(index)">
                 X
               </button>
@@ -82,27 +152,52 @@
           <input type="file" id="editImage" @change="onFileChange" /><br /> -->
 
           <label for="editName">Titre produit</label><br />
-          <input type="text" id="editName" size="30" v-model="editProd.titre" /><br />
+          <input
+            type="text"
+            id="editName"
+            size="30"
+            v-model="editProd.titre"
+          /><br />
 
           <label for="editDescription">Description produit</label><br />
-          <textarea id="description" name="description" v-model="editProd.description"></textarea><br />
+          <textarea
+            id="description"
+            name="description"
+            v-model="editProd.description"
+          ></textarea
+          ><br />
 
           <label for="editPrice">Prix produit</label><br />
-          <input type="string" id="editPrice" size="10" v-model="editProd.prix" /><br />
+          <input
+            type="string"
+            id="editPrice"
+            size="10"
+            v-model="editProd.prix"
+          /><br />
 
           <label for="editMoq">MOQ produit</label><br />
-          <input type="number" id="editMoq" size="5" v-model="editProd.moq" /><br />
+          <input
+            type="number"
+            id="editMoq"
+            size="5"
+            v-model="editProd.moq"
+          /><br />
 
           <label for="category">Catégorie Id produit</label><br />
           <select id="category" name="category" v-model="editProd.categorieId">
             <option value="1">Mobilier</option>
             <option value="2">Luminaires</option>
             <option value="3">Tapis</option>
-            <option value="4">Deco</option>
-          </select><br />
+            <option value="4">Deco</option></select
+          ><br />
 
           <br /><br />
-          <ButtonComponent label="Enregistrer" bcolor="#3F4666" hcolor="#4280b8" @click="saveMod()" />
+          <ButtonComponent
+            label="Enregistrer"
+            bcolor="#3F4666"
+            hcolor="#4280b8"
+            @click="saveMod()"
+          />
         </form>
       </div>
     </div>
@@ -336,8 +431,17 @@ export default {
           categorieId: 1,
         },
       ],
+      categories: [
+        { id: 1, name: 'Mobilier' },
+        { id: 2, name: 'Luminaires' },
+        { id: 3, name: 'Tapis' },
+        { id: 4, name: 'Deco' },
+      ],
+      newCategory: {
+        name: ''
+      },
       newProd: {
-        // image: "",
+        image: "no-image.png",
         titre: "",
         description: "",
         prix: "",
@@ -347,11 +451,28 @@ export default {
       //   isAdmin: false,
       isVisible: false,
       isAddVisible: false,
+      isAddCategoryVisible: false,
       editProd: {},
       indexModal: -1,
     };
   },
   methods: {
+    addCategory() {
+      if (this.newCategory.name) {
+        const maxId = this.categories.reduce((max, category) => category.id > max ? category.id : max, 0);
+        this.categories.push({ id:maxId +1, name: this.newCategory.name });
+        this.newCategory.name = '';
+        this.closeAddCategoryModal();
+      } else {
+        alert("Merci de remplir le champ Nom de la Catégorie.");
+      }
+    },
+    showAddCategory() {
+      this.isAddCategoryVisible = true;
+    },
+    closeAddCategoryModal() {
+      this.isAddCategoryVisible = false;
+    },
     addProd() {
       if (!this.newProd.prix || parseFloat(this.newProd.prix) <= 0) {
         alert("Produit Ajouté.");
@@ -385,9 +506,6 @@ export default {
         this.closeAddModal();
         // } else {
         //   alert("Merci de remplir tous les champs.");
-
-
-
       }
     },
     showAdd() {
@@ -451,7 +569,7 @@ export default {
     //     alert("Please select a file.");
     //   }
     // },
-    // checkMembershipStatus() { 
+    // checkMembershipStatus() {
     //     const userType = localStorage.getItem('userType');
     //     this.isAdmin = userType === 'isAdmin';
     // } Ne Marche Pas ?!?
@@ -500,7 +618,7 @@ table {
   border-collapse: collapse;
 }
 
-.product-image {
+.produit-image {
   height: 100px;
   width: 100px;
   margin: 10px;
