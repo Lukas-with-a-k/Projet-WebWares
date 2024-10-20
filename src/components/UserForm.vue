@@ -4,7 +4,8 @@
         <input name="name" type="text" placeholder="Raison sociale" v-model="localUserData.name" disabled><br>
 
         <label for="phone">Numéro de téléphone</label>
-        <input name="phone" type="text" placeholder="Numéro de téléphone" v-model="localUserData.phone" @input="validPhone">
+        <input name="phone" type="text" placeholder="Numéro de téléphone" v-model="localUserData.phone"
+            @input="validPhone">
         <div class="msgError" v-if="errors.phone">{{ errors.phone }}</div><br>
 
         <label for="mail">Email</label>
@@ -29,15 +30,15 @@
 export default {
     props: ['user'],
     data() {
-      return {
-        errors: {
-        phone: '',
-        mail: '',
-        postal: '',
-        city: '',
-        adress: ''
+        return {
+            errors: {
+                phone: '',
+                mail: '',
+                postal: '',
+                city: '',
+                adress: ''
             }
-     };
+        };
     },
     computed: {
         localUserData: {
@@ -51,26 +52,26 @@ export default {
     },
     methods: {
         validPhone() {
-          const phoneRegex = /^(0[1-9]([-. ]?[0-9]{2}){4}|(\+33|0033)[1-9]([-. ]?[0-9]{2}){4})$/;
-           this.errors.phone = phoneRegex.test(this.user.phone) ? '' : 'Entrez le numéro valide';
-          this.emitValidation();
+            const phoneRegex = /^(0[1-9]([-. ]?[0-9]{2}){4}|(\+33|0033)[1-9]([-. ]?[0-9]{2}){4})$/;
+            this.errors.phone = phoneRegex.test(this.user.phone) ? '' : 'Entrez le numéro valide';
+            this.emitValidation();
         },
         validEmail() {
-          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-          this.errors.mail = emailRegex.test(this.user.username) ? '' : 'Entrez email valide';
-          this.emitValidation();
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            this.errors.mail = emailRegex.test(this.user.username) ? '' : 'Entrez email valide';
+            this.emitValidation();
         },
         validPostal() {
-          this.errors.postal = this.user.postal ? '' : 'Entrez code postal';
-          this.emitValidation();
+            this.errors.postal = this.user.postal ? '' : 'Entrez code postal';
+            this.emitValidation();
         },
         validCity() {
-          this.errors.city = this.user.city ? '' : 'Entrez ville';
-          this.emitValidation();
+            this.errors.city = this.user.city ? '' : 'Entrez ville';
+            this.emitValidation();
         },
         validAdress() {
-          this.errors.adress = this.user.adress ? '' : 'Entrez adresse';
-          this.emitValidation();
+            this.errors.adress = this.user.adress ? '' : 'Entrez adresse';
+            this.emitValidation();
         },
         emitValidation() {
             this.$emit('validResults', this.errors);
@@ -79,39 +80,43 @@ export default {
     watch: {
         user: {
             handler() {
-              this.validPhone();
-              this.validEmail();
-              this.validPostal();
-              this.validCity();
-              this.validAdress();
+                this.validPhone();
+                this.validEmail();
+                this.validPostal();
+                this.validCity();
+                this.validAdress();
             },
-         deep: true,
-         immediate: true
+            deep: true,
+            immediate: true
         }
     }
 };
 </script>
-<style  scoped>
-label{
+<style scoped>
+label {
     font-size: 20px;
 }
+
 input {
     font-size: 25px;
     /* width: 600px; */
     height: 40px;
 }
-.msgError{
+
+.msgError {
     color: red
 }
+
 form {
     display: flex;
     flex-direction: column;
-   
+
     justify-content: center;
-    
+
     padding: 10px;
-    
+
 }
+
 /* @media display and (max-width: 360px){
     input {
         max-width: fit-content;
@@ -119,5 +124,5 @@ form {
    } */
 /* } */
 /* margin:  0 auto; */
- /* max-width: 600px; */ 
+/* max-width: 600px; */
 </style>

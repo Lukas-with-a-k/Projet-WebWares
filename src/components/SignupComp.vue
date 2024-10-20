@@ -1,67 +1,21 @@
 <template>
   <div class="signup">
     <h3>Inscription</h3>
-    <input
-      id="name"
-      type="text"
-      placeholder="Raison sociale"
-      :class="{ 'input-error': invalidFields.name }"
-    />
-    <input
-      id="siret"
-      type="text"
-      placeholder="Numéro de SIRET"
-      :class="{ 'input-error': invalidFields.siret }"
-      :title="getErrorMessage('siret')"
-    />
-    <input
-      id="username"
-      type="text"
-      placeholder="Adresse e-mail"
-      :class="{ 'input-error': invalidFields.username }"
-    />
-    <input
-      id="phone"
-      type="text"
-      placeholder="Numéro de téléphone"
-      :class="{ 'input-error': invalidFields.phone }"
-      :title="getErrorMessage('phone')"
-    />
-    <input
-      class="pw"
-      id="password"
-      type="text"
-      placeholder="Mot de passe"
-      :class="{ 'input-error': invalidFields.password }"
-      :title="getErrorMessage('password')"
-    />
-    <input
-      class="pw"
-      id="passwordconfirm"
-      type="text"
-      placeholder="Confirmation du Mot de passe"
-      :class="{ 'input-error': invalidFields.passwordConfirm }"
-      :title="getErrorMessage('passwordConfirm')"
-    />
-    <input
-      id="adress"
-      type="text"
-      placeholder="Adresse (ex : 17 rue Fernand)"
-      :class="{ 'input-error': invalidFields.adress }"
-    />
-    <input
-      id="city"
-      type="text"
-      placeholder="Ville"
-      :class="{ 'input-error': invalidFields.city }"
-    />
-    <input
-      class="postal"
-      id="postal"
-      type="text"
-      placeholder="Code Postal"
-      :class="{ 'input-error': invalidFields.postal }"
-    />
+    <input id="name" type="text" placeholder="Raison sociale" :class="{ 'input-error': invalidFields.name }" />
+    <input id="siret" type="text" placeholder="Numéro de SIRET" :class="{ 'input-error': invalidFields.siret }"
+      :title="getErrorMessage('siret')" />
+    <input id="username" type="text" placeholder="Adresse e-mail" :class="{ 'input-error': invalidFields.username }" />
+    <input id="phone" type="text" placeholder="Numéro de téléphone" :class="{ 'input-error': invalidFields.phone }"
+      :title="getErrorMessage('phone')" />
+    <input class="pw" id="password" type="text" placeholder="Mot de passe"
+      :class="{ 'input-error': invalidFields.password }" :title="getErrorMessage('password')" />
+    <input class="pw" id="passwordconfirm" type="text" placeholder="Confirmation du Mot de passe"
+      :class="{ 'input-error': invalidFields.passwordConfirm }" :title="getErrorMessage('passwordConfirm')" />
+    <input id="adress" type="text" placeholder="Adresse (ex : 17 rue Fernand)"
+      :class="{ 'input-error': invalidFields.adress }" />
+    <input id="city" type="text" placeholder="Ville" :class="{ 'input-error': invalidFields.city }" />
+    <input class="postal" id="postal" type="text" placeholder="Code Postal"
+      :class="{ 'input-error': invalidFields.postal }" />
 
     <br />
     <button class="connect" @click="checkSignUp">S'inscrire</button>
@@ -351,11 +305,13 @@ p.signup {
   margin-left: 20px;
   color: #3f4666;
 }
+
 a.lost {
   margin-top: 16px;
   margin-right: 20px;
   float: right;
 }
+
 h3 {
   font-size: 24px;
   font-weight: 600;

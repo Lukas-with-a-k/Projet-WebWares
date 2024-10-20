@@ -1,23 +1,16 @@
 <template>
-    <div class="bkg">
-      <div class="banner"> 
-        <video  
-        src="@/assets/wewa.mp4" frameborder="0" 
-        autoplay 
-        loop>
+  <div class="bkg">
+    <div class="banner">
+      <video src="@/assets/wewa.mp4" frameborder="0" autoplay loop>
       </video>
     </div>
     <div class="action">
-    <h1 v-if="!userType">Pas encore membre?</h1>
-    <SignupComp
-    v-if="showSignup"
-    @toggleLogin="toggleLogin"
-    @accountCreated="accountCreated"
-    />
-    <button v-if="!userType" @click="toggleSignup" class="button">Inscrivez-vous!</button>
-    <h1 >Voulez-vous en savoir plus?</h1> 
-    <button @click="contact" class="button">Nous contacter</button>
-</div>
+      <h1 v-if="!userType">Pas encore membre?</h1>
+      <SignupComp v-if="showSignup" @toggleLogin="toggleLogin" @accountCreated="accountCreated" />
+      <button v-if="!userType" @click="toggleSignup" class="button">Inscrivez-vous!</button>
+      <h1>Voulez-vous en savoir plus?</h1>
+      <button @click="contact" class="button">Nous contacter</button>
+    </div>
   </div>
 
 </template>
@@ -34,10 +27,10 @@ export default {
     };
   },
   components: {
-  SignupComp,
-    
+    SignupComp,
+
   },
- 
+
   methods: {
     contact() {
       this.$router.push({ name: "ContactPage" });
@@ -48,20 +41,20 @@ export default {
     getUserType() {
       const userType = localStorage.getItem('userType');
       if (userType) {
-        this.userType = userType; 
+        this.userType = userType;
       }
     }
   },
   mounted() {
-    this.getUserType();  
+    this.getUserType();
   },
- 
+
   watch: {
     userType(newValue, oldValue) {
       if (newValue !== oldValue) {
         console.log('User type changed:', newValue);
       }
-      
+
     }
   }
 };
@@ -72,7 +65,6 @@ export default {
 
 
 <style scoped>
-
 .action {
   display: flex;
   flex-direction: column;
@@ -81,20 +73,21 @@ export default {
   height: 25vh;
   color: #2a2a2a;
 }
+
 .bkg {
-    background: linear-gradient( rgba(230,237,235,1) 0%, rgba(63,70,102,1) 60%, rgba(116,130,132,1) 99%);
-  }
+  background: linear-gradient(rgba(230, 237, 235, 1) 0%, rgba(63, 70, 102, 1) 60%, rgba(116, 130, 132, 1) 99%);
+}
 
 .banner {
   width: 100%;
-  }
+}
 
 video {
   width: 100%;
   height: 700px;
   object-fit: cover;
   object-position: center 30%;
- 
+
 }
 
 .button {
@@ -115,13 +108,14 @@ video {
 
 @media (max-width: 768px) {
   .banner {
-   display: none;
+    display: none;
   }
 
   .action {
     height: 50vh;
   }
 }
+
 @media (max-width: 480px) {
   .bkg {
     min-height: 7vh;

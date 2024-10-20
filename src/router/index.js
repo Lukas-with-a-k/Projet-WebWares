@@ -3,11 +3,11 @@ import { createRouter, createWebHistory } from 'vue-router';
 
 
 const routes = [
-  { 
+  {
     path: '/',
     name: 'LandingPage',
     component: LandingPage,
-    
+
   },
   {
     path: "/userlist-admin",
@@ -19,7 +19,7 @@ const routes = [
     name: "CommandstAdmin",
     component: () => import("../views/CommandsAdmin.vue"),
   },
-  
+
   {
     path: "/ProductList",
     name: "ProductList",
@@ -31,34 +31,34 @@ const routes = [
     component: () => import("../views/ProductDetails.vue"),
   },
   {
-  path: "/PanierUser",
-  name: "PanierUser",
-  component: () => import("../views/PanierUser.vue"),
+    path: "/PanierUser",
+    name: "PanierUser",
+    component: () => import("../views/PanierUser.vue"),
 
-},
-{
-  path: "/UserCommands",
-  name: "commands",
-  component: () => import("../views/CommandsUser.vue"),
+  },
+  {
+    path: "/UserCommands",
+    name: "commands",
+    component: () => import("../views/CommandsUser.vue"),
 
-},
-{
-  // ici on récupère l'id de la catégorie dans l'url
-  path: '/category/:id',
-  name: 'ProductCategory',
-  component: () => import("../components/ProductCategory.vue"),
-},
-{
-  path: "/GestionProduits",
-  name: "GestionProduits",
-  component: () => import("../views/GestionProduits.vue"),
+  },
+  {
+    // ici on récupère l'id de la catégorie dans l'url
+    path: '/category/:id',
+    name: 'ProductCategory',
+    component: () => import("../components/ProductCategory.vue"),
+  },
+  {
+    path: "/GestionProduits",
+    name: "GestionProduits",
+    component: () => import("../views/GestionProduits.vue"),
 
-},
-{
-  path: '/contact'
-  , name: 'ContactPage'
-  , component: () => import("../components/ContactPage.vue")
-}
+  },
+  {
+    path: '/contact'
+    , name: 'ContactPage'
+    , component: () => import("../components/ContactPage.vue")
+  }
 ];
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),

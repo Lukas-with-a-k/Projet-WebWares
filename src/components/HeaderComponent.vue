@@ -95,7 +95,7 @@ export default {
       this.cartCount = produits.length;
     },
     addProductToCart(product) {
-    this.produitsInPanier.push(product);
+      this.produitsInPanier.push(product);
     },
     logout() {
       this.$emit("logout");
@@ -103,7 +103,7 @@ export default {
       localStorage.removeItem("userId");
       localStorage.removeItem("userType");
       localStorage.removeItem("produitsInPanier");// Ajoute ça dans ton code !!!
-      },
+    },
 
     // Fonction pour afficher le menu déroulant
     toggleDropdown() {
@@ -145,7 +145,7 @@ export default {
       this.userName = storedName;
     }
     this.loadCart();
-    
+
   },
   mounted() {
     document.addEventListener("click", this.closeDropdown);
@@ -305,7 +305,7 @@ export default {
   cursor: pointer;
   padding: 20px;
   margin: 10px;
-  
+
 }
 
 .dropbtn:hover {

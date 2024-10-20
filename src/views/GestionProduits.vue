@@ -1,178 +1,113 @@
 <template>
-<div> <!--v-if="isAdmin" ne fonctionne pas-->
+  <div> <!--v-if="isAdmin" ne fonctionne pas-->
     <!-- MODAL ADD -->
     <div id="addModal" class="modal" v-show="isAddVisible" v-cloak>
-        <div class="modal-content">
-            <span class="close" @click="closeAddModal()">X</span>
-            <h2>Ajouter un produit</h2>
-            <form @submit.prevent="addProd">
-            <label for="addImg">Produit image</label><br />
-            <input type="file" id="addImage" @change="onFileChangeAdd" /><br />
+      <div class="modal-content">
+        <span class="close" @click="closeAddModal()">X</span>
+        <h2>Ajouter un produit</h2>
+        <form @submit.prevent="addProd">
+          <label for="addImg">Produit image</label><br />
+          <input type="file" id="addImage" @change="onFileChangeAdd" /><br />
 
-            <label for="addName">Titre produit</label><br />
-            <input
-                type="text"
-                id="titre"
-                name="titre"
-                v-model="newProd.titre"
-            /><br />
+          <label for="addName">Titre produit</label><br />
+          <input type="text" id="titre" name="titre" v-model="newProd.titre" /><br />
 
-            <label for="addDescription">Description produit</label><br />
-            <textarea
-                id="description"
-                name="description"
-                v-model="newProd.description"
-            ></textarea
-            ><br />
+          <label for="addDescription">Description produit</label><br />
+          <textarea id="description" name="description" v-model="newProd.description"></textarea><br />
 
-            <label for="addPrice">Prix produit</label><br />
-            <input
-                type="number"
-                id="prix"
-                name="prix"
-                size="8"
-                v-model="newProd.prix"
-            /><br />
+          <label for="addPrice">Prix produit</label><br />
+          <input type="number" id="prix" name="prix" size="8" v-model="newProd.prix" /><br />
 
-            <label for="addMoq">MOQ produit</label><br />
-            <input
-                type="number"
-                id="moq"
-                name="moq"
-                size="4"
-                v-model="newProd.moq"
-            /><br />
+          <label for="addMoq">MOQ produit</label><br />
+          <input type="number" id="moq" name="moq" size="4" v-model="newProd.moq" /><br />
 
-            <label for="category">Catégorie produit</label><br />
-            <select id="category" name="category" v-model="newProd.categorieId">
-                <option value="1">Mobilier</option>
-                <option value="2">Luminaires</option>
-                <option value="3">Tapis</option>
-                <option value="4">Deco</option></select
-            ><br />
-            <br /><br />
-            <ButtonComponent
-                label="Enregistrer"
-                bcolor="#3F4666"
-                hcolor="#4280b8"
-                @click="addProd"
-            />
-            </form>
-        </div>
+          <label for="category">Catégorie produit</label><br />
+          <select id="category" name="category" v-model="newProd.categorieId">
+            <option value="1">Mobilier</option>
+            <option value="2">Luminaires</option>
+            <option value="3">Tapis</option>
+            <option value="4">Deco</option>
+          </select><br />
+          <br /><br />
+          <ButtonComponent label="Enregistrer" bcolor="#3F4666" hcolor="#4280b8" @click="addProd" />
+        </form>
+      </div>
     </div>
     <!-- MODAL  -->
 
-    <ButtonComponent
-        label="Ajouter un Produit"
-        bcolor="#4280b8"
-        hcolor="#748284"
-        @click="showAdd()"
-    />
+    <ButtonComponent label="Ajouter un Produit" bcolor="#4280b8" hcolor="#748284" @click="showAdd()" />
     <div class="body" style="overflow-x: auto">
-        <h1>Liste des produits</h1>
-        <table>
-            <thead>
-                <tr>
-                <th>Image produit</th>
-                <th>Titre produit</th>
-                <th>Description produit</th>
-                <th>Prix produit</th>
-                <th>MOQ produit</th>
-                <th>CatégorieId</th>
-                <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="(produit, index) in productList" :key="index">
-                <td>
-                <img
-                :src="require(`@/assets/${produit.image}`)"
-                :alt="produit.titre"
-                class="product-image"
-                />
-                </td>
-                <td>{{ produit.titre }}</td>
-                <td>{{ produit.description }}</td>
-                <td>{{ produit.prix }}</td>
-                <td>{{ produit.moq }}</td>
-                <td>{{ produit.categorieId }}</td>
-                <td>
-                <ButtonComponent
-                label="Edit"
-                bcolor="#3F4666"
-                hcolor="#4280b8"
-                @click="showMod(index)"
-                />
-                <button type="button" class="delete-btn" @click="supProd(index)">
+      <h1>Liste des produits</h1>
+      <table>
+        <thead>
+          <tr>
+            <th>Image produit</th>
+            <th>Titre produit</th>
+            <th>Description produit</th>
+            <th>Prix produit</th>
+            <th>MOQ produit</th>
+            <th>CatégorieId</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(produit, index) in productList" :key="index">
+            <td>
+              <img :src="require(`@/assets/${produit.image}`)" :alt="produit.titre" class="product-image" />
+            </td>
+            <td>{{ produit.titre }}</td>
+            <td>{{ produit.description }}</td>
+            <td>{{ produit.prix }}</td>
+            <td>{{ produit.moq }}</td>
+            <td>{{ produit.categorieId }}</td>
+            <td>
+              <ButtonComponent label="Edit" bcolor="#3F4666" hcolor="#4280b8" @click="showMod(index)" />
+              <button type="button" class="delete-btn" @click="supProd(index)">
                 X
-                </button>
-                </td>
-                </tr>
-            </tbody>
-        </table>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
 
     <!-- MODAL EDIT -->
     <div id="editModal" class="modal" v-show="isVisible" v-cloak>
-        <div class="modal-content">
-            <span class="close" @click="closeModal()">X</span>
-            <h2>Modifier le produit :</h2>
+      <div class="modal-content">
+        <span class="close" @click="closeModal()">X</span>
+        <h2>Modifier le produit :</h2>
 
-            <form class="edit-form">
-            <label for="editImg">Produit image</label><br />
-            <input type="file" id="editImage" @change="onFileChange" /><br />
+        <form class="edit-form">
+          <label for="editImg">Produit image</label><br />
+          <input type="file" id="editImage" @change="onFileChange" /><br />
 
-            <label for="editName">Titre produit</label><br />
-            <input
-                type="text"
-                id="editName"
-                size="30"
-                v-model="editProd.titre"
-            /><br />
+          <label for="editName">Titre produit</label><br />
+          <input type="text" id="editName" size="30" v-model="editProd.titre" /><br />
 
-            <label for="editDescription">Description produit</label><br />
-            <textarea
-                id="description"
-                name="description"
-                v-model="editProd.description"
-            >Description...</textarea><br />
+          <label for="editDescription">Description produit</label><br />
+          <textarea id="description" name="description" v-model="editProd.description">Description...</textarea><br />
 
-            <label for="editPrice">Prix produit</label><br />
-            <input
-                type="string"
-                id="editPrice"
-                size="10"
-                v-model="editProd.prix"
-            /><br />
+          <label for="editPrice">Prix produit</label><br />
+          <input type="string" id="editPrice" size="10" v-model="editProd.prix" /><br />
 
-            <label for="editMoq">MOQ produit</label><br />
-            <input
-                type="number"
-                id="editMoq"
-                size="5"
-                v-model="editProd.moq"
-            /><br />
+          <label for="editMoq">MOQ produit</label><br />
+          <input type="number" id="editMoq" size="5" v-model="editProd.moq" /><br />
 
-            <label for="category">Catégorie Id produit</label><br />
-            <select id="category" name="category" v-model="editProd.categorieId">
-                <option value="1">Mobilier</option>
-                <option value="2">Luminaires</option>
-                <option value="3">Tapis</option>
-                <option value="4">Deco</option></select
-            ><br />
+          <label for="category">Catégorie Id produit</label><br />
+          <select id="category" name="category" v-model="editProd.categorieId">
+            <option value="1">Mobilier</option>
+            <option value="2">Luminaires</option>
+            <option value="3">Tapis</option>
+            <option value="4">Deco</option>
+          </select><br />
 
-            <br /><br />
-            <ButtonComponent
-            label="Enregistrer"
-            bcolor="#3F4666"
-            hcolor="#4280b8"
-            @click="saveMod()"
-            />
-            </form>
-        </div>
+          <br /><br />
+          <ButtonComponent label="Enregistrer" bcolor="#3F4666" hcolor="#4280b8" @click="saveMod()" />
+        </form>
+      </div>
     </div>
     <!-- MODAL  -->
-</div>
+  </div>
 </template>
 
 <script>
@@ -409,7 +344,7 @@ export default {
         moq: "",
         categorieId: "",
       },
-    //   isAdmin: false,
+      //   isAdmin: false,
       isVisible: false,
       isAddVisible: false,
       editProd: {},
@@ -559,6 +494,7 @@ table {
   margin: 40px auto;
   border-collapse: collapse;
 }
+
 .product-image {
   height: 100px;
   width: 100px;
@@ -606,6 +542,7 @@ table {
   width: 100%;
   position: relative;
 }
+
 .edit-form {
   font-size: 18px;
 }

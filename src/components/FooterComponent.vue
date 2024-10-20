@@ -1,30 +1,30 @@
 <template>
-    <footer class="footer">
-      <div class="container">
-        <div class="social">
-          <a href=""><i class="fab fa-facebook-f"></i><img src="@\assets\facebook.png" alt="facebook"></a>
-          <a href=""><i class="fab fa-twitter"></i><img src="@\assets\X.png" alt="X"></a>
-          <a href=""><i class="fab fa-instagram"></i><img src="@\assets\insta.png" alt="insta"></a>
-        </div>
-           
-        <p>&copy; 2024 - WebWares inc.</p>
-        <p>
-          <a href="">Mentions légales</a> |
-          <a href="">Politique de confidentialité</a> | 
-          <a href="">Conditions d'utilisation</a>
-        </p>
+  <footer class="footer">
+    <div class="container">
+      <div class="social">
+        <a href=""><i class="fab fa-facebook-f"></i><img src="@\assets\facebook.png" alt="facebook"></a>
+        <a href=""><i class="fab fa-twitter"></i><img src="@\assets\X.png" alt="X"></a>
+        <a href=""><i class="fab fa-instagram"></i><img src="@\assets\insta.png" alt="insta"></a>
       </div>
-    </footer>
-  </template>
-  
-  <script>
-  export default {
-    name: 'FooterComponent',
-  };
-  </script>
-  
-  <style scoped>
- .footer {
+
+      <p>&copy; 2024 - WebWares inc.</p>
+      <p>
+        <a href="">Mentions légales</a> |
+        <a href="">Politique de confidentialité</a> |
+        <a href="">Conditions d'utilisation</a>
+      </p>
+    </div>
+  </footer>
+</template>
+
+<script>
+export default {
+  name: 'FooterComponent',
+};
+</script>
+
+<style scoped>
+.footer {
   background-color: #748284;
   color: #e6edeb;
   padding: 20px 0;
@@ -83,8 +83,4 @@
     height: 20px;
   }
 }
-
-  
-  
-  </style>
-  
+</style>

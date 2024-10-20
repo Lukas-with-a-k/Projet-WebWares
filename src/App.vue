@@ -1,26 +1,13 @@
 <template>
-  <HeaderComponent :isLoggedIn="isLoggedIn" @toggleLogin="toggleLogin" @toggleSignup="toggleSignup" @logout="logout"/>
+  <HeaderComponent :isLoggedIn="isLoggedIn" @toggleLogin="toggleLogin" @toggleSignup="toggleSignup" @logout="logout" />
   <nav>
-    <LoginComp
-    :accounts="accounts"
-    v-if="showLogin"
-    @toggleSignup="toggleSignup"
-    @closeForms="closeForms"
-    @loginSuccess="loginSuccess"
-    />
-    <SignupComp
-    v-if="showSignup"
-    @toggleLogin="toggleLogin"
-    @accountCreated="accountCreated"
-    />
-    <div
-    v-if="showLogin || showSignup"
-    class="dark-overlay"
-    @click="closeForms"
-    ></div>
+    <LoginComp :accounts="accounts" v-if="showLogin" @toggleSignup="toggleSignup" @closeForms="closeForms"
+      @loginSuccess="loginSuccess" />
+    <SignupComp v-if="showSignup" @toggleLogin="toggleLogin" @accountCreated="accountCreated" />
+    <div v-if="showLogin || showSignup" class="dark-overlay" @click="closeForms"></div>
   </nav>
   <router-view />
-  <AdminBar/>
+  <AdminBar />
   <FooterComponent />
 </template>
 <script>
@@ -31,7 +18,7 @@ import SignupComp from "./components/SignupComp.vue";
 import AdminBar from './components/AdminBar.vue';
 export default {
   name: 'App',
-  components: { 
+  components: {
     HeaderComponent,
     FooterComponent,
     AdminBar,
@@ -83,7 +70,7 @@ export default {
     loginSuccess(user) {
       this.isLoggedIn = true;
       this.userType = user.type;
-      this.userName = user.name;  
+      this.userName = user.name;
       localStorage.setItem('userType', user.type);
       localStorage.setItem('userName', user.name);
       this.$root.$emit('userTypeChanged');
@@ -129,7 +116,7 @@ export default {
       localStorage.removeItem("userType");
       localStorage.removeItem("userName");
       window.location.reload();
-      this.$root.$emit('userTypeChanged'); 
+      this.$root.$emit('userTypeChanged');
     },
   },
   mounted() {
@@ -156,7 +143,7 @@ body {
   padding: 0;
   background-color: #E6EDEB;
   box-sizing: border-box;
-  
+
 }
 
 #app {
@@ -186,5 +173,4 @@ nav a.router-link-exact-active {
   background-color: rgba(0, 0, 0, 0.7);
   z-index: 99;
 }
-
 </style>

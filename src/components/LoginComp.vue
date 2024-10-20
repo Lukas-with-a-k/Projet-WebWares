@@ -3,12 +3,7 @@
     <h3>Connexion</h3>
     <input id="username" type="text" placeholder="Adresse e-mail" />
     <br />
-    <input
-      class="pw"
-      id="password"
-      type="password"
-      placeholder="Mot de passe"
-    />
+    <input class="pw" id="password" type="password" placeholder="Mot de passe" />
     <br />
     <button class="connect" @click="loginButton">Se connecter</button>
     <br />
@@ -52,7 +47,7 @@ export default {
           console.log("Connexion réussie !");
           localStorage.setItem("userType", account.type);
           localStorage.setItem("userId", usernameValue);
-          this.$emit("loginSuccess", account); 
+          this.$emit("loginSuccess", account);
           this.$emit("closeForms");
         } else {
           console.log("Mot de passe incorrect");

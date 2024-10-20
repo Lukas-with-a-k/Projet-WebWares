@@ -1,36 +1,38 @@
 <template>
-<div class="bkg">
-  <h1>Nos Produits</h1>
-  <!-- barre de recherche -->
-    <input type="search" name="search" id="query" placeholder="Rechercher..." v-model="query" @input="filterProducts(query)"/>
+  <div class="bkg">
+    <h1>Nos Produits</h1>
+    <!-- barre de recherche -->
+    <input type="search" name="search" id="query" placeholder="Rechercher..." v-model="query"
+      @input="filterProducts(query)" />
     <div class="card-container">
       <div class="card" v-for="(prod, index) in produits" :key="index">
-        <div class="image-container">  
+        <div class="image-container">
           <img :src="require(`@/assets/${prod.image}`)" :alt="prod.titre" />
-          <button class="add-to-cart" v-if="isMember" @click="addToCart(prod, index)">Ajouter au panier <span class="checkmark" v-if="productAdded === index">&#10003;</span>
-          </button>  
-            <div class="qte" v-if="isMember && chosen(prod)">
-              <span> Qte: </span>
-              <button @click="decrease(prod)"> - </button>
-              <span> {{ prod.count }} </span>
-              <button @click="increase(prod)"> + </button>
-            </div>
-        </div> 
+          <button class="add-to-cart" v-if="isMember" @click="addToCart(prod, index)">Ajouter au panier <span
+              class="checkmark" v-if="productAdded === index">&#10003;</span>
+          </button>
+          <div class="qte" v-if="isMember && chosen(prod)">
+            <span> Qte: </span>
+            <button @click="decrease(prod)"> - </button>
+            <span> {{ prod.count }} </span>
+            <button @click="increase(prod)"> + </button>
+          </div>
+        </div>
         <h4>{{ prod.titre }}</h4>
-        <p v-if="isMember">{{ prod.prix }} € | MOQ: {{prod.moq}}</p>
+        <p v-if="isMember">{{ prod.prix }} € | MOQ: {{ prod.moq }}</p>
         <router-link :to="`/ProductDetails/${prod.id}`" class="details-link">Voir Détails</router-link>
       </div>
     </div>
-</div>  
+  </div>
 </template>
-  
+
 <script>
-  export default {
-    name: "ProductList", 
-    data() {
-      return {
-        produits: [
-          {
+export default {
+  name: "ProductList",
+  data() {
+    return {
+      produits: [
+        {
           id: 1,
           image: "mobilier-5.jpg",
           titre: "Table à manger en bois",
@@ -39,8 +41,8 @@
           moq: 5,
           count: 5,
           categorieId: 1,
-          },
-          {
+        },
+        {
           id: 2,
           image: "luminaire-1.jpg",
           titre: "Lampe moderne",
@@ -49,8 +51,8 @@
           moq: 10,
           count: 10,
           categorieId: 2,
-          },
-          {
+        },
+        {
           id: 3,
           image: "tapis-2.jpg",
           titre: "Tapis en laine",
@@ -59,8 +61,8 @@
           moq: 20,
           count: 20,
           categorieId: 3,
-          },
-          {
+        },
+        {
           id: 4,
           image: "deco-3.jpg",
           titre: "Vase éthnique en argile",
@@ -69,8 +71,8 @@
           moq: 20,
           count: 20,
           categorieId: 4,
-          },
-          {
+        },
+        {
           id: 5,
           image: "luminaire-3.jpg",
           titre: "Suspension en jute",
@@ -79,18 +81,18 @@
           moq: 20,
           count: 20,
           categorieId: 2,
-          },
-          {
+        },
+        {
           id: 6,
           image: "tapis-5.jpg",
           titre: "Tapis poils longs",
           description: "Tapis poils longs tellement doux et durable. Tissé à la main, 100% polyester recylcé!",
           prix: 129.99,
           moq: 10,
-          count: 10, 
+          count: 10,
           categorieId: 3,
-          },
-          {
+        },
+        {
           id: 7,
           image: "deco-1.jpg",
           titre: " Vase en bois",
@@ -99,8 +101,8 @@
           moq: 20,
           count: 20,
           categorieId: 4,
-          },
-          {
+        },
+        {
           id: 8,
           image: "mobilier-3.jpg",
           titre: "Canapé en cuir 3 places",
@@ -109,18 +111,18 @@
           moq: 2,
           count: 2,
           categorieId: 1,
-          },
-          {
+        },
+        {
           id: 9,
           image: "tapis-3.jpg",
           titre: "Tapis oriental tissé",
           description: "Tapis motif ethnique type Poils ras. Antistatique, antiacarien et il ne blanchit pas avec le temps.",
           prix: 119.99,
           moq: 10,
-          count: 10, 
+          count: 10,
           categorieId: 3,
-          },
-          {
+        },
+        {
           id: 10,
           image: "luminaire-5.jpg",
           titre: "Applique en frêne",
@@ -129,8 +131,8 @@
           moq: 20,
           count: 20,
           categorieId: 2,
-          },
-          {
+        },
+        {
           id: 11,
           image: "deco-4.jpg",
           titre: "Vase ceramique",
@@ -139,8 +141,8 @@
           moq: 20,
           count: 20,
           categorieId: 4,
-          },
-          {
+        },
+        {
           id: 12,
           image: "mobilier-1.jpg",
           titre: "Table de chevet",
@@ -149,8 +151,8 @@
           moq: 20,
           count: 20,
           categorieId: 1,
-          },
-          {
+        },
+        {
           id: 13,
           image: "luminaire-4.jpg",
           titre: "Suspension forme dôme",
@@ -159,8 +161,8 @@
           moq: 20,
           count: 20,
           categorieId: 2,
-          },
-          {
+        },
+        {
           id: 14,
           image: "tapis-1.jpg",
           titre: "Tapis imitation fourrure",
@@ -169,8 +171,8 @@
           moq: 15,
           count: 15,
           categorieId: 3,
-          },
-          {
+        },
+        {
           id: 15,
           image: "mobilier-4.jpg",
           titre: "Canapé convertible express 3 places en velours",
@@ -179,8 +181,8 @@
           moq: 5,
           count: 5,
           categorieId: 1,
-          },
-          {
+        },
+        {
           id: 16,
           image: "deco-2.jpg",
           titre: "Vase céramique bleu",
@@ -189,8 +191,8 @@
           moq: 20,
           count: 20,
           categorieId: 4,
-          },
-          {
+        },
+        {
           id: 17,
           image: "tapis-4.jpg",
           titre: "Tapis crocheté téte d'éléphant",
@@ -199,8 +201,8 @@
           moq: 20,
           count: 20,
           categorieId: 3,
-          },
-          {
+        },
+        {
           id: 18,
           image: "luminaire-2.jpg",
           titre: "Suspension en béton clair et bois",
@@ -209,8 +211,8 @@
           moq: 20,
           count: 20,
           categorieId: 2,
-          },
-          {
+        },
+        {
           id: 19,
           image: "deco-5.jpg",
           titre: "Vase en céramique raku, turquoise",
@@ -219,8 +221,8 @@
           moq: 20,
           count: 20,
           categorieId: 4,
-          },
-          {
+        },
+        {
           id: 20,
           image: "mobilier-2.jpg",
           titre: "Etagère murale en pin",
@@ -229,27 +231,27 @@
           moq: 20,
           count: 20,
           categorieId: 1,
-          },
-        ],
-        filteredProduits: [],
-        isMember: false,
-        productAdded: null,
-        query: '',
-      };
-    },
+        },
+      ],
+      filteredProduits: [],
+      isMember: false,
+      productAdded: null,
+      query: '',
+    };
+  },
   created() {
     this.checkMembershipStatus();
     this.filteredProduits = this.produits;
   },
   methods: {
     filterProducts() {
-    const searchTerm = this.query ? this.query.toLowerCase() : ''; // Vérification de sécurité pour `query`
-    this.filteredProduits = this.produits.filter((product) => {
-      return product.titre && product.titre.toLowerCase().includes(searchTerm); // Vérification de sécurité pour `titre`
-    });
+      const searchTerm = this.query ? this.query.toLowerCase() : ''; // Vérification de sécurité pour `query`
+      this.filteredProduits = this.produits.filter((product) => {
+        return product.titre && product.titre.toLowerCase().includes(searchTerm); // Vérification de sécurité pour `titre`
+      });
     },
     goToDetails(productId) {
-      this.$router.push({ name: `@/views/ProductDetails/${this.produits.id}`, params: { id: productId }});
+      this.$router.push({ name: `@/views/ProductDetails/${this.produits.id}`, params: { id: productId } });
     },
     checkMembershipStatus() {
       const userType = localStorage.getItem('userType');
@@ -273,18 +275,18 @@
         //validation de ajout au click
         this.productAdded = index;
         setTimeout(() => {
-        this.productAdded = null;
+          this.productAdded = null;
         }, 700);
         window.location.reload();
       }
     },
     chosen(prod) {
       let produitsInPanier = JSON.parse(localStorage.getItem('produitsInPanier')) || [];
-      return produitsInPanier.some(item => item.id === prod.id); 
+      return produitsInPanier.some(item => item.id === prod.id);
     },
     decrease(prod) {
-      if (prod.count > prod.moq){
-        prod.count --;
+      if (prod.count > prod.moq) {
+        prod.count--;
         this.updateLocalStorage(prod);
       }
     },
@@ -307,7 +309,7 @@
 
 <style scoped>
 .bkg {
-  background: linear-gradient( rgba(230,237,235,1) 0%, rgba(63,70,102,1) 30%, rgba(116,130,132,1) 84%);
+  background: linear-gradient(rgba(230, 237, 235, 1) 0%, rgba(63, 70, 102, 1) 30%, rgba(116, 130, 132, 1) 84%);
   min-height: 78vh;
 }
 
@@ -335,10 +337,10 @@ h1 {
 .card {
   display: flex;
   justify-content: center;
-  flex-direction: column;  
+  flex-direction: column;
   color: #e6edeb;
   border: none;
-  padding-bottom: 20px; 
+  padding-bottom: 20px;
   text-align: center;
   width: 500px;
 }
@@ -346,16 +348,16 @@ h1 {
 .image-container {
   position: relative;
   width: 100%;
-}  
+}
 
-.card img {  
+.card img {
   height: 500px;
   width: 500px;
   margin-bottom: 15px;
   object-fit: cover;
-} 
+}
 
-.add-to-cart {  
+.add-to-cart {
   display: none;
   position: absolute;
   bottom: 240px;
@@ -387,7 +389,7 @@ h1 {
 
 .qte span {
   font-size: 1.1;
-  margin:3px
+  margin: 3px
 }
 
 .card h4 {
@@ -410,21 +412,24 @@ a:hover,
 a.router-link-active {
   color: #4fb694;
 }
+
 /* Media query 945px */
 @media (max-width: 945px) {
-    .bkg {
+  .bkg {
     background-image: none;
-  }  
+  }
+
   .card-container {
     flex-direction: column;
     align-items: center;
     justify-content: center;
     padding: 20px
   }
+
   .card {
     background-color: #3F4666;
     width: auto;
-    margin-bottom: 15px; 
+    margin-bottom: 15px;
   }
 }
 
@@ -432,20 +437,24 @@ a.router-link-active {
 @media (max-width: 360px) {
   .bkg {
     background-image: none;
-  }  
+  }
+
   .card-container {
     flex-direction: column;
     align-items: center;
     padding-left: 10px;
   }
+
   .card {
     background-color: #3F4666;
     width: auto;
     padding: 15px;
   }
+
   .card h4 {
     font-size: 1em;
   }
+
   .card p {
     font-size: 0.9em;
   }

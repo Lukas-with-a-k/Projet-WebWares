@@ -17,19 +17,22 @@
                 <tr v-for="(command, index) in userCommand" :key="index" :style="changeBackground(command.status)">
                     <td>{{ command.id }}</td>
                     <td>
-                        <div v-for="(detail, detailIndex) in showDetails(command.id)" :key="detailIndex">{{ detail.titre }}</div>
+                        <div v-for="(detail, detailIndex) in showDetails(command.id)" :key="detailIndex">{{ detail.titre
+                            }}</div>
                     </td>
                     <td>
-                        <div v-for="(detail, detailIndex) in showDetails(command.id)" :key="detailIndex">{{ detail.prix }}</div>
+                        <div v-for="(detail, detailIndex) in showDetails(command.id)" :key="detailIndex">{{ detail.prix
+                            }}</div>
                     </td>
                     <td>
-                        <div v-for="(detail, detailIndex) in showDetails(command.id)" :key="detailIndex">{{ detail.count }}</div>
+                        <div v-for="(detail, detailIndex) in showDetails(command.id)" :key="detailIndex">{{ detail.count
+                            }}</div>
                     </td>
                     <td>{{ command.ttc }}</td>
                     <td>{{ command.user }}</td>
                     <td>
                         <p v-if="command.status === 'nouveau'"> Nouveau !</p>
-                        <select v-model="command.status" @change="updateStatus(command)" >
+                        <select v-model="command.status" @change="updateStatus(command)">
                             <option value="nouveau">Nouveau</option>
                             <option value="enCour">En cour</option>
                             <option value="envoyé">Envoyé</option>
@@ -49,7 +52,7 @@
 
 <script>
 export default {
-   
+
     data() {
         return {
             userCommand: [],
@@ -73,11 +76,11 @@ export default {
                 commands[index].status = command.status;
                 localStorage.setItem('userCommand', JSON.stringify(commands));
             }
-           
+
         },
         changeBackground(status) {
-            
-            return status === "enCour" ? "background-color: #edd1d1;" : status === "nouveau" ? "background-color: #cfeacf;" : status === "livré" ? "background-color: #c2c2c2;": "";
+
+            return status === "enCour" ? "background-color: #edd1d1;" : status === "nouveau" ? "background-color: #cfeacf;" : status === "livré" ? "background-color: #c2c2c2;" : "";
         }
     },
     created() {
@@ -89,32 +92,35 @@ export default {
 
 <style scoped>
 table {
- position: relative;
-  left: 50%;
-  transform: translateX(-50%); 
-  width: 80%;
-  height: 72vh;
-  border-collapse: collapse;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    height: 72vh;
+    border-collapse: collapse;
 }
 
 th,
-td, select {
-  border: 1px solid #ddd;
-  padding: 8px;
-  font-size: 24px;
-  
-  }
-
-th {
-  background-color: #f2f2f2;
+td,
+select {
+    border: 1px solid #ddd;
+    padding: 8px;
+    font-size: 24px;
 
 }
-td p{
+
+th {
+    background-color: #f2f2f2;
+
+}
+
+td p {
     color: white;
     background-color: green;
     padding: 7px;
 }
-.encour{
+
+.encour {
     background-color: #edd1d1;
 }
 </style>

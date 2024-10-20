@@ -11,27 +11,27 @@
 </template>
 
 <script>
-    export default {
-        name: "AdminBar",
-        data() {
-            return {
-                isAdmin: false
-            }
-        },
-        methods: {
-            checkUserType() {
-                const userType = localStorage.getItem("userType");
-                this.isAdmin = userType === "admin";
-            }
-        },
-        created() {
-            this.checkUserType()
-        }   
-
-
-                 
-        
+export default {
+    name: "AdminBar",
+    data() {
+        return {
+            isAdmin: false
+        }
+    },
+    methods: {
+        checkUserType() {
+            const userType = localStorage.getItem("userType");
+            this.isAdmin = userType === "admin";
+        }
+    },
+    created() {
+        this.checkUserType()
     }
+
+
+
+
+}
 </script>
 
 <style scoped>
@@ -61,7 +61,7 @@
     display: flex;
     flex-direction: column;
     gap: 170px;
-   font-size: 20px;
+    font-size: 20px;
     font-weight: bold;
 }
 
@@ -77,22 +77,22 @@
 h4 {
     background-color: #4280b8;
     padding: 7px;
-    
+
     color: white;
 }
 
 @media (max-width: 768px) {
     .admin-bar {
-    position: absolute;
-    top: 470px;
-    height: 80px;
-    width: 100%;
-    background-color: #3F4666;
-    color: white;
-    font-weight: bold;
-    align-items: center;
-    z-index: 99999;  
-}
+        position: absolute;
+        top: 470px;
+        height: 80px;
+        width: 100%;
+        background-color: #3F4666;
+        color: white;
+        font-weight: bold;
+        align-items: center;
+        z-index: 99999;
+    }
 
     .admin-links {
         position: relative;
