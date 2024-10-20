@@ -1,4 +1,5 @@
 <template>
+  <div class="main-container">
   <h1>Mon panier</h1>
   <div class="container bkg">
     <p v-if="isError">{{ errorMessage }}</p><br>
@@ -35,6 +36,8 @@
       </div>
     </div>
   </div>
+</div>
+
 </template>
 
 <script>
@@ -143,47 +146,67 @@ export default {
 }
 </script>
 <style scoped>
+.main-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 78vh
+}
 .bkg {
   background: linear-gradient(rgba(230, 237, 235, 1) 0%, rgba(63, 70, 102, 1) 60%, rgba(116, 130, 132, 1) 84%);
   padding: 20px;
 }
-
+/* template{
+  height: 90vh;
+} */
 .container {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-around;
-  height: 72vh;
-  padding: 20px;
+    flex: 1;
+    display: flex;
+    flex-wrap: wrap;
+    /* align-items: center; */
+    justify-content: space-around;
+    height: 78vh;
+    color: black;
+    
 }
-
-table .container2 {
-  width: 100%;
-  max-width: 600px;
-  margin-bottom: 20px;
+.container1 td{
+  font-size: 30px;
+}
+td button {
+        text-align: center;
+        margin: 10px;
+        padding: 7px 10px;
+        font-size: 20px;
+    }
+ .container2 {
+    width: 100%;
+    max-width: 300px;
+    margin-bottom: 20px;
 }
 
 
 .bkg p {
-  margin: 0 auto;
-  font-size: 30px;
-  margin-top: 10%;
+    margin: 0 auto;
+    font-size: 30px;
+    /* margin-top: 10%; */
 }
 
 .prix {
-  flex-direction: column;
-  padding: 10px;
-  justify-content: space-around;
-  border: 1px solid black;
-  border-radius: 5px;
-  margin: 20px 0;
-  font-size: 20px;
-
+    flex-direction: column;
+    padding: 20px;
+    justify-content: center;
+    border: 1px solid black;
+    border-radius: 5px;
+    margin: 10px;
+   
+   
 }
-
-.prix span {
+.prix p{
   font-size: 30px;
-  font-weight: 700;
+  padding: 20px;
+}
+.prix p span {
+    font-size: 35px;
+    font-weight: 700;
 }
 
 tr img {
@@ -211,85 +234,71 @@ tr img {
   tr,
   td {
     display: block;
-  }
-
-  .container1,
-  .container2 {
-    width: 100%;
-    padding: 15px;
-
-  }
-
-  .prix {
-    font-size: 16px;
-    width: auto;
-    height: auto;
-  }
-
-  .prix p {
-    font-size: 16px;
-  }
-
-  .prix span {
-    font-size: 20px;
-
-  }
-
-  .button {
-    text-align: center;
-  }
+      }
+   .container1, .container2 {
+        width: 100%;
+        padding: 15px;
+       
+    }
+    .prix {
+        /* font-size: 16px; */
+        width: auto;
+        height: auto;
+        }
+    .prix p{
+      font-size: 16px;
+    }
+    .prix span p{
+        font-size: 20px;
+       
+    }
+    .container1 .button {
+        text-align: center;
+        margin: 5px;
+        font-size: 20px;
+    }
 }
 
 @media only screen and (min-width: 768px) {
-  .container {
-    flex-direction: row;
-    justify-content: space-around;
-    height: 72vh;
-    width: 100vw;
-  }
-
-  .container2 {
-    width: 35%;
-    max-width: 600px;
-    margin-bottom: 20px;
-    /* flex-shrink: 2; */
-  }
-
-  table {
-    width: 100%;
-    color: #fff;
-    font-size: 24px;
-  }
-
-  .prix {
-    font-size: 24px;
-    color: white;
-  }
-
-  .prix span {
-    font-size: 25px;
-
-  }
+    .container {
+        flex-direction: row;
+        justify-content: space-around;
+        height: auto;
+        width: 100vw;
+    }
+    .container2 {
+        width: 35%;
+        max-width: 600px;
+        margin-bottom: 20px;
+        /* flex-shrink: 2; */
+    }
+    table{
+      width: 100%;
+      /* color: #fff; */
+      font-size: 24px;
+    }
+    
 }
-
 .modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
 }
 
 .modal-contenu {
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-  width: 90%;
-  max-width: 500px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    width: 90%;
+    max-width: 500px;
+   
 }
 </style>

@@ -6,7 +6,7 @@
                 <UserForm :user="user" @userdata="user = $event" @validResults="handlerRes"></UserForm>
             </form>
             <p v-if="isError" style="color: red;"> {{ errorMessage }}</p>
-            <ButtonComponent label="Confirmer l'information" @click="verifier" bcolor="#3f4666" hcolor="#4280b8" />
+            <ButtonComponent label="Confirmer les informations" @click="verifier" bcolor="#3f4666" hcolor="#4280b8" />
 
         </div>
         <div class="container2">
@@ -50,8 +50,7 @@ export default {
             validationErrors: {},
             showModal: false,
             message: "",
-            commande: false,
-            accessAuCommand: false
+            
         };
     },
     methods: {
@@ -124,17 +123,13 @@ export default {
             this.commande = true;
 
         },
-
-        closeCommands() {
-            this.showModal = false;
-            if (this.accessAuCommand) {
-                return this.isDisabled = true
-            }
-            if (this.commande) {
-                this.$router.push({ name: 'ProductList' });
-            }
-            this.commande = false
+        
+        closeCommands(){
+          this.showModal = false;
+          if (this.commande){
+            window.location.href = '/ProductList';
         }
+    } 
     },
     created() {
         this.userId = localStorage.getItem("userId");
@@ -162,6 +157,8 @@ export default {
     flex-wrap: wrap;
     align-items: center;
     padding: 20px;
+    color: black;
+    
 }
 
 .container1,
@@ -178,13 +175,11 @@ export default {
     border: 1px solid black;
     border-radius: 5px;
     margin: 20px 0;
-    font-size: 20px;
-    /* Updated for better scaling */
+    font-size: 30px; 
 }
 
 .prix span {
-    font-size: 30px;
-    /* Updated for better scaling */
+    font-size: 40px;
     font-weight: 700;
 }
 
@@ -215,6 +210,9 @@ export default {
     .button {
         text-align: center;
     }
+    modal{
+        font-size: 20px;  
+    }
 }
 
 .modal {
@@ -227,6 +225,7 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
+    font-size: 30px;
 }
 
 .modal-contenu {
