@@ -6,8 +6,8 @@
             <span class="close" @click="closeAddModal()">X</span>
             <h2>Ajouter un produit</h2>
             <form @submit.prevent="addProd">
-            <label for="addImg">Produit image</label><br />
-            <input type="file" id="addImage" @change="onFileChangeAdd" /><br />
+     <!--   <label for="addImg">Produit image</label><br />
+            <input type="file" id="addImage" @change="onFileChangeAdd" /><br />  -->
 
             <label for="addName">Titre produit</label><br />
             <input
@@ -27,7 +27,7 @@
 
             <label for="addPrice">Prix produit</label><br />
             <input
-                type="number"
+                type="string"
                 id="prix"
                 name="prix"
                 size="8"
@@ -73,7 +73,7 @@
         <table>
             <thead>
                 <tr>
-                <th>Image produit</th>
+                <th>Image produit</th> 
                 <th>Titre produit</th>
                 <th>Description produit</th>
                 <th>Prix produit</th>
@@ -83,14 +83,13 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="(produit, index) in productList" :key="index">
+                <tr v-for="(produit, index) in productList" :key="index">   
                 <td>
                 <img
                 :src="require(`@/assets/${produit.image}`)"
                 :alt="produit.titre"
                 class="product-image"
-                />
-                </td>
+                /></td>
                 <td>{{ produit.titre }}</td>
                 <td>{{ produit.description }}</td>
                 <td>{{ produit.prix }}</td>
@@ -119,8 +118,8 @@
             <h2>Modifier le produit :</h2>
 
             <form class="edit-form">
-            <label for="editImg">Produit image</label><br />
-            <input type="file" id="editImage" @change="onFileChange" /><br />
+        <!--<label for="editImg">Produit image</label><br />
+            <input type="file" id="editImage" @change="onFileChange" /><br /> -->
 
             <label for="editName">Titre produit</label><br />
             <input
@@ -135,7 +134,7 @@
                 id="description"
                 name="description"
                 v-model="editProd.description"
-            >Description...</textarea><br />
+            ></textarea><br />
 
             <label for="editPrice">Prix produit</label><br />
             <input
@@ -418,29 +417,50 @@ export default {
   },
   methods: {
     addProd() {
-      if (!this.newProd.prix || parseFloat(this.newProd.prix) <= 0) {
-        alert("merci de remplir le champ avec une valeur positive.");
+    //   console.log("Image:", this.newProd.image);
+      console.log("Title:", this.newProd.titre);
+      console.log("Description:", this.newProd.description);
+      console.log("Price:", this.newProd.prix);
+      console.log("MOQ:", this.newProd.moq);
+      console.log("Category ID:", this.newProd.categorieId);
+
+    //   if (!this.newProd.image) {
+    //     alert("Merci de remplir le champ Image.");
+    //     return;
+    //   }
+      if (!this.newProd.titre) {
+        alert("Merci de remplir le champ Titre.");
         return;
       }
-      if (
-        this.newProd.image &&
-        this.newProd.titre &&
-        this.newProd.description &&
-        this.newProd.moq > 0 &&
-        this.newProd.categorieId
-      ) {
-        //donne un id
-        const maxId = this.productList.reduce(
-          (max, product) => (product.id > max ? product.id : max),
-          0
-        );
+      if (!this.newProd.description) {
+        alert("Merci de remplir le champ Description.");
+        return;
+      }
+      if (!this.newProd.prix || parseFloat(this.newProd.prix) <= 0) {
+        alert("Merci de remplir le champ Prix avec une valeur positive.");
+        return;
+      }
+      if (!this.newProd.moq || parseInt(this.newProd.moq) <= 0) {
+        alert("Merci de remplir le champ MOQ avec une valeur supérieure à 0.");
+        return;
+      }
+      if (!this.newProd.categorieId) {
+        alert("Merci de remplir le champ Catégorie.");
+        return;
+      }
+      //donne un id
+      const maxId = this.productList.reduce(
+        (max, product) => (product.id > max ? product.id : max),
+        0
+      );
         this.newProd.id = maxId + 1;
 
-        this.newprod.prix = parseFloat(this.newProd.prix);
+        this.newProd.prix = parseFloat(this.newProd.prix);
 
         this.productList.push({ ...this.newProd });
         this.newProd = {
-          image: "",
+        //   image: "",
+          id: "",  
           titre: "",
           description: "",
           prix: "",
@@ -450,8 +470,7 @@ export default {
         this.closeAddModal();
         // } else {
         //   alert("Merci de remplir tous les champs.");
-      }
-    },
+      },  
     showAdd() {
       this.isAddVisible = true; // open "addProd modal"
     },
@@ -487,30 +506,30 @@ export default {
     saveToLocalStorage() {
       localStorage.setItem("products", JSON.stringify(this.productList));
     },
-    onFileChangeAdd(e) {
-      const file = e.target.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          this.newProd.image = reader.result;
-        };
-        reader.readAsDataURL(file);
-      } else {
-        alert("Veuillez sélectioner un fichier image.");
-      }
-    },
-    onFileChange(e) {
-      const file = e.target.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          this.editProd.image = reader.result;
-        };
-        reader.readAsDataURL(file);
-      } else {
-        alert("Please select a file.");
-      }
-    },
+    // onFileChangeAdd(e) {
+    //   const file = e.target.files[0];
+    //   if (file) {
+    //     const reader = new FileReader();
+    //     reader.onloadend = () => {
+    //       this.newProd.image = reader.result;
+    //     };
+    //     reader.readAsDataURL(file);
+    //   } else {
+    //     alert("Veuillez sélectioner un fichier image.");
+    //   }
+    // },
+    // onFileChange(e) {
+    //   const file = e.target.files[0];
+    //   if (file) {
+    //     const reader = new FileReader();
+    //     reader.onloadend = () => {
+    //       this.editProd.image = reader.result;
+    //     };
+    //     reader.readAsDataURL(file);
+    //   } else {
+    //     alert("Please select a file.");
+    //   }
+    // },
     // checkMembershipStatus() { 
     //     const userType = localStorage.getItem('userType');
     //     this.isAdmin = userType === 'isAdmin';
