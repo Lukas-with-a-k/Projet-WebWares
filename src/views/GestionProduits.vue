@@ -2,12 +2,12 @@
   <div> <!--v-if="isAdmin" ne fonctionne pas-->
     <!-- MODAL ADD -->
     <div id="addModal" class="modal" v-show="isAddVisible" v-cloak>
-      <div class="modal-content">
-        <span class="close" @click="closeAddModal()">X</span>
-        <h2>Ajouter un produit</h2>
-        <form @submit.prevent="addProd">
-          <!-- <label for="addImg">Produit image</label><br />
-          <input type="file" id="addImage" @change="onFileChangeAdd" /><br /> -->
+        <div class="modal-content">
+            <span class="close" @click="closeAddModal()">X</span>
+            <h2>Ajouter un produit</h2>
+            <form @submit.prevent="addProd">
+     <!--   <label for="addImg">Produit image</label><br />
+            <input type="file" id="addImage" @change="onFileChangeAdd" /><br />  -->
 
           <label for="addName">Titre produit</label><br />
           <input type="text" id="titre" name="titre" v-model="newProd.titre" /><br />
@@ -15,8 +15,14 @@
           <label for="addDescription">Description produit</label><br />
           <textarea id="description" name="description" v-model="newProd.description"></textarea><br />
 
-          <label for="addPrice">Prix produit</label><br />
-          <input type="number" id="prix" name="prix" size="8" v-model="newProd.prix" /><br />
+            <label for="addPrice">Prix produit</label><br />
+            <input
+                type="string"
+                id="prix"
+                name="prix"
+                size="8"
+                v-model="newProd.prix"
+            /><br />
 
           <label for="addMoq">MOQ produit</label><br />
           <input type="number" id="moq" name="moq" size="4" v-model="newProd.moq" /><br />
@@ -84,8 +90,12 @@
           <label for="editName">Titre produit</label><br />
           <input type="text" id="editName" size="30" v-model="editProd.titre" /><br />
 
-          <label for="editDescription">Description produit</label><br />
-          <textarea id="description" name="description" v-model="editProd.description">Description...</textarea><br />
+            <label for="editDescription">Description produit</label><br />
+            <textarea
+                id="description"
+                name="description"
+                v-model="editProd.description"
+            ></textarea><br />
 
           <label for="editPrice">Prix produit</label><br />
           <input type="string" id="editPrice" size="10" v-model="editProd.prix" /><br />
@@ -385,8 +395,11 @@ export default {
         this.closeAddModal();
         // } else {
         //   alert("Merci de remplir tous les champs.");
+      
+
+
       }
-    },
+    }, 
     showAdd() {
       this.isAddVisible = true; // open "addProd modal"
     },
