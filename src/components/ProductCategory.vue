@@ -21,7 +21,7 @@
           <h3>{{ product.description }}</h3> 
           <p v-if="isMember">Quantité Minimum de Commande: {{ product.moq }}</p>
           <p v-if="isMember">Prix unitaire: {{ product.prix }} €</p>
-          <router-link :to="`/product-details/${product.id}`">Voir Détails</router-link>
+          <router-link :to="`/ProductDetails/${product.id}`" class="details-link">Voir Détails</router-link>
         </div>
       </div>
     </div>
@@ -343,7 +343,6 @@ created() {
   flex-direction: column;
   align-items: center;
   min-height: 78vh;
- 
 }
 
 #query {
@@ -432,6 +431,17 @@ h1 {
 .card h2, h3, p {
   color: #e6edeb; 
   margin: 30px;
+}
+
+a {
+    display: inline-block;
+    text-decoration: none;
+    color: #e6edeb;
+  }
+
+a:hover,
+a.router-link-active {
+  color: #4fb694;
 }
 
 @media (max-width: 750px) {

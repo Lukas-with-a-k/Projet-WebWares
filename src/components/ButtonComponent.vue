@@ -19,13 +19,15 @@
         background-color: v-bind(bcolor);
                 /* padding: 7px 20px;
                 cursor: pointer; */
-  color: #e6edeb;
-  font-size: 24px;
-  margin: 10px;
-  padding: 15px;
-  border: none;
-  cursor: pointer;
-  border-radius: 5px;
+        color: #e6edeb;
+        text-decoration: none;
+        border-radius: 5px;
+        border: none;
+        cursor: pointer;
+        padding: 10px 20px;
+        margin: 5px;
+        font-size: 16px;
+        transition: background-color 0.3s ease;
 }
     button:hover{
         background-color: v-bind(hcolor);
