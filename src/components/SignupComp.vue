@@ -114,9 +114,10 @@ export default {
         const accounts = JSON.parse(localStorage.getItem("accounts")) || [];
         accounts.push(newUser);
         localStorage.setItem("accounts", JSON.stringify(accounts));
-        console.log(
+        alert(
           "Compte crée avec succès, utilisateur : " + newUser.username
         );
+        window.location.reload();
       }
     },
 

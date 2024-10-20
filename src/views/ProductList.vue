@@ -5,7 +5,7 @@
     <input type="search" name="search" id="query" placeholder="Rechercher..." v-model="query"
       @input="filterProducts(query)" />
     <div class="card-container">
-      <div class="card" v-for="(prod, index) in produits" :key="index">
+      <div class="card" v-for="(prod, index) in filteredProduits" :key="index">
         <div class="image-container">
           <img :src="require(`@/assets/${prod.image}`)" :alt="prod.titre" />
           <button class="add-to-cart" v-if="isMember" @click="addToCart(prod, index)">Ajouter au panier <span
