@@ -1,0 +1,21 @@
+10/10/2024 | 11h |
+
+Choix de VueJS en CDN pour le projet
+Choix de la charte graphique (couleurs et mise en page) / Grey #748284 | Dark Blue #3F4666 | White #E6EDEB | Light Blue #428088
+Réunion placée a 13h30 
+
+| 13h30 |
+
+Repartition des taches dans le groupe (Git master : Lukas | Header + Footer : Lukas  | Landing page : Lukas | Page Liste : Claudia | Page Details : Claudia  | Page Panier : Vlada | Résumé commande : Vlada  | Page Inscription/Connexion : Louis  | Gestion utilisateur : Louis  | Gestion des produits : Claudia | Gestion catégories produits : Claudia | Gestion commandes : Vlada)
+On commences sous CDN le 10 octobre et si on a trop de soucis on passes sous CLI
+Creation du repo GitHub : https://github.com/Lukas-with-a-k/Projet-WebWares
+Au final on fait du Vue CLI sans VueX/Store
+Push d'un projet de base en Vue CLI sur la branche master
+
+| 17h30 |
+
+Creation du header & footer par Lukas
+Creation du component d'inscription / de connexion (Avec regex qui permetent de check les erreurs pour le SIRET/PHONE/PASSWORD)
+Ajout de l'affichage des erreurs a l'inscription (bord rouge et message d'erreur au hover de l'input)
+Push de tout le monde et merge des components et views ajoutés.
+Réunion du 11 octobre fixé a 9h30 avec l'accord commun

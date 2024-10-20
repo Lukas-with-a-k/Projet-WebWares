@@ -1,0 +1,3 @@
+18/10/2024 | 16h30h |
+Réunion avec le client, interface admin réalisée, il manque juste la sidebar sur le coté.
+Tout le reste et validé et le client a confiance en ce groupe pour remporter l'appel d'offre.

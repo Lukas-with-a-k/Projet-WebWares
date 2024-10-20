@@ -1,0 +1,8 @@
+16/10/2024 | 9h30h |
+Tout le monde est présent sur la réunion
+Lukas a réalisé la fin de la landing page et enlever l'affichage du bouton inscription sur la landing quand l'user est connecté.
+Vlada a fait du css sur le panier et a également fait les informations de livraisons avec certaines qui sont non modifiable (raison sociale)
+Claudia a ajouté un bouton pour ajouter au panier au hover d'un element sur le produit et sur la fonction qui sert a cela
+Louis a commencé a faire une liste users modifiable pour les admins (changement de role)
+RDV fixé a 15H pour cette aprem pour gerer avant le rdv avec le client
+ 

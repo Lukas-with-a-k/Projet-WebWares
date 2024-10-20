@@ -1,0 +1,9 @@
+14/10/2024 | 9h30h |
+Tout le monde est présent a la réunion
+Lukas a fait un formulaire nous contacter et a fait le fait que ce soit dynamique pour les catégories
+Claudia a fait une liste des produits quand on est déconnecté, avec un dégradé en fond et s'est occupée du responsive
+Vlada a continué la liste du panier
+Louis a effectué les changements demandés par le client (Aggrandissements des champs etc & Espacement entre les champs / -Nom/Prénom / +Raison sociale / Regroupements des champs par catégories)
+
+
+| 16h |
