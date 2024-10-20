@@ -1,0 +1,4 @@
+Louis a terminé la partie gestion d'utilisateurs admin.
+Vlada a terminé la partie gestion des commandes admin.
+Claudia a terminé la partie gestion des produits admin.
+Lukas a terminé la barre d'outils admin.
