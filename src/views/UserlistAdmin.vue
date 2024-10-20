@@ -29,7 +29,7 @@
             </select>
           </td>
           <td>
-            <button @click="removeAccount(account)">Supprimer</button>
+            <button @click="removeAccount(account)" style="background-color: tomato;">Supprimer</button>
           </td>
         </tr>
       </tbody>
