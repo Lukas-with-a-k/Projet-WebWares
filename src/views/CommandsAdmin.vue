@@ -36,6 +36,7 @@
                             <option value="livré">Livré</option>
                         </select>
                     </td>
+                    <td> <ButtonComponent label="Supprimer / Annuler" @click="supprimeCommmand(index)" bcolor="#3f4666" hcolor="#4280b8"/></td>
                 </tr>
             </tbody>
         </table>
@@ -48,8 +49,12 @@
 
 
 <script>
+import ButtonComponent from '@/components/ButtonComponent.vue';
+
 export default {
-   
+    components:{
+      ButtonComponent
+  },
     data() {
         return {
             userCommand: [],
@@ -63,7 +68,6 @@ export default {
         showDetails(commandId) {
             let allDetails = this.commandDetails.filter(detail => detail.id === commandId);
             let convertedDetails = allDetails.map(this.convertProxyToObject);
-            // console.log(`Command ID: ${commandId}, Details:`, convertedDetails); // Debugging
             return convertedDetails;
         },
         updateStatus(command) {
@@ -78,7 +82,16 @@ export default {
         changeBackground(status) {
             
             return status === "enCour" ? "background-color: #edd1d1;" : status === "nouveau" ? "background-color: #cfeacf;" : status === "livré" ? "background-color: #c2c2c2;": "";
-        }
+        },
+        supprimeCommmand(ind){
+            let commandId = this.userCommand[ind].id;
+            this.commandDetails = this.commandDetails.filter(command => command.id !== commandId);
+
+            localStorage.setItem("commandDetails", JSON.stringify(this.commandDetails));
+
+            this.userCommand.splice(ind, 1);
+            localStorage.setItem("userCommand", JSON.stringify(this.userCommand));
+         },
     },
     created() {
         this.userCommand = JSON.parse(localStorage.getItem('userCommand')) || [];
@@ -88,9 +101,14 @@ export default {
 </script>
 
 <style scoped>
+.command-list {
+    height: 90vh;
+    overflow: auto;
+}
 table {
   width: 100%;
   border-collapse: collapse;
+  
 }
 
 th,

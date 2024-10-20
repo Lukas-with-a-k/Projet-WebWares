@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <div class="container1">
-            <h4>Information pour livrason</h4>
+            <h1>Information pour livrason</h1>
             <form>
                 <UserForm :user="user" @userdata="user = $event" @validResults="handlerRes"></UserForm>
             </form>
@@ -49,8 +49,7 @@
             validationErrors: {},
             showModal: false,
             message: "",
-            commande: false,
-            accessAuCommand: false
+            
         };
     },
     methods: {
@@ -125,13 +124,10 @@
         
         closeCommands(){
           this.showModal = false;
-          if(this.accessAuCommand) {
-            return this.isDisabled = true 
-          }
           if (this.commande){
           this.$router.push({name:'ProductList'});
         }
-        this.commande = false
+        
         } 
     },
        created() {
@@ -160,6 +156,8 @@
      flex-wrap: wrap;
     align-items: center;
     padding: 20px;
+    color: black;
+    
 }
 
 .container1, .container2 {
@@ -175,11 +173,11 @@
     border: 1px solid black;
     border-radius: 5px;
     margin: 20px 0;
-    font-size: 20px; /* Updated for better scaling */
+    font-size: 30px; 
 }
 
 .prix span {
-    font-size: 30px; /* Updated for better scaling */
+    font-size: 40px;
     font-weight: 700;
 }
 
@@ -204,6 +202,9 @@
     .button {
         text-align: center;
     }
+    modal{
+        font-size: 20px;  
+    }
 }
 
 .modal {
@@ -216,6 +217,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    font-size: 30px;
 }
 
 .modal-contenu {

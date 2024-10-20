@@ -1,4 +1,5 @@
 <template>
+  <div class="main-container">
   <h1>Mon panier</h1>
 <div class="container bkg">
   <p v-if="isError">{{ errorMessage }}</p><br>
@@ -32,6 +33,7 @@
       <ButtonComponent label="Passer au command" @click="passerAuCommand()" bcolor="#3f4666" hcolor="#4280b8"/>
     </div>
   </div>
+</div>
 </div>
 </template>
 
@@ -137,23 +139,41 @@ this.userId = localStorage.getItem("userId");
 }
 </script>
 <style scoped>
+.main-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 78vh
+}
 .bkg {
     background: linear-gradient(rgba(230,237,235,1) 0%, rgba(63,70,102,1) 60%, rgba(116,130,132,1) 84%);
     padding: 20px;
+    
 }
-
+/* template{
+  height: 90vh;
+} */
 .container {
+    flex: 1;
     display: flex;
     flex-wrap: wrap;
-    align-items: center;
+    /* align-items: center; */
     justify-content: space-around;
-    height: auto;
-    padding: 20px;
+    height: 78vh;
+    color: black;
+    
 }
-
-table .container2 {
+.container1 td{
+  font-size: 30px;
+}
+td button {
+        text-align: center;
+        margin: 10px;
+        padding: 7px 10px;
+        font-size: 20px;
+    }
+ .container2 {
     width: 100%;
-    max-width: 600px;
+    max-width: 300px;
     margin-bottom: 20px;
 }
 
@@ -161,22 +181,25 @@ table .container2 {
 .bkg p {
     margin: 0 auto;
     font-size: 30px;
-    margin-top: 10%;
+    /* margin-top: 10%; */
 }
 
 .prix {
     flex-direction: column;
-    padding: 10px;
-    justify-content: space-around;
+    padding: 20px;
+    justify-content: center;
     border: 1px solid black;
     border-radius: 5px;
-    margin: 20px 0;
-    font-size: 20px;
+    margin: 10px;
+   
    
 }
-
-.prix span {
-    font-size: 30px;
+.prix p{
+  font-size: 30px;
+  padding: 20px;
+}
+.prix p span {
+    font-size: 35px;
     font-weight: 700;
 }
 
@@ -207,19 +230,21 @@ table, tbody, tr, td {
        
     }
     .prix {
-        font-size: 16px;
+        /* font-size: 16px; */
         width: auto;
         height: auto;
-    }
+        }
     .prix p{
       font-size: 16px;
     }
-    .prix span {
+    .prix span p{
         font-size: 20px;
        
     }
-    .button {
+    .container1 .button {
         text-align: center;
+        margin: 5px;
+        font-size: 20px;
     }
 }
 
@@ -238,17 +263,10 @@ table, tbody, tr, td {
     }
     table{
       width: 100%;
-      color: #fff;
+      /* color: #fff; */
       font-size: 24px;
     }
-    .prix {
-        font-size: 24px;
-        color: white;
-    }
-    .prix span {
-        font-size: 25px;
-        
-    }
+    
 }
 .modal {
     position: fixed;
@@ -260,6 +278,7 @@ table, tbody, tr, td {
     display: flex;
     justify-content: center;
     align-items: center;
+    font-size: 30px;
 }
 
 .modal-contenu {
@@ -269,6 +288,7 @@ table, tbody, tr, td {
     box-shadow: 0 0 10px rgba(0,0,0,0.5);
     width: 90%;
     max-width: 500px;
+   
 }
 </style>
 
