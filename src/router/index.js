@@ -1,6 +1,5 @@
-import LandingPage from '@/views/LandingPage.vue';
 import { createRouter, createWebHistory } from 'vue-router';
-
+import LandingPage from '@/views/LandingPage.vue';
 
 const routes = [
   { 
@@ -57,6 +56,6 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
-})
+});
 
-export default router
+export default router;
