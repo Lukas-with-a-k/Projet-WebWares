@@ -18,6 +18,12 @@
             id="categoryName"
             v-model="newCategory.name"
           /><br /><br />
+          <ButtonComponent
+            label="Enregistrer"
+            bcolor="#4280b8"
+            hcolor="#3f4666"
+            @click="addCategory"
+          />
         </form>
       </div>
     </div>
@@ -78,12 +84,7 @@
             hcolor="#4280b8"
             @click="addProd"
           />
-          <ButtonComponent
-            label="Enregistrer"
-            bcolor="#4280b8"
-            hcolor="#3f4666"
-            @click="addCategory"
-          />
+          
         </form>
       </div>
     </div>
@@ -94,6 +95,12 @@
       bcolor="#4280b8"
       hcolor="#748284"
       @click="showAdd()"
+    />
+    <ButtonComponent
+      label="Ajouter une Categorie"
+      bcolor="#4280b8"
+      hcolor="#748284"
+      @click="showAddCategory()"
     />
     <div class="body" style="overflow-x: auto">
       <h1>Liste des produits</h1>
@@ -463,8 +470,6 @@ export default {
         this.categories.push({ id:maxId +1, name: this.newCategory.name });
         this.newCategory.name = '';
         this.closeAddCategoryModal();
-      } else {
-        alert("Merci de remplir le champ Nom de la Catégorie.");
       }
     },
     showAddCategory() {
