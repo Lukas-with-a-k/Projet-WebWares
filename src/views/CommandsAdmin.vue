@@ -89,7 +89,11 @@ export default {
 
 <style scoped>
 table {
-  width: 100%;
+ position: relative;
+  left: 50%;
+  transform: translateX(-50%); 
+  width: 80%;
+  height: 72vh;
   border-collapse: collapse;
 }
 

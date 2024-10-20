@@ -121,6 +121,7 @@
         this.showModal = true;
         this.message = "Votre commande a été bien effectuée";
         this.commande = true;
+        
         },
         
         closeCommands(){

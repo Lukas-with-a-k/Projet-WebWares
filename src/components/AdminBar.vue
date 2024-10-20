@@ -3,7 +3,7 @@
         <ul class="admin-links">
             <h4>Administration</h4>
             <li><router-link to="/GestionProduits">Produits</router-link></li>
-            <li><router-link to="/admin/orders">Commandes</router-link></li>
+            <li><router-link to="/commands-admin">Commandes</router-link></li>
             <li><router-link to="/userlist-admin">Utilisateurs</router-link></li>
         </ul>
 
