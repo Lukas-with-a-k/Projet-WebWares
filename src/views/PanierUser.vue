@@ -16,7 +16,7 @@
               <span> {{ produit.count }} </span>
               <button @click="increase(produit)"> + </button>
             </td>
-            <td>Total TH : {{ subTotal(produit) }}</td>
+            <td>Total TH : {{ subTotal(produit) }}€</td>
             <td>
               <ButtonComponent label="Supprimer" @click="supprimeProduit(index)" bcolor="#3f4666" hcolor="#4280b8" />
             </td>
@@ -26,12 +26,12 @@
     </div>
     <div class="container2" v-if="!isError">
       <div class="prix">
-        <p> HT : {{ htTotal() }}</p>
-        <p>TVA : {{ tva() }}</p>
-        <p> TTC :<span> {{ prixTotal() }} </span></p>
+        <p> HT : {{ htTotal() }}€</p>
+        <p>TVA : {{ tva() }}€</p>
+        <p> TTC :<span> {{ prixTotal() }}€</span></p>
       </div>
       <div class="button">
-        <ButtonComponent label="Passer au command" @click="passerAuCommand()" bcolor="#3f4666" hcolor="#4280b8" />
+        <ButtonComponent label="Valider le panier" @click="passerAuCommand()" bcolor="#3f4666" hcolor="#4280b8" />
       </div>
     </div>
   </div>
@@ -153,7 +153,7 @@ export default {
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-around;
-  height: auto;
+  height: 72vh;
   padding: 20px;
 }
 
@@ -244,7 +244,7 @@ tr img {
   .container {
     flex-direction: row;
     justify-content: space-around;
-    height: auto;
+    height: 72vh;
     width: 100vw;
   }
 
