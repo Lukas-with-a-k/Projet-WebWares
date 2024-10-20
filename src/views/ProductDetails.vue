@@ -28,15 +28,7 @@
       this.checkMembershipStatus();
       this.fetchProduct();
     },
-    //   
-    //   
-    //   
-    //     
-    //   }
-    //   
-    //     
-    //   }
-    // },
+
     methods: {
       fetchProduct(){
         const productId = this.$route.params.id;
@@ -92,27 +84,27 @@
   </script>
   
   <style scoped>
-.bkg {  
-  background: linear-gradient( rgba(230,237,235,1) 0%, rgba(63,70,102,1) 30%, rgba(116,130,132,1) 98%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  min-height: 78vh;
+  .bkg {  
+    background: linear-gradient( rgba(230,237,235,1) 0%, rgba(63,70,102,1) 30%, rgba(116,130,132,1) 98%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 78vh;
 }
-.back-button {
-  background-color: #4280b8;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
+  .back-button {
+    background-color: #4280b8;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+     cursor: pointer;
 }
-.back-button:hover {
-  background-color: #3F4666;
+  .back-button:hover {
+    background-color: #3F4666;
 }
-h1 {
-  color: #3F4666;
-  padding: 50px;
+  h1 {
+    color: #3F4666;
+    padding: 50px;
 }
   .product-details {
     display: flex;
