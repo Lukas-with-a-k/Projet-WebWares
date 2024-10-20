@@ -1,0 +1,11 @@
+11/10/2024 | 9h30h |
+Debut de la réunion, tout le monde est présent, Lukas s'occupes de faire les 2 headers (connecté et déconnecté)
+Claudia s'occupes de la gestion du panier, description etc
+Vlada s'occupes de la gestion des commandes 
+Louis s'occupes de la base de données, gestion back de inscription / connexion
+
+
+| 16h30 |
+Claudia a organisé l'espace assets avec les images pour les affichage des produits
+Louis a terminé la base de donnée en localstorage et fais fonctionner l'inscription/la connexion qui est en lien avec la base de données
+Lukas a tout merge, fini le header et le footer adapté en fonction de si l'utilisateur est connecté ou déconnecté et tout connecté avec la base de données.
