@@ -1,14 +1,17 @@
 {
+  "homepage": "https://lukas-with-a-k.github.io/Projet-WebWares/",
   "name": "webwares",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
+    "deploy": "gh-pages -d dist",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
     "core-js": "^3.8.3",
+    "gh-pages": "^6.2.0",
     "multer": "^1.4.5-lts.1",
     "vue": "^3.2.13",
     "vue-router": "^4.0.3"
